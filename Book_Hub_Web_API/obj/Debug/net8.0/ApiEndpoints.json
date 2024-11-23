@@ -1,12 +1,460 @@
 [
   {
-    "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
-    "Method": "TestAPI",
-    "RelativePath": "api/Home/GetAllBooks",
+    "ContainingType": "Book_Hub_Web_API.Controllers.AdminController",
+    "Method": "RemoveBook",
+    "RelativePath": "api/Admin/{bookId}",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookid",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Book_Hub_Web_API.Models.Books",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.AdminController",
+    "Method": "AddBooks",
+    "RelativePath": "api/Admin/AddBook",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "BookId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Isbn",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Title",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Author",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Publication",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PublishedDate",
+        "Type": "System.DateOnly",
+        "IsRequired": false
+      },
+      {
+        "Name": "Edition",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Language",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Description",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Cost",
+        "Type": "System.Decimal",
+        "IsRequired": false
+      },
+      {
+        "Name": "AvailableQuantity",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "TotalQuantity",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "GenreId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Genres.GenreId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "Genres.Name",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Genres.Description",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Genres.Books",
+        "Type": "System.Collections.Generic.ICollection\u00601[[Book_Hub_Web_API.Models.Books, Book_Hub_Web_API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Borrowed",
+        "Type": "System.Collections.Generic.ICollection\u00601[[Book_Hub_Web_API.Models.Borrowed, Book_Hub_Web_API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Reservations",
+        "Type": "System.Collections.Generic.ICollection\u00601[[Book_Hub_Web_API.Models.Reservations, Book_Hub_Web_API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Book_Hub_Web_API.Models.Books",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.AdminController",
+    "Method": "GetAllBorrowed",
+    "RelativePath": "api/Admin/GetBorrowed",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Book_Hub_Web_API.Models.Borrowed, Book_Hub_Web_API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.AdminController",
+    "Method": "GetAllFine",
+    "RelativePath": "api/Admin/GetFines",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Book_Hub_Web_API.Models.Fines, Book_Hub_Web_API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.AdminController",
+    "Method": "GetAllGenre",
+    "RelativePath": "api/Admin/GetGenre",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Book_Hub_Web_API.Models.Genres, Book_Hub_Web_API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.AdminController",
+    "Method": "GetAllLogUserActivity",
+    "RelativePath": "api/Admin/GetLog",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Book_Hub_Web_API.Models.LogUserActivity, Book_Hub_Web_API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.AdminController",
+    "Method": "GetAllNotification",
+    "RelativePath": "api/Admin/GetNotification",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Book_Hub_Web_API.Models.Notifications, Book_Hub_Web_API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.AdminController",
+    "Method": "GetAllReservation",
+    "RelativePath": "api/Admin/GetReservation",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Book_Hub_Web_API.Models.Reservations, Book_Hub_Web_API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.AdminController",
+    "Method": "GetAllUser",
+    "RelativePath": "api/Admin/GetUser",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Book_Hub_Web_API.Models.Users, Book_Hub_Web_API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.AdminController",
+    "Method": "UpdateBooks",
+    "RelativePath": "api/Admin/Updatebook",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "BookId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "AvailableQuantity",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "TotalQuantity",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Book_Hub_Web_API.Models.Books",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
+    "Method": "CreateUser",
+    "RelativePath": "api/Home/CreateUser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "user",
+        "Type": "Book_Hub_Web_API.Models.Users",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Book_Hub_Web_API.Models.Users",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
+    "Method": "DeleteUser",
+    "RelativePath": "api/Home/DeleteUser",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
+    "Method": "GetUsers",
+    "RelativePath": "api/Home/Get",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[Book_Hub_Web_API.Models.Users, Book_Hub_Web_API, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
+    "Method": "TestAPI",
+    "RelativePath": "api/Home/TestAPI",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
+    "Method": "UpdateUser",
+    "RelativePath": "api/Home/UpdateUser",
+    "HttpMethod": "PATCH",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "user",
+        "Type": "Book_Hub_Web_API.Models.Users",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Book_Hub_Web_API.Models.Users",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
+    "Method": "Validate",
+    "RelativePath": "api/Home/Validate",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "password",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
+    "Method": "Validate",
+    "RelativePath": "api/Home/Validate",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "username",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "password",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {

@@ -1,6 +1,22 @@
-﻿namespace Book_Hub_Web_API.Repositories
+﻿using Book_Hub_Web_API.Data.DTO;
+using Book_Hub_Web_API.Models;
+
+namespace Book_Hub_Web_API.Repositories
 {
-    public class IAdminRepository
+    public interface IAdminRepository
     {
+
+        Task<List<Borrowed>> GetAllBorrowed();
+        Task<List<Fines>> GetAllFines();
+        Task<List<Genres>> GetAllGenres();
+        Task<List<LogUserActivity>> GetAllLogUserActivity();
+        Task<List<Notifications>> GetAllNotifications();
+        Task<List<Reservations>> GetAllReservations();
+        Task<List<Users>> GetAllUsers();
+        Task<Books> AddBook(Books book);
+        Task<Books> UpdateBook(Update_book_dto update_Book_Dto);
+        Task<Books> RemoveBook(int bookId);
+
+
     }
 }

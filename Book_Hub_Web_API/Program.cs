@@ -1,4 +1,7 @@
 
+using Book_Hub_Web_API.Data;
+using Book_Hub_Web_API.Repositories;
+
 namespace Book_Hub_Web_API
 {
     public class Program
@@ -6,6 +9,7 @@ namespace Book_Hub_Web_API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+         
 
             // Add services to the container.
 
@@ -13,6 +17,12 @@ namespace Book_Hub_Web_API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddDbContext<BookHubDBContext>();
+            builder.Services.AddScoped<ICommonRepository, CommonRepository>();
+            builder.Services.AddScoped<IAdminRepository, AdminRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 
             var app = builder.Build();
 
