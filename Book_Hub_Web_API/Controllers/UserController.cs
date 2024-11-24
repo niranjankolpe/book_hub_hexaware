@@ -21,9 +21,8 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("GetBookByBookId")]
         [HttpPost]
-        public async Task<IActionResult> GetBookByBookId(int bookId)
+        public async Task<IActionResult> GetBookByBookId([FromForm]int bookId)
         {
-            await Task.Delay(100);
             Books book = await _userRepository.GetBookByBookId(bookId);
             return Ok(new JsonResult(book));
         }
@@ -104,8 +103,8 @@ namespace Book_Hub_Web_API.Controllers
         [HttpPatch]
         public async Task<IActionResult> ResetPassword([FromForm] Reset_Password_DTO reset_password_dto)
         {
-            await _userRepository.ResetPassword(reset_password_dto);
-            return Ok("Password Reset Successfully");
+            Users u = await _userRepository.ResetPassword(reset_password_dto);
+            return Ok($"Password Reset Successfully. {u.UserId}, {u.PasswordHash}");
         }
     }
 }

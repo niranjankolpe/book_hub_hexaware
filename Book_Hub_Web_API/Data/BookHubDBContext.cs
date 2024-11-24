@@ -25,7 +25,7 @@ namespace Book_Hub_Web_API.Data
                 entity.HasOne(g => g.Genres)
                 .WithMany(g => g.Books)
                 .HasForeignKey(g => g.GenreId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
                 entity.Property(b => b.Cost)
                 .HasColumnType("decimal(10, 2)");
@@ -47,13 +47,13 @@ namespace Book_Hub_Web_API.Data
                 entity.HasOne(b => b.Book)
                 .WithMany(b => b.Borrowed)
                 .HasForeignKey(b => b.BookId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
                 // Borrowed-User (M-1)
                 entity.HasOne(u => u.User)
                 .WithMany(b => b.Borrowed)
                 .HasForeignKey(u => u.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
                 entity.Property(b => b.BorrowDate)
                 .HasColumnType("date")
@@ -98,7 +98,7 @@ namespace Book_Hub_Web_API.Data
                 entity.HasOne(b => b.Borrowed)
                 .WithMany(f => f.Fines)
                 .HasForeignKey(f => f.BorrowId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
                 // Fine Type conversion from Enum to string
                 entity.Property(f => f.FineType)
@@ -146,7 +146,7 @@ namespace Book_Hub_Web_API.Data
                 entity.HasOne(u => u.Users)
                 .WithMany(n => n.Notifications)
                 .HasForeignKey(u => u.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
             });
 
 
@@ -185,13 +185,13 @@ namespace Book_Hub_Web_API.Data
                 entity.HasOne(b => b.Book)
                 .WithMany(r => r.Reservations)
                 .HasForeignKey(b => b.BookId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
 
                 // Reservations-Users (M-1)
                 entity.HasOne(u => u.Users)
                 .WithMany(r => r.Reservations)
                 .HasForeignKey(u => u.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
             });
 
             // Users Model
@@ -224,7 +224,7 @@ namespace Book_Hub_Web_API.Data
                 entity.HasOne(u => u.User)
                 .WithMany(l => l.LogUserActivity)
                 .HasForeignKey(u => u.UserId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
             });
         }
 

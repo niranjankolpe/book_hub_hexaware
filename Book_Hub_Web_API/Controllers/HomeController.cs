@@ -2,6 +2,7 @@
 using Book_Hub_Web_API.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Book_Hub_Web_API.Data.DTO;
 
 namespace Book_Hub_Web_API.Controllers
 {
@@ -15,14 +16,18 @@ namespace Book_Hub_Web_API.Controllers
             _commonRepository = commonRepository;
         }
 
+
+
         [Route("TestAPI")]
         [HttpGet]
         public IActionResult TestAPI()
         {
             return Ok("API Test Successful!");
         }
+
+
+
         [Route("Validate")]
-        [HttpGet]
         [HttpPost]
         public IActionResult Validate([FromForm] string username, [FromForm] string password)
         {
@@ -38,68 +43,37 @@ namespace Book_Hub_Web_API.Controllers
             }
         }
 
-        [Route("Get")]
-        [HttpGet]
-        public ActionResult<List<Users>> GetUsers()
-        {
-            var users = _commonRepository.GetAllBooks();
-            return Ok(users);
-        }
-        /*
-         * methods after connecting to database
-         * [HttpGet]
-         * public async Task<ActionResult<List<Books>>> GetAllBooks(){
-         *   try{
-         *   var books =  await _commonRepository.GetAllBooks();
-         *   return Ok(books);
-         *   }
-         *   catch(exception e){
-         *   return StatusCode(500,"Internal Server Error");
-         *   }
-         * // POST: api/users/validate
-    [HttpPost("validate")]
-    public async Task<IActionResult> ValidateUser([FromBody] User loginUser)
-    {
-        try
-        {
-            // Call the repository method to validate the user
-            var user = await _userRepository.ValidateUserAsync(loginUser.Username, loginUser.Password);
 
-            if (user == null)
-            {
-                // User not found or password incorrect
-                return Unauthorized(new { message = "Invalid username or password" });
-            }
-
-            // Return success with user data (excluding sensitive information like password)
-            return Ok(new { message = "User authenticated", user = new { user.Id, user.Username, user.FullName, user.Email } });
-        }
-        catch (Exception ex)
-        {
-            // Handle unexpected errors
-            return StatusCode(500, "Internal server error");
-        }
-    }
-         * 
-         * */
-
-       
-
+        
         [Route("CreateUser")]
         [HttpPost]
-        public async Task<Users> CreateUser([Bind("UserId", "Name", "Email", "Phone", "Address", "PasswordHash")] Users user)
+        public async Task<IActionResult> CreateUser(string name, string email, string phone, string address, string passwordHash)
         {
-            await _commonRepository.CreateUser(user);
-            return user;
+            await Task.Delay(100);
+            Users u = new Users()
+            {
+                Name = name,
+                Email = email,
+                Phone = phone,
+                Address = address,
+                PasswordHash = passwordHash
+            };
+            await _commonRepository.CreateUser(u);
+            return Ok("User created successfully!");
         }
+
+
 
         [Route("UpdateUser")]
         [HttpPatch]
-        public async Task<Users> UpdateUser(Users user)
+        public async Task<Users> UpdateUser(int userId, string name, string phone, string address)
         {
-            await _commonRepository.UpdateUser(user);
-            return user;
+
+            Users u = await _commonRepository.UpdateUser(userId, name, phone, address);
+            return u;
         }
+
+
 
         [Route("DeleteUser")]
         [HttpDelete]

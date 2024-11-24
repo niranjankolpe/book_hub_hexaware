@@ -12,6 +12,8 @@ namespace Book_Hub_Web_API.Controllers
     {
         private IAdminRepository _adminRepository;
 
+
+
         public AdminController(IAdminRepository adminRepository)
         {
             _adminRepository = adminRepository;
@@ -19,15 +21,26 @@ namespace Book_Hub_Web_API.Controllers
         }
 
 
+
         [HttpPost]
         [Route("AddBook")]
-
-        public async Task<ActionResult<Books>> AddBooks([FromForm] Books book)
+        public async Task<ActionResult<Books>> AddBooks(string isbn, string title, string author, string publication, DateOnly pubDate, string edition, string lang, string desc, decimal cost, int avail, int total, int genreId)
         {
-            if (!ModelState.IsValid)
+            Books book = new Books()
             {
-                return BadRequest(ModelState); // Return 400 Bad Request if validation fails
-            }
+                Isbn = isbn,
+                Title = title,
+                Author = author,
+                Publication = publication,
+                PublishedDate = pubDate,
+                Edition = edition,
+                Language = lang,
+                Description = desc,
+                Cost = cost,
+                AvailableQuantity = avail,
+                TotalQuantity = total,
+                GenreId = genreId
+            };
             try
             {
                 var books = await _adminRepository.AddBook(book);
@@ -42,9 +55,10 @@ namespace Book_Hub_Web_API.Controllers
 
         }
 
+
+
         [HttpGet]
         [Route("GetBorrowed")]
-
         public async Task<ActionResult<List<Borrowed>>> GetAllBorrowed()
         {
             try
@@ -57,8 +71,6 @@ namespace Book_Hub_Web_API.Controllers
                 {
                     return NotFound(new { message = "No borrowed records found." });
                 }
-
-
                 return Ok(borrowedRecords);
             }
             catch (Exception ex)
@@ -68,6 +80,9 @@ namespace Book_Hub_Web_API.Controllers
             }
 
         }
+
+
+
         [HttpGet]
         [Route("GetFines")]
         public async Task<ActionResult<List<Fines>>> GetAllFine()
@@ -88,6 +103,8 @@ namespace Book_Hub_Web_API.Controllers
             }
         }
 
+
+
         [HttpGet]
         [Route("GetGenre")]
         public async Task<ActionResult<List<Genres>>> GetAllGenre()
@@ -107,6 +124,9 @@ namespace Book_Hub_Web_API.Controllers
                 return StatusCode(500, new { message = $"An error occurred: {ex.Message}" });
             }
         }
+
+
+
         [HttpGet]
         [Route("GetLog")]
         public async Task<ActionResult<List<LogUserActivity>>> GetAllLogUserActivity()
@@ -126,6 +146,9 @@ namespace Book_Hub_Web_API.Controllers
                 return StatusCode(500, new { message = $"An error occurred: {ex.Message}" });
             }
         }
+
+
+
         [HttpGet]
         [Route("GetNotification")]
         public async Task<ActionResult<List<Notifications>>> GetAllNotification()
@@ -145,6 +168,9 @@ namespace Book_Hub_Web_API.Controllers
                 return StatusCode(500, new { message = $"An error occurred: {ex.Message}" });
             }
         }
+
+
+
         [HttpGet]
         [Route("GetReservation")]
         public async Task<ActionResult<List<Reservations>>> GetAllReservation()
@@ -164,6 +190,9 @@ namespace Book_Hub_Web_API.Controllers
                 return StatusCode(500, new { message = $"An error occurred: {ex.Message}" });
             }
         }
+
+
+
         [HttpGet]
         [Route("GetUser")]
         public async Task<ActionResult<List<Users>>> GetAllUser()
@@ -184,7 +213,10 @@ namespace Book_Hub_Web_API.Controllers
             }
         }
 
-        [HttpPatch("{bookId}")]
+
+
+        [Route("RemoveBook")]
+        [HttpPatch]
         public async Task<ActionResult<Books>> RemoveBook(int bookid)
         {
             try
@@ -203,6 +235,8 @@ namespace Book_Hub_Web_API.Controllers
 
             }
         }
+
+
 
         [HttpPatch]
         [Route("Updatebook")]
@@ -225,6 +259,5 @@ namespace Book_Hub_Web_API.Controllers
               return  StatusCode(500, new { message = $"An error occurred: {ex.Message}" });
             }
         }
-
     }
 }

@@ -11,10 +11,14 @@ namespace Book_Hub_Web_API.Repositories
     {
         private BookHubDBContext _DBContext;
 
+
+
         public AdminRepository(BookHubDBContext dBContext)
         {
             _DBContext = dBContext;
         }
+
+
 
         public async Task<Books> AddBook(Books book)
         {
@@ -36,6 +40,8 @@ namespace Book_Hub_Web_API.Repositories
             }
         }
 
+
+
         public async Task<List<Borrowed>> GetAllBorrowed()
         {
 
@@ -49,6 +55,8 @@ namespace Book_Hub_Web_API.Repositories
             }
         }
 
+
+
         public async Task<List<Fines>> GetAllFines()
         {
             try
@@ -61,6 +69,8 @@ namespace Book_Hub_Web_API.Repositories
                 throw new Exception($"Error retrieving borrowed records: {ex.Message}", ex);
             }
         }
+
+
 
         public async Task<List<Genres>> GetAllGenres()
         {
@@ -76,6 +86,8 @@ namespace Book_Hub_Web_API.Repositories
 
         }
 
+
+
         public async Task<List<LogUserActivity>> GetAllLogUserActivity()
         {
             try
@@ -88,6 +100,8 @@ namespace Book_Hub_Web_API.Repositories
             }
 
         }
+
+
 
         public async Task<List<Notifications>> GetAllNotifications()
         {
@@ -102,6 +116,8 @@ namespace Book_Hub_Web_API.Repositories
 
         }
 
+
+
         public async Task<List<Reservations>> GetAllReservations()
         {
             try
@@ -115,6 +131,8 @@ namespace Book_Hub_Web_API.Repositories
 
         }
 
+
+
         public async Task<List<Users>> GetAllUsers()
         {
             try
@@ -127,6 +145,8 @@ namespace Book_Hub_Web_API.Repositories
             }
 
         }
+
+
 
         public async Task<Books> RemoveBook(int bookId)
         {
