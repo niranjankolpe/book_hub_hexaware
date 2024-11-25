@@ -94,6 +94,8 @@ namespace Book_Hub_Web_API.Repositories
             }
             _bookHubDBContext.Update(existingUser);
             await _bookHubDBContext.SaveChangesAsync();
+
+
             return existingUser;
         }
     }

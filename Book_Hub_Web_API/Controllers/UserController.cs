@@ -23,88 +23,157 @@ namespace Book_Hub_Web_API.Controllers
         [HttpPost]
         public async Task<IActionResult> GetBookByBookId([FromForm]int bookId)
         {
-            Books book = await _userRepository.GetBookByBookId(bookId);
-            return Ok(new JsonResult(book));
+            try
+            {
+                var book = await _userRepository.GetBookByBookId(bookId);
+                return Ok(new JsonResult(book));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [Route("GetBookByISBN")]
         [HttpPost]
-        public async Task<IActionResult> GetBookByISBN(string isbn)
+        public async Task<IActionResult> GetBookByISBN([FromForm] string isbn)
         {
-            await Task.Delay(100);
-            Books book = await _userRepository.GetBookByISBN(isbn);
-            return Ok(new JsonResult(book));
+            try
+            {
+                var book = await _userRepository.GetBookByISBN(isbn);
+                return Ok(new JsonResult(book));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [Route("GetBooksByGenre")]
         [HttpPost]
-        public async Task<IActionResult> GetBooksByGenre(int genreId)
+        public async Task<IActionResult> GetBooksByGenre([FromForm] int genreId)
         {
-            await Task.Delay(100);
-            List<Books> books = await _userRepository.GetBooksByGenre(genreId);
-            return Ok(new JsonResult(books));
+            try
+            {
+                var books = await _userRepository.GetBooksByGenre(genreId);
+                return Ok(new JsonResult(books));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [Route("GetBooksByAuthor")]
         [HttpPost]
-        public async Task<IActionResult> GetBooksByAuthor(string authorName)
+        public async Task<IActionResult> GetBooksByAuthor([FromForm] string authorName)
         {
-            await Task.Delay(100);
-            List<Books> books = await _userRepository.GetBooksByAuthor(authorName);
-            return Ok(new JsonResult(books));
+            try
+            {
+                var books = await _userRepository.GetBooksByAuthor(authorName);
+                return Ok(new JsonResult(books));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [Route("BorrowBook")]
         [HttpPost]
-        public async Task<IActionResult> BorrowBook(int bookId, int userId)
+        public async Task<IActionResult> BorrowBook([FromForm] int bookId, [FromForm] int userId)
         {
-            await Task.Delay(100);
-            Borrowed borrowed = await _userRepository.BorrowBook(bookId, userId);
-            return Ok(new JsonResult(borrowed));
+            try
+            {
+                var borrowed = await _userRepository.BorrowBook(bookId, userId);
+                return Ok(new JsonResult(borrowed));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [Route("ReturnBook")]
         [HttpPatch]
-        public async Task<IActionResult> ReturnBook(int borrowId)
+        public async Task<IActionResult> ReturnBook([FromForm] int borrowId)
         {
-            await Task.Delay(100);
-            Borrowed borrowed = await _userRepository.ReturnBook(borrowId);
-            return Ok(new JsonResult(borrowed));
+            try
+            {
+                var borrowed = await _userRepository.ReturnBook(borrowId);
+                return Ok(new JsonResult(borrowed));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [Route("ReportLostBook")]
         [HttpPatch]
-        public async Task<IActionResult> ReportLostBook(int borrowId)
+        public async Task<IActionResult> ReportLostBook([FromForm] int borrowId)
         {
-            await Task.Delay(100);
-            Borrowed borrowed = await _userRepository.ReportLostBook(borrowId);
-            return Ok(new JsonResult(borrowed));
+            try
+            {
+                var borrowed = await _userRepository.ReportLostBook(borrowId);
+                return Ok(new JsonResult(borrowed));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [Route("ReserveBook")]
         [HttpPost]
-        public async Task<IActionResult> ReserveBook(int bookId, int userId)
+        public async Task<IActionResult> ReserveBook([FromForm] int bookId, [FromForm] int userId)
         {
-            await Task.Delay(100);
-            Reservations reservation = await _userRepository.ReserveBook(bookId, userId);
-            return Ok(new JsonResult(reservation));
+            try
+            {
+                var reservation = await _userRepository.ReserveBook(bookId, userId);
+                return Ok(new JsonResult(reservation));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [Route("CancelBookReservation")]
         [HttpPatch]
-        public async Task<IActionResult> CancelBookReservation(int reservationId)
+        public async Task<IActionResult> CancelBookReservation([FromForm] int reservationId)
         {
-            await Task.Delay(100);
-            Reservations reservation = await _userRepository.CancelBookReservation(reservationId);
-            return Ok(new JsonResult(reservation));
+            try
+            {
+                var reservation = await _userRepository.CancelBookReservation(reservationId);
+                return Ok(new JsonResult(reservation));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [Route("ResetPassword")]
         [HttpPatch]
-        public async Task<IActionResult> ResetPassword([FromForm] Reset_Password_DTO reset_password_dto)
+        public async Task<IActionResult> ResetPassword([FromForm] [Bind("UserId", "Email", "OldPassword", "NewPassword")] Reset_Password_DTO reset_password_dto)
         {
-            Users u = await _userRepository.ResetPassword(reset_password_dto);
-            return Ok($"Password Reset Successfully. {u.UserId}, {u.PasswordHash}");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var user = await _userRepository.ResetPassword(reset_password_dto);
+                    return Ok(new JsonResult(user));
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
