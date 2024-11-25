@@ -291,27 +291,27 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "name",
+        "Name": "Name",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "email",
+        "Name": "Email",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "phone",
+        "Name": "Phone",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "address",
+        "Name": "Address",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "passwordHash",
+        "Name": "PasswordHash",
         "Type": "System.String",
         "IsRequired": false
       }
@@ -336,16 +336,6 @@
   },
   {
     "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
-    "Method": "TestAPI",
-    "RelativePath": "api/Home/TestAPI",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
     "Method": "UpdateUser",
     "RelativePath": "api/Home/UpdateUser",
     "HttpMethod": "PATCH",
@@ -353,22 +343,22 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "userId",
+        "Name": "UserId",
         "Type": "System.Int32",
         "IsRequired": false
       },
       {
-        "Name": "name",
+        "Name": "Name",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "phone",
+        "Name": "Phone",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "address",
+        "Name": "Address",
         "Type": "System.String",
         "IsRequired": false
       }
@@ -394,12 +384,12 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "username",
+        "Name": "Email",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "password",
+        "Name": "PasswordHash",
         "Type": "System.String",
         "IsRequired": false
       }

@@ -6,14 +6,14 @@ namespace Book_Hub_Web_API.Repositories
 {
     public interface ICommonRepository
     {
-        Task<string> ValidateUser(string username, string password);
+        Task<string> ValidateUser(Validate_User_DTO validate_User_DTO);
          Task<List<Books>> GetAllBooks();
 
-        Task<Users> CreateUser(Users user);
+        Task<Users> CreateUser(Create_User_DTO create_User_DTO);
 
-        Task<Users> UpdateUser(int userId, string name, string phone, string address);
+        Task<Users> UpdateUser(UpdateUser_DTO updateUser_DTO);
 
-        Task<IActionResult> DeleteUser(int userId);
+        Task<string> DeleteUser(int userId);
 
     }
 }

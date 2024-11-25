@@ -146,7 +146,7 @@ namespace Book_Hub_Web_API.Repositories
 
         }
 
-
+         
 
         public async Task<Books> RemoveBook(int bookId)
         {
@@ -200,7 +200,7 @@ namespace Book_Hub_Web_API.Repositories
                     await _DBContext.SaveChangesAsync();
                     return book;
                 }
-                return null;
+                return book!=null ? book :new Books();
 
             }
             catch (Exception ex)
