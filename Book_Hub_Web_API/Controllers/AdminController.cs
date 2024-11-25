@@ -12,38 +12,20 @@ namespace Book_Hub_Web_API.Controllers
     {
         private IAdminRepository _adminRepository;
 
-
-
         public AdminController(IAdminRepository adminRepository)
         {
             _adminRepository = adminRepository;
 
         }
 
-
-
         [HttpPost]
         [Route("AddBook")]
-        public async Task<ActionResult<Books>> AddBooks(string isbn, string title, string author, string publication, DateOnly pubDate, string edition, string lang, string desc, decimal cost, int avail, int total, int genreId)
+        public async Task<ActionResult<Books>> AddBooks([FromForm] [Bind(" Isbn", "Title", "Author", "Publication", "PublishedDate", "Edition", "Language", "Description", "Cost", "AvailableQuantity", "TotalQuantity", "GenreId")] Add_Book_DTO add_Book_DTO)
         {
-            Books book = new Books()
-            {
-                Isbn = isbn,
-                Title = title,
-                Author = author,
-                Publication = publication,
-                PublishedDate = pubDate,
-                Edition = edition,
-                Language = lang,
-                Description = desc,
-                Cost = cost,
-                AvailableQuantity = avail,
-                TotalQuantity = total,
-                GenreId = genreId
-            };
+            
             try
             {
-                var books = await _adminRepository.AddBook(book);
+                var books = await _adminRepository.AddBook(add_Book_DTO);
                 return Ok(books);
 
             }
@@ -240,7 +222,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [HttpPatch]
         [Route("Updatebook")]
-        public async Task<ActionResult<Books>> UpdateBooks([FromForm] Update_book_dto update_Book_Dto)
+        public async Task<ActionResult<Books>> UpdateBooks([FromForm] [Bind("BookId", "AvailableQuantity", "TotalQuantity")] Update_book_dto update_Book_Dto)
         {
             try
             {

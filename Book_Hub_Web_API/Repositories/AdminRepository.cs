@@ -11,18 +11,32 @@ namespace Book_Hub_Web_API.Repositories
     {
         private BookHubDBContext _DBContext;
 
-
-
         public AdminRepository(BookHubDBContext dBContext)
         {
             _DBContext = dBContext;
         }
 
-
-
-        public async Task<Books> AddBook(Books book)
+        public async Task<Books> AddBook(Add_Book_DTO add_Book_DTO)
         {
-            if (book == null)
+            Books book = new Books()
+            {
+                Isbn = add_Book_DTO.Isbn,
+                Title = add_Book_DTO.Title,
+                Author = add_Book_DTO.Author,
+                Publication = add_Book_DTO.Publication,
+                PublishedDate = add_Book_DTO.PublishedDate,
+                Edition = add_Book_DTO.Edition,
+                Language = add_Book_DTO.Language,
+                Description = add_Book_DTO.Description,
+                Cost = add_Book_DTO.Cost,
+                AvailableQuantity = add_Book_DTO.AvailableQuantity,
+                TotalQuantity = add_Book_DTO.TotalQuantity,
+                GenreId = add_Book_DTO.GenreId
+
+            };
+
+
+            if (add_Book_DTO == null)
             {
                 throw new ArgumentNullException("Invalid entry");
             }
@@ -41,7 +55,6 @@ namespace Book_Hub_Web_API.Repositories
         }
 
 
-
         public async Task<List<Borrowed>> GetAllBorrowed()
         {
 
@@ -54,7 +67,6 @@ namespace Book_Hub_Web_API.Repositories
                 throw new Exception($"Error retrieving borrowed records: {ex.Message}", ex);
             }
         }
-
 
 
         public async Task<List<Fines>> GetAllFines()
@@ -180,7 +192,6 @@ namespace Book_Hub_Web_API.Repositories
                 throw new Exception($"Error removing book: {ex.Message}", ex);
             }
         }
-
 
 
         public async Task<Books> UpdateBook(Update_book_dto update_Book_Dto)

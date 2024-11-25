@@ -8,62 +8,62 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "isbn",
+        "Name": "Isbn",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "title",
+        "Name": "Title",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "author",
+        "Name": "Author",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "publication",
+        "Name": "Publication",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "pubDate",
+        "Name": "PublishedDate",
         "Type": "System.DateOnly",
         "IsRequired": false
       },
       {
-        "Name": "edition",
+        "Name": "Edition",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "lang",
+        "Name": "Language",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "desc",
+        "Name": "Description",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "cost",
+        "Name": "Cost",
         "Type": "System.Decimal",
         "IsRequired": false
       },
       {
-        "Name": "avail",
+        "Name": "AvailableQuantity",
         "Type": "System.Int32",
         "IsRequired": false
       },
       {
-        "Name": "total",
+        "Name": "TotalQuantity",
         "Type": "System.Int32",
         "IsRequired": false
       },
       {
-        "Name": "genreId",
+        "Name": "GenreId",
         "Type": "System.Int32",
         "IsRequired": false
       }
