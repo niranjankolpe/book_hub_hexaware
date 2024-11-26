@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Book_Hub_Web_API.Controllers
@@ -18,6 +19,7 @@ namespace Book_Hub_Web_API.Controllers
             _logger = logger;
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {

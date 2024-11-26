@@ -73,14 +73,14 @@ namespace Book_Hub_Web_API.Repositories
 
 
 
-        public  async Task<string> ValidateUser(Validate_User_DTO validate_User_DTO)
+        public async Task<Users> ValidateUser(Validate_User_DTO validate_User_DTO)
         {
-            Users? u =  await _bookHubDBContext.Users.FirstOrDefaultAsync(u => u.Email == validate_User_DTO.Email && u.PasswordHash == validate_User_DTO.PasswordHash);
-            if (u == null)
+            Users? user = await _bookHubDBContext.Users.FirstOrDefaultAsync(u => u.Email == validate_User_DTO.Email && u.PasswordHash == validate_User_DTO.PasswordHash);
+            if (user == null)
             {
-                return "User does not exist";
+                throw new Exception("User with those credentials not found!");
             }
-            return "User is valid";
+            return user;
         }
 
 

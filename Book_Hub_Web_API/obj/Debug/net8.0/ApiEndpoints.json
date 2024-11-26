@@ -336,6 +336,37 @@
   },
   {
     "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
+    "Method": "GetAllBooks",
+    "RelativePath": "api/Home/GetAllBooks",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
+    "Method": "Login",
+    "RelativePath": "api/Home/Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PasswordHash",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
     "Method": "UpdateUser",
     "RelativePath": "api/Home/UpdateUser",
     "HttpMethod": "PATCH",

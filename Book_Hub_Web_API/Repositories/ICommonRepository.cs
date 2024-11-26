@@ -6,7 +6,7 @@ namespace Book_Hub_Web_API.Repositories
 {
     public interface ICommonRepository
     {
-        Task<string> ValidateUser(Validate_User_DTO validate_User_DTO);
+        Task<Users> ValidateUser(Validate_User_DTO validate_User_DTO);
          Task<List<Books>> GetAllBooks();
 
         Task<Users> CreateUser(Create_User_DTO create_User_DTO);

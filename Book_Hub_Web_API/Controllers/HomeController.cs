@@ -4,6 +4,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Book_Hub_Web_API.Data.DTO;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace Book_Hub_Web_API.Controllers
 {
@@ -12,64 +17,80 @@ namespace Book_Hub_Web_API.Controllers
     public class HomeController : ControllerBase
     {
         private ICommonRepository _commonRepository;
-        public HomeController(ICommonRepository commonRepository)
+
+        private readonly IConfiguration _configuration;
+
+        public HomeController(ICommonRepository commonRepository, IConfiguration configuration)
         {
             _commonRepository = commonRepository;
+            _configuration = configuration;
         }
 
+        [Route("GetAllBooks")]
+        [HttpGet]
+        public async Task<IActionResult> GetAllBooks()
+        {
+            try
+            {
+                var books = await _commonRepository.GetAllBooks();
+                return Ok(books);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
-
-        //[Route("Validate")]
-        //[HttpPost]
-        //public IActionResult Validate([FromForm] [Bind("Email", "PasswordHash")] Validate_User_DTO validate_User_DTO)
-        //{
-        //    try
-        //    {
-        //        var result = _commonRepository.ValidateUser(validate_User_DTO);
-        //        return Ok(result);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Log the exception
-        //        return StatusCode(500, $"An error occurred while validating the user.{ex.Message}");
-        //    }
-        //}
         [Route("Validate")]
         [HttpPost]
         public async Task<IActionResult> Validate([FromForm] Validate_User_DTO validate_User_DTO)
         {
             try
             {
-                // Validate the user via the repository
-                string result = await _commonRepository.ValidateUser(validate_User_DTO);
-
-                // Return appropriate response
-                if (result == "User is valid")
-                {
-                    return Ok(new { success = true, message = result });
-                }
-                else
-                {
-                    return BadRequest(new { success = false, message = result });
-                }
+                Users result = await _commonRepository.ValidateUser(validate_User_DTO);
+                return Ok(result);
             }
             catch (Exception ex)
             {
-                // Log the error with additional details for debugging
-                Console.Error.WriteLine($"Error validating user: {ex}");
-
-                // Return a generic error response
-                return StatusCode(500, new
-                {
-                    success = false,
-                    message = "An error occurred while validating the user. Please try again later."
-                });
+                return BadRequest(ex.Message);
             }
         }
 
+        [AllowAnonymous]
+        [Route("Login")]
+        [HttpPost]
+        public async Task<IActionResult> Login([FromForm][Bind("Email", "PasswordHash")] Validate_User_DTO validate_User_DTO)
+        {
+            try
+            {
+                Users user = await _commonRepository.ValidateUser(validate_User_DTO);
+                List<Claim> claims = new List<Claim>()
+                {
+                    new Claim ("UserId", user.UserId.ToString()),
+                    new Claim ("Email",  user.Email.ToString()),
+                    new Claim (ClaimTypes.Role, user.Role.ToString())
+                };
 
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+                var signInCreds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+                var token = new JwtSecurityToken(
+                    issuer: _configuration["Jwt:Issuer"],
+                    audience: _configuration["Jwt:Audience"],
+                    claims: claims,
+                    expires: DateTime.Now.AddHours(2),
+                    signingCredentials: signInCreds
+                );
+                string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
+                return Ok(tokenValue);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
+        [Authorize(Roles = "Consumer")]
         [Route("CreateUser")]
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromForm][Bind("Name", "Email", "Phone", "Address", "PasswordHash")] Create_User_DTO create_User_DTO)

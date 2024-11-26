@@ -1,7 +1,11 @@
-
+using System.Text;
+using System.Text.Encodings;
 using System.Text.Json.Serialization;
 using Book_Hub_Web_API.Data;
 using Book_Hub_Web_API.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+
 
 namespace Book_Hub_Web_API
 {
@@ -23,6 +27,31 @@ namespace Book_Hub_Web_API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+
+
+
+            // JWT Authentication Code Begins
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                };
+            });
+            builder.Services.AddAuthorization();
+            // JWT Authentication Code Ends
+
+
+
 
             builder.Services.AddDbContext<BookHubDBContext>();
             builder.Services.AddScoped<ICommonRepository, CommonRepository>();
