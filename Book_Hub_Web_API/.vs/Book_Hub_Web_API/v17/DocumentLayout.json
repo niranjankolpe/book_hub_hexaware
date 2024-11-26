@@ -1,7 +1,32 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\Book_Hub_Web_API\\",
-  "Documents": [],
+  "WorkspaceRootPath": "D:\\Book Hub\\Book_Hub_Web_API\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|d:\\book hub\\book_hub_web_api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|d:\\book hub\\book_hub_web_api\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|solutionrelative:controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|d:\\book hub\\book_hub_web_api\\migrations\\20241126093238_dbmthree.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|solutionrelative:migrations\\20241126093238_dbmthree.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|d:\\book hub\\book_hub_web_api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|solutionrelative:controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|d:\\book hub\\book_hub_web_api\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|solutionrelative:controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|d:\\book hub\\book_hub_web_api\\data\\bookhubdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|solutionrelative:data\\bookhubdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 1,
@@ -9,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 171,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -17,11 +42,89 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Book Hub\\Book_Hub_Web_API\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "D:\\Book Hub\\Book_Hub_Web_API\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAQwB8AAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T09:57:21.325Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "20241126093238_DBMThree.cs",
+              "DocumentMoniker": "D:\\Book Hub\\Book_Hub_Web_API\\Migrations\\20241126093238_DBMThree.cs",
+              "RelativeDocumentMoniker": "Migrations\\20241126093238_DBMThree.cs",
+              "ToolTip": "D:\\Book Hub\\Book_Hub_Web_API\\Migrations\\20241126093238_DBMThree.cs",
+              "RelativeToolTip": "Migrations\\20241126093238_DBMThree.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T09:32:38.712Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "D:\\Book Hub\\Book_Hub_Web_API\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "Controllers\\HomeController.cs",
+              "ToolTip": "D:\\Book Hub\\Book_Hub_Web_API\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "Controllers\\HomeController.cs",
+              "ViewState": "AgIAAFsAAAAAAAAAAAAkwGYAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T09:30:50.813Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "D:\\Book Hub\\Book_Hub_Web_API\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UserController.cs",
+              "ToolTip": "D:\\Book Hub\\Book_Hub_Web_API\\Controllers\\UserController.cs",
+              "RelativeToolTip": "Controllers\\UserController.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAQwBkAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T09:30:08.322Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "D:\\Book Hub\\Book_Hub_Web_API\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
+              "ToolTip": "D:\\Book Hub\\Book_Hub_Web_API\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "Controllers\\AdminController.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAwAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T09:23:58.733Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "BookHubDBContext.cs",
+              "DocumentMoniker": "D:\\Book Hub\\Book_Hub_Web_API\\Data\\BookHubDBContext.cs",
+              "RelativeDocumentMoniker": "Data\\BookHubDBContext.cs",
+              "ToolTip": "D:\\Book Hub\\Book_Hub_Web_API\\Data\\BookHubDBContext.cs",
+              "RelativeToolTip": "Data\\BookHubDBContext.cs",
+              "ViewState": "AgIAAL8AAAAAAAAAAAAgwMQAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T09:19:18.163Z"
             }
           ]
         }

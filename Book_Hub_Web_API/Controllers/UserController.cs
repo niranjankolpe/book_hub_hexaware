@@ -5,11 +5,13 @@ using Book_Hub_Web_API.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Book_Hub_Web_API.Data.DTO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Book_Hub_Web_API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Consumer")]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -21,6 +23,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("GetBookByBookId")]
         [HttpPost]
+        [Authorize(Roles = "Consumer")]
         public async Task<IActionResult> GetBookByBookId([FromForm]int bookId)
         {
             try

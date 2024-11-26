@@ -1,6 +1,8 @@
 ﻿using Book_Hub_Web_API.Data.DTO;
+using Book_Hub_Web_API.Data.Enums;
 using Book_Hub_Web_API.Models;
 using Book_Hub_Web_API.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +10,7 @@ namespace Book_Hub_Web_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Administrator")]
     public class AdminController : ControllerBase
     {
         private IAdminRepository _adminRepository;

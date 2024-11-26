@@ -5,6 +5,7 @@ using Book_Hub_Web_API.Data;
 using Book_Hub_Web_API.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 
 namespace Book_Hub_Web_API
@@ -28,7 +29,7 @@ namespace Book_Hub_Web_API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-
+          
 
 
             // JWT Authentication Code Begins
@@ -68,9 +69,12 @@ namespace Book_Hub_Web_API
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
 
+
+            app.UseHttpsRedirection();
+            app.UseAuthentication();
             app.UseAuthorization();
+          //  app.UseAuthorization();
 
 
             app.MapControllers();

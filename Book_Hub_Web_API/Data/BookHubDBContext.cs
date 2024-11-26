@@ -198,7 +198,7 @@ namespace Book_Hub_Web_API.Data
             modelBuilder.Entity<Users>(entity =>
             {
                 entity.HasKey(u => u.UserId);
-
+                entity.HasIndex(u => u.Email).IsUnique();
                 entity.Property(u => u.AccountCreatedDate)
                 .HasColumnType("date")
                 .HasConversion(

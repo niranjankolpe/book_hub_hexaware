@@ -14,6 +14,7 @@ namespace Book_Hub_Web_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Consumer,Administrator")]
     public class HomeController : ControllerBase
     {
         private ICommonRepository _commonRepository;
@@ -43,6 +44,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("Validate")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Validate([FromForm] Validate_User_DTO validate_User_DTO)
         {
             try
@@ -56,9 +58,10 @@ namespace Book_Hub_Web_API.Controllers
             }
         }
 
-        [AllowAnonymous]
+       
         [Route("Login")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromForm][Bind("Email", "PasswordHash")] Validate_User_DTO validate_User_DTO)
         {
             try
