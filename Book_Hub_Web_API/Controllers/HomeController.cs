@@ -29,6 +29,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("GetAllBooks")]
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllBooks()
         {
             try
@@ -58,10 +59,9 @@ namespace Book_Hub_Web_API.Controllers
             }
         }
 
-       
+        [AllowAnonymous]
         [Route("Login")]
         [HttpPost]
-        [AllowAnonymous]
         public async Task<IActionResult> Login([FromForm][Bind("Email", "PasswordHash")] Validate_User_DTO validate_User_DTO)
         {
             try
@@ -93,7 +93,7 @@ namespace Book_Hub_Web_API.Controllers
             }
         }
 
-        [Authorize(Roles = "Consumer")]
+        [AllowAnonymous]
         [Route("CreateUser")]
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromForm][Bind("Name", "Email", "Phone", "Address", "PasswordHash")] Create_User_DTO create_User_DTO)
@@ -102,16 +102,14 @@ namespace Book_Hub_Web_API.Controllers
             {
                 await Task.Delay(100);
 
-                await _commonRepository.CreateUser(create_User_DTO);
-                return Ok("User created successfully!");
+                var user = await _commonRepository.CreateUser(create_User_DTO);
+                return Ok($"User created successfully with User Id: {user.UserId}");
             }
             else
             {
                 return BadRequest();
             }
         }
-
-
 
         [Route("UpdateUser")]
         [HttpPatch]
@@ -123,10 +121,9 @@ namespace Book_Hub_Web_API.Controllers
         }
 
 
-
         [Route("DeleteUser")]
         [HttpDelete]
-        public async Task<IActionResult> DeleteUser(int userId)
+        public async Task<IActionResult> DeleteUser([FromForm] int userId)
         {
            var result =  await _commonRepository.DeleteUser(userId);
             return Ok(result);

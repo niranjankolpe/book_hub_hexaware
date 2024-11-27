@@ -66,7 +66,7 @@ namespace Book_Hub_Web_API.Repositories
                _bookHubDBContext.Users.Remove(user);
                 await _bookHubDBContext.SaveChangesAsync();
                 
-                return "User deleted successfully!";
+                return $"User deleted successfully with User Id: {user.UserId}";
             }
             return "User not found!";
         }

@@ -202,7 +202,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("RemoveBook")]
         [HttpPatch]
-        public async Task<ActionResult<Books>> RemoveBook(int bookid)
+        public async Task<ActionResult<Books>> RemoveBook([FromForm]int bookid)
         {
             try
             {
