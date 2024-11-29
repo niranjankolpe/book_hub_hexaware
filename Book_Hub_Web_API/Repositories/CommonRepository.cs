@@ -24,6 +24,10 @@ namespace Book_Hub_Web_API.Repositories
         public async Task<List<Books>>GetAllBooks()
         {
             var books = await _bookHubDBContext.Books.ToListAsync();
+            if (books == null)
+            {
+                throw new Exception("No book found!");
+            }
             return books;
         }
 

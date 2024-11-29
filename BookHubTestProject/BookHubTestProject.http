@@ -1,0 +1,6 @@
+@BookHubTestProject_HostAddress = http://localhost:5035
+
+GET {{BookHubTestProject_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
