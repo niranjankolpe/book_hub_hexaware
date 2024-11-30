@@ -36,37 +36,37 @@ namespace Book_Hub_Web_API.Repositories
             return books != null ? books : throw new Exception($"No book found for Author: {authorName}");
         }
 
-        public async Task<string> BorrowBook(int bookId, int userId)
+        public async Task<Borrowed> BorrowBook(int bookId, int userId)
         {
             Books? availableBook = _context.Books.FirstOrDefault(b => b.BookId == bookId);
             if (availableBook == null)
             {
-                return $"Incorrect Book Id: {bookId}!";
+                throw new Exception($"Incorrect Book Id: {bookId}!");
             }
             if (availableBook.AvailableQuantity < 1)
             {
-                return $"Insufficient Book quantity for Book Id: {bookId}!";
+                throw new Exception($"Insufficient Book quantity for Book Id: {bookId}!");
             }
-
+            
             Borrowed? alreadyBorrowed = _context.Borrowed.FirstOrDefault(b => b.BookId == bookId && b.BorrowStatus==Borrow_Status.Borrowed);
             if (alreadyBorrowed != null)
             {
                 if (alreadyBorrowed.UserId != userId)
                 {
-                    return $"Book with Id: {bookId} is already borrowed by someone else!";
+                    throw new Exception($"Book with Id: {bookId} is already borrowed by someone else!");
                 }
                 else if (alreadyBorrowed.UserId == userId)
                 {
-                    return $"Book with Id: {bookId} is already borrowed by you!";
+                    throw new Exception($"Book with Id: {bookId} is already borrowed by you!");
                 }
             }
-
+            
             Reservations? alreadyReserved = _context.Reservations.Where(r => r.BookId == bookId && r.ReservationStatus == Reservation_Status.Pending).FirstOrDefault();
             if (alreadyReserved != null)
             {
                 if (alreadyReserved.UserId != userId)
                 {
-                    return $"Book with Id: {bookId} is unavailable because of existing reservations!";
+                    throw new Exception($"Book with Id: {bookId} is unavailable because of existing reservations!");
                 }
                 else if (alreadyReserved.UserId == userId && alreadyReserved.ReservationStatus==Reservation_Status.Pending)
                 {
@@ -79,7 +79,7 @@ namespace Book_Hub_Web_API.Repositories
                     Reservations? nextReservation = _context.Reservations.FirstOrDefault(r => r.BookId == bookId && r.ReservationStatus == Reservation_Status.Pending);
                     if (nextReservation != null)
                     {
-                        return $"Borrow Request Declined. Your Reservation Id: {alreadyReserved.ReservationId} is expired, and reservations by other users exist!";
+                        throw new Exception($"Borrow Request Declined. Your Reservation Id: {alreadyReserved.ReservationId} is expired, and reservations by other users exist!");
                     }
                 }
             }
@@ -87,7 +87,7 @@ namespace Book_Hub_Web_API.Repositories
             List<Borrowed> totalBorrows = _context.Borrowed.Where(b => b.UserId == userId && b.BorrowStatus==Borrow_Status.Borrowed).ToList();
             if (totalBorrows.Count > 4)
             {
-                return "You already have borrowed too many books! Return some and try again.";
+                throw new Exception($"You already have borrowed {totalBorrows.Count} books! Only {5} books max are allowed to borrow. Return some and try again.");
             }
 
             Borrowed borrowed = new Borrowed()
@@ -127,16 +127,16 @@ namespace Book_Hub_Web_API.Repositories
             _context.Notifications.Add(notification);
             await _context.SaveChangesAsync();
 
-            return $"Borrowed Successfully! Borrow ID: {borrowId}, Book ID: {bookId}";
+            return borrowed;
         }
 
-        public async Task<string> ReturnBook(int borrowId)
+        public async Task<Borrowed> ReturnBook(int borrowId)
         {
             Borrowed? borrowed = _context.Borrowed.FirstOrDefault(b => b.BorrowId == borrowId);
 
             if (borrowed == null)
             {
-                return $"Borrow Id: {borrowId} does not exist!";
+                throw new Exception($"Borrow Id: {borrowId} does not exist!");
             }
             borrowed.ReturnDate = DateOnly.FromDateTime(DateTime.Now);
             borrowed.BorrowStatus = Borrow_Status.Returned;
@@ -193,15 +193,15 @@ namespace Book_Hub_Web_API.Repositories
             _context.Notifications.Add(notification);
             await _context.SaveChangesAsync();
 
-            return $"Book Returned Successfully! Borrow Id: {borrowId}, Book Id: {bookId}";
+            return borrowed;
         }
 
-        public async Task<string> ReportLostBook(int borrowId)
+        public async Task<Borrowed> ReportLostBook(int borrowId)
         {
             Borrowed? borrowed = _context.Borrowed.FirstOrDefault(b => b.BorrowId == borrowId);
             if (borrowed == null)
             {
-                return $"Borrow Id: {borrowId} does not exist!";
+                throw new Exception($"Borrow Id: {borrowId} does not exist!");
             }
 
             borrowed.BorrowStatus = Borrow_Status.Lost;
@@ -239,10 +239,10 @@ namespace Book_Hub_Web_API.Repositories
             _context.Notifications.Add(notification);
             await _context.SaveChangesAsync();
 
-            return $"Book Lost Reported Successfully! Borrow Id: {borrowId}, Book Id: {bookId}";
+            return borrowed;
         }
 
-        public async Task<string> ReserveBook(int bookId, int userId)
+        public async Task<Reservations> ReserveBook(int bookId, int userId)
         {
             Reservations reservation = new Reservations()
             {
@@ -254,13 +254,13 @@ namespace Book_Hub_Web_API.Repositories
                 ReservationStatus = Reservation_Status.Pending
             };
 
-            Borrowed? b = _context.Borrowed.FirstOrDefault(b => b.BookId == bookId && b.BorrowStatus==Borrow_Status.Borrowed);
+            Borrowed? alreadyBorrowed = _context.Borrowed.FirstOrDefault(b => b.BookId == bookId && b.BorrowStatus==Borrow_Status.Borrowed);
             
-            Reservations? r = _context.Reservations.Where(r => r.BookId == bookId && r.ReservationStatus == Reservation_Status.Pending).OrderBy(r => r.ApplicationTimestamp).FirstOrDefault();
+            List<Reservations> reservationsList = _context.Reservations.Where(r => r.BookId == bookId && r.ReservationStatus == Reservation_Status.Pending).OrderBy(r => r.ApplicationTimestamp).ToList();
 
-            if (r == null)
+            if (reservationsList.Count == 0)
             {
-                if (b == null)
+                if (alreadyBorrowed == null)
                 {
                     reservation.ExpectedAvailabilityDate = DateOnly.FromDateTime(DateTime.Now);
                     reservation.ReservationExpiryDate = DateOnly.FromDateTime(DateTime.Now).AddDays(1);
@@ -288,94 +288,91 @@ namespace Book_Hub_Web_API.Repositories
                     _context.Notifications.Add(notification2);
                     await _context.SaveChangesAsync();
 
-                    return $"Reservation Successful! Reservation Id: {reservation.ReservationId}. Also, the book is available for borrowing now!";
+                    return reservation;
+                    //return $"Reservation Successful! Reservation Id: {reservation.ReservationId}. Also, the book is available for borrowing now!";
                 }
 
-                if (b != null)
+                if (alreadyBorrowed.UserId == userId)
                 {
-                    if (b.UserId == userId)
-                    {
-                        return "You cannot reserve a book you have already borrowed!";
-                    }
-
-                    reservation.ExpectedAvailabilityDate = b.ReturnDeadline.AddDays(1);
-                    reservation.ReservationExpiryDate = null;
-                    reservation.ReservationStatus = Reservation_Status.Pending;
-                    _context.Reservations.Add(reservation);
-                    await _context.SaveChangesAsync();
-
-                    Notifications notification = new Notifications()
-                    {
-                        UserId = userId,
-                        MessageType = Notification_Type.Reservation_Book_Related,
-                        MessageDescription = $"Reservation Successful! Reservation Id: {reservation.ReservationId}, Book Id: {bookId}.",
-                        SentDate = DateOnly.FromDateTime(DateTime.Now)
-                    };
-                    _context.Notifications.Add(notification);
-                    await _context.SaveChangesAsync();
-                    return $"Reservation Successful! Reservation Id: {reservation.ReservationId}, Book Id: {bookId}.";
-                }
-            }
-
-            if (r != null)
-            {
-                if (r.UserId == userId && r.ReservationStatus==Reservation_Status.Pending)
-                {
-                    return $"You already have a reservation for this book!";
+                    throw new Exception($"You cannot reserve a book you have already borrowed! BorrowId: {alreadyBorrowed.BorrowId}");
                 }
 
-                if (r.ExpectedAvailabilityDate != null)
-                {
-                    reservation.ExpectedAvailabilityDate = r.ExpectedAvailabilityDate.Value.AddDays(10);
-                }
-                else
-                {
-                    reservation.ExpectedAvailabilityDate = null;
-                }
+                reservation.ExpectedAvailabilityDate = alreadyBorrowed.ReturnDeadline.AddDays(1);
                 reservation.ReservationExpiryDate = null;
                 reservation.ReservationStatus = Reservation_Status.Pending;
                 _context.Reservations.Add(reservation);
                 await _context.SaveChangesAsync();
-
-                Notifications notification = new Notifications()
+                Notifications notification3 = new Notifications()
                 {
                     UserId = userId,
                     MessageType = Notification_Type.Reservation_Book_Related,
                     MessageDescription = $"Reservation Successful! Reservation Id: {reservation.ReservationId}, Book Id: {bookId}.",
                     SentDate = DateOnly.FromDateTime(DateTime.Now)
                 };
-                _context.Notifications.Add(notification);
+                _context.Notifications.Add(notification3);
                 await _context.SaveChangesAsync();
-                return $"Reservation Successful! Reservation Id: {reservation.ReservationId}, Book Id: {bookId}.";
+                return reservation;
+                //return $"Reservation Successful! Reservation Id: {reservation.ReservationId}, Book Id: {bookId}.";
             }
-            return $"Reservation Unsuccessful! Do not worry, its an error on our side. We will fix it ASAP :)";
+
+            Reservations? existingUserReservation = reservationsList.Where(r => r.UserId == userId).FirstOrDefault();
+            if (existingUserReservation != null)
+            {
+                throw new Exception($"You already have a reservation for this book! Reservation Id: {existingUserReservation.ReservationId}");
+            }
+
+            Reservations lastReservation = reservationsList.Last();
+            if (lastReservation.ExpectedAvailabilityDate != null)
+            {
+                reservation.ExpectedAvailabilityDate = lastReservation.ExpectedAvailabilityDate.Value.AddDays(10);
+            }
+            else
+            {
+                reservation.ExpectedAvailabilityDate = null;
+            }
+            reservation.ReservationExpiryDate = null;
+            reservation.ReservationStatus = Reservation_Status.Pending;
+            _context.Reservations.Add(reservation);
+            await _context.SaveChangesAsync();
+
+            Notifications notification = new Notifications()
+            {
+                UserId = userId,
+                MessageType = Notification_Type.Reservation_Book_Related,
+                MessageDescription = $"Reservation Successful! Reservation Id: {reservation.ReservationId}, Book Id: {bookId}.",
+                SentDate = DateOnly.FromDateTime(DateTime.Now)
+            };
+            _context.Notifications.Add(notification);
+            await _context.SaveChangesAsync();
+            return reservation;
+            //return $"Reservation Successful! Reservation Id: {reservation.ReservationId}, Book Id: {bookId}.";
         }
 
-        public async Task<string> CancelBookReservation(int reservationId)
+        public async Task<Reservations> CancelBookReservation(int reservationId)
         {
             Reservations? reservation = _context.Reservations.FirstOrDefault(r => r.ReservationId == reservationId);
             if (reservation == null)
             {
-                return $"Reservation Id: {reservationId} does not exist";
+                throw new Exception($"Reservation Id: {reservationId} does not exist");
             }
 
             reservation.ReservationStatus = Reservation_Status.Cancelled;
             _context.Reservations.Update(reservation);
             await _context.SaveChangesAsync();
-            return $"Reservation Cancelled Successfully! Reservation Id: {reservationId}";
+            return reservation;
         }
 
-        public async Task<string> ResetPassword(Reset_Password_DTO reset_Password_DTO)
+        public async Task<Users> ResetPassword(Reset_Password_DTO reset_Password_DTO)
         {
             Users? existingUser = _context.Users.Where(u => u.UserId == reset_Password_DTO.UserId).FirstOrDefault();
             if (existingUser == null)
             {
-                return $"User Id: {reset_Password_DTO.UserId} not found!";
+                throw new Exception($"User Id: {reset_Password_DTO.UserId} not found!");
             }
 
             if (existingUser.PasswordHash != reset_Password_DTO.OldPassword)
             {
-                return $"Old password does not match";
+                throw new Exception($"Old password does not match");
             }
 
             existingUser.PasswordHash = reset_Password_DTO.NewPassword;
@@ -401,7 +398,7 @@ namespace Book_Hub_Web_API.Repositories
             _context.LogUserActivity.Add(logUserActivity);
             await _context.SaveChangesAsync();
 
-            return $"Password Successfully Updated!";
+            return existingUser;
         }
     }
 }

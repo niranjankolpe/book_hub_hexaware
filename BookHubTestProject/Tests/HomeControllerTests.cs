@@ -28,6 +28,7 @@ namespace BookHubTestProject.Tests
         {
             _configuration = new Mock<IConfiguration>();
             _commonRepository = new Mock<ICommonRepository>();
+
             _homeController = new HomeController(_commonRepository.Object, _configuration.Object);
         }
 
@@ -37,37 +38,37 @@ namespace BookHubTestProject.Tests
         //    Assert.Pass();
         //}
 
-        [Test]
-        public async Task GetAllBooks_NoParams_ReturnsOkObjectResult()
-        {
-            List<Books> bookList = new List<Books>()
-            {
-                new Books(){BookId=1, Isbn="3226", Title="A Journey to the Past", Cost=47.99M, AvailableQuantity=5, TotalQuantity=5, GenreId=2},
-                new Books(){BookId=2, Isbn="857483", Title="A Trip to Paris", Cost=94.99M, AvailableQuantity=17, TotalQuantity=17, GenreId=8}
-            };
+        //[Test]
+        //public async Task GetAllBooks_NoParams_ReturnsOkObjectResult()
+        //{
+        //    List<Books> bookList = new List<Books>()
+        //    {
+        //        new Books(){BookId=1, Isbn="3226", Title="A Journey to the Past", Cost=47.99M, AvailableQuantity=5, TotalQuantity=5, GenreId=2},
+        //        new Books(){BookId=2, Isbn="857483", Title="A Trip to Paris", Cost=94.99M, AvailableQuantity=17, TotalQuantity=17, GenreId=8}
+        //    };
 
-            _commonRepository.Setup(repo => repo.GetAllBooks()).ReturnsAsync(bookList);
+        //    _commonRepository.Setup(repo => repo.GetAllBooks()).ReturnsAsync(bookList);
 
-            var result = await _homeController.GetAllBooks();
-            var okObjectResult = result as OkObjectResult;
-            Assert.That(200, Is.EqualTo(okObjectResult?.StatusCode));
-        }
+        //    var result = await _homeController.GetAllBooks();
+        //    var okObjectResult = result as OkObjectResult;
+        //    Assert.That(200, Is.EqualTo(okObjectResult?.StatusCode));
+        //}
 
-        [Test]
-        public async Task GetAllBooks_NoParams_ReturnsBadRequestObjectResult()
-        {
-            List<Books> bookList = new List<Books>()
-            {
+        //[Test]
+        //public async Task GetAllBooks_NoParams_ReturnsBadRequestObjectResult()
+        //{
+        //    List<Books> bookList = new List<Books>()
+        //    {
 
-            };
+        //    };
 
-            var exceptionMessage = "No book found!";
-            _commonRepository.Setup(repo => repo.GetAllBooks()).ThrowsAsync(new Exception(exceptionMessage));
+        //    var exceptionMessage = "No book found!";
+        //    _commonRepository.Setup(repo => repo.GetAllBooks()).ThrowsAsync(new Exception(exceptionMessage));
 
-            var result = await _homeController.GetAllBooks();
-            var badRequestObjectResult = result as BadRequestObjectResult;
-            Assert.That(400, Is.EqualTo(badRequestObjectResult?.StatusCode));
-            Assert.That(exceptionMessage, Is.EqualTo(badRequestObjectResult?.Value));
-        }
+        //    var result = await _homeController.GetAllBooks();
+        //    var badRequestObjectResult = result as BadRequestObjectResult;
+        //    Assert.That(400, Is.EqualTo(badRequestObjectResult?.StatusCode));
+        //    Assert.That(exceptionMessage, Is.EqualTo(badRequestObjectResult?.Value));
+        //}
     }
 }

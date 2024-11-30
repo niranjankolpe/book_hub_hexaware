@@ -9,3 +9,6 @@ select * from LogUserActivity;
 select * from Notifications;
 select * from Reservations;
 select * from Users;
+
+select * from Borrowed;
+select * from Reservations;
