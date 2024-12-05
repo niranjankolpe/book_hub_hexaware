@@ -18,39 +18,35 @@ namespace Book_Hub_Web_API.Repositories
 
         public async Task<Books> AddBook(Add_Book_DTO add_Book_DTO)
         {
-            Books book = new Books()
-            {
-                Isbn = add_Book_DTO.Isbn,
-                Title = add_Book_DTO.Title,
-                Author = add_Book_DTO.Author,
-                Publication = add_Book_DTO.Publication,
-                PublishedDate = add_Book_DTO.PublishedDate,
-                Edition = add_Book_DTO.Edition,
-                Language = add_Book_DTO.Language,
-                Description = add_Book_DTO.Description,
-                Cost = add_Book_DTO.Cost,
-                AvailableQuantity = add_Book_DTO.AvailableQuantity,
-                TotalQuantity = add_Book_DTO.TotalQuantity,
-                GenreId = add_Book_DTO.GenreId
-
-            };
-
-
-            if (add_Book_DTO == null)
-            {
-                throw new ArgumentNullException("Invalid entry");
-            }
-
             try
-            {  //adding the books to Books dbset and saving changes
+            {
+                Books book = new Books()
+                {
+                    Isbn = add_Book_DTO.Isbn,
+                    Title = add_Book_DTO.Title,
+                    Author = add_Book_DTO.Author,
+                    Publication = add_Book_DTO.Publication,
+                    PublishedDate = add_Book_DTO.PublishedDate,
+                    Edition = add_Book_DTO.Edition,
+                    Language = add_Book_DTO.Language,
+                    Description = add_Book_DTO.Description,
+                    Cost = add_Book_DTO.Cost,
+                    AvailableQuantity = add_Book_DTO.AvailableQuantity,
+                    TotalQuantity = add_Book_DTO.TotalQuantity,
+                    GenreId = add_Book_DTO.GenreId
+
+                };
+
+                //adding the books to Books dbset and saving changes
                 await _DBContext.Books.AddAsync(book);
                 await _DBContext.SaveChangesAsync();
                 return book;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception($"An error occurred while adding the book: {ex.Message}", ex);
 
+
+            }
+            catch(Exception e)
+            {
+                throw new Exception("Cannot Be Added");
             }
         }
 

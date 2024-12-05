@@ -125,6 +125,7 @@ namespace Book_Hub_Web_API.Controllers
         [HttpDelete]
         public async Task<IActionResult> DeleteUser([FromForm] int userId)
         {
+
            var result =  await _commonRepository.DeleteUser(userId);
             return Ok(result);
         }
