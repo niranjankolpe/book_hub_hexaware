@@ -98,16 +98,23 @@ namespace Book_Hub_Web_API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromForm][Bind("Name", "Email", "Phone", "Address", "PasswordHash")] Create_User_DTO create_User_DTO)
         {
-            if (ModelState.IsValid)
+            try
             {
-                await Task.Delay(100);
+                if (ModelState.IsValid)
+                {
+                    await Task.Delay(100);
 
-                var user = await _commonRepository.CreateUser(create_User_DTO);
-                return Ok($"User created successfully with User Id: {user.UserId}");
+                    var user = await _commonRepository.CreateUser(create_User_DTO);
+                    return Ok($"User created successfully with User Id: {user.UserId}");
+                }
+                else
+                {
+                    return BadRequest();
+                }
             }
-            else
+            catch(Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 

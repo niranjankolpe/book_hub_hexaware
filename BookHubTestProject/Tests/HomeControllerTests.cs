@@ -203,12 +203,11 @@ namespace BookHubTestProject.Tests
             _commonRepository.Setup(repo => repo.CreateUser(create_User_DTO)).ThrowsAsync(new Exception(exceptionMessage));
 
             var result = await _homeController.CreateUser(create_User_DTO);
-            var badRequestObjectResult = new BadRequestObjectResult(result);
+            var badRequestObjectResult = result as BadRequestObjectResult;
             Assert.That(400, Is.EqualTo(badRequestObjectResult?.StatusCode));
             Assert.That(exceptionMessage, Is.EqualTo(badRequestObjectResult?.Value));
-
-
         }
+
         [Test]
         [TestCase("ss@gamil.com", "ttt")]
         public async Task ValidateUser_takesValidateUserDto_returnsOkObject(string Email, string PasswordHash)
@@ -236,8 +235,6 @@ namespace BookHubTestProject.Tests
             var okObjectResult = new OkObjectResult(result);
 
             Assert.That(200, Is.EqualTo(okObjectResult?.StatusCode));
-
-
         }
 
         [Test]
@@ -258,18 +255,9 @@ namespace BookHubTestProject.Tests
             _commonRepository.Setup(repo => repo.ValidateUser(validate_User_DTO)).ThrowsAsync(new Exception(exceptionMessage));
 
             var result = await _homeController.Validate(validate_User_DTO);
-            var badRequestObjectResult = new BadRequestObjectResult(result);
+            var badRequestObjectResult = result as BadRequestObjectResult;
             Assert.That(400, Is.EqualTo(badRequestObjectResult?.StatusCode));
             Assert.That(exceptionMessage, Is.EqualTo(badRequestObjectResult?.Value));
-
-
-
         }
-
-
-
-
-
-
     }
 }

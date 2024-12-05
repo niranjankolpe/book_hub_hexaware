@@ -23,7 +23,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [HttpPost]
         [Route("AddBook")]
-        public async Task<ActionResult<Books>> AddBooks([FromForm] [Bind(" Isbn", "Title", "Author", "Publication", "PublishedDate", "Edition", "Language", "Description", "Cost", "AvailableQuantity", "TotalQuantity", "GenreId")] Add_Book_DTO add_Book_DTO)
+        public async Task<IActionResult> AddBooks([FromForm] [Bind(" Isbn", "Title", "Author", "Publication", "PublishedDate", "Edition", "Language", "Description", "Cost", "AvailableQuantity", "TotalQuantity", "GenreId")] Add_Book_DTO add_Book_DTO)
         {
             
             try

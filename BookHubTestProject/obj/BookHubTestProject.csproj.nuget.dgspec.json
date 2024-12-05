@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Book Hub\\BookHubTestProject\\BookHubTestProject.csproj": {}
+    "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\BookHubTestProject\\BookHubTestProject.csproj": {}
   },
   "projects": {
-    "D:\\Book Hub\\BookHubTestProject\\BookHubTestProject.csproj": {
+    "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\BookHubTestProject\\BookHubTestProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Book Hub\\BookHubTestProject\\BookHubTestProject.csproj",
+        "projectUniqueName": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\BookHubTestProject\\BookHubTestProject.csproj",
         "projectName": "BookHubTestProject",
-        "projectPath": "D:\\Book Hub\\BookHubTestProject\\BookHubTestProject.csproj",
-        "packagesPath": "C:\\Users\\Sejal\\.nuget\\packages\\",
-        "outputPath": "D:\\Book Hub\\BookHubTestProject\\obj\\",
+        "projectPath": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\BookHubTestProject\\BookHubTestProject.csproj",
+        "packagesPath": "C:\\Users\\niran\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\BookHubTestProject\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Sejal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\niran\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],

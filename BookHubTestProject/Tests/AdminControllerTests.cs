@@ -609,10 +609,10 @@ namespace BookHubTestProject.Tests
             _adminRepository.Setup(repo => repo.AddBook(_Book_DTO)).ThrowsAsync(new Exception("Cannot Be Added"));
 
             var result = await _adminController.AddBooks(_Book_DTO);
-            var objectResult = new ObjectResult(result);
+            var objectResult = result as ObjectResult;
             // Assert.Pass();
             Console.WriteLine(objectResult?.StatusCode);
-            Assert.That(500, Is.EqualTo(objectResult.StatusCode));
+            Assert.That(500, Is.EqualTo(objectResult?.StatusCode));
 
         }
         [Test]

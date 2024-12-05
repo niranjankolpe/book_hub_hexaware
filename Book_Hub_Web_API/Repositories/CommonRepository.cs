@@ -12,8 +12,6 @@ namespace Book_Hub_Web_API.Repositories
 
         private BookHubDBContext _bookHubDBContext;
         
-
-
         public CommonRepository(BookHubDBContext bookHubDBContext)
         {
             _bookHubDBContext = bookHubDBContext;

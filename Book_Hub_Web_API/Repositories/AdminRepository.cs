@@ -41,8 +41,6 @@ namespace Book_Hub_Web_API.Repositories
                 await _DBContext.Books.AddAsync(book);
                 await _DBContext.SaveChangesAsync();
                 return book;
-
-
             }
             catch(Exception e)
             {
