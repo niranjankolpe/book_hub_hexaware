@@ -1,0 +1,98 @@
+/* Home container to fit the screen while respecting header and footer */
+.home-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* Ensures the entire viewport height is used */
+    overflow: hidden; /* Prevents unwanted scrollbars */
+  }
+  
+  /* Hero section should take all space between header and footer */
+  .hero-section {
+    flex: 1; /* Fills available space between header and footer */
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  /* Hero image covers the full hero section */
+  .hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures image fills the section */
+    object-position: center; /* Centers the image */
+    filter: brightness(70%);
+  }
+  
+  /* Overlay content (text) styling */
+  .hero-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+  }
+  
+  .hero-overlay h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    overflow: hidden; /* Ensures no text is visible outside the container */
+    white-space: nowrap; /* Prevents text from wrapping */
+    border-right: 3px solid white; /* Cursor effect */
+    animation: typing 2s steps(40, end), blink 0.5s step-end infinite;
+    animation-iteration-count: infinite; /* Repeats the animation */
+    animation-delay: 0s, 2.5s; /* Sync the typing and blinking animations */
+  }
+  
+  /* Typing effect animation */
+  @keyframes typing {
+    0% {
+      width: 0; /* Start with no text visible */
+    }
+    50% {
+      width: 100%; /* Fully typed */
+    }
+    100% {
+      width: 0; /* Back to invisible for repetition */
+    }
+  }
+  
+  @keyframes blink {
+    50% {
+      border-color: transparent;
+    }
+  }
+  
+  /* Hero overlay paragraph */
+  .hero-overlay p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.6);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .hero-overlay h1 {
+      font-size: 2rem;
+    }
+  
+    .hero-overlay p {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .hero-overlay h1 {
+      font-size: 1.5rem;
+    }
+  
+    .hero-overlay p {
+      font-size: 0.9rem;
+    }
+  }
+  
