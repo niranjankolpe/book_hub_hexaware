@@ -1,1 +1,15 @@
-<p>contact-us works!</p>
+<div class="contact-us-form">
+    <h2>Contact Us</h2><br>
+    <form #contactUsForm (submit)="onSubmit()">
+        <label for="queryType">Select query type:</label>
+        <select name="queryType" id="queryType" [(ngModel)]="query.type" required>
+            <option value="1">Complaint</option>
+            <option value="2">Feeback</option>
+            <option value="3">Suggestion</option>
+        </select><br><br>
+
+        <label for="queryDescription">Enter your thougths:</label>
+        <textarea name="queryDescription" id="queryDescription" [(ngModel)]="query.description"></textarea><br><br>
+        <button class="btn btn-primary" type="submit" [disabled]="">Submit</button>
+    </form>
+</div>

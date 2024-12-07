@@ -11,5 +11,6 @@ import { FooterComponent } from './components/footer/footer.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  picture ='https://www.edigitallibrary.com/img/library-img.jpg';
   title = 'Book_Hub_Angular_Project';
 }

@@ -23,7 +23,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("GetBookByBookId")]
         [HttpPost]
-        [Authorize(Roles = "Consumer")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetBookByBookId([FromForm]int bookId)
         {
             try
@@ -39,6 +39,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("GetBookByISBN")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> GetBookByISBN([FromForm] string isbn)
         {
             try
@@ -54,6 +55,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("GetBooksByGenre")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> GetBooksByGenre([FromForm] int genreId)
         {
             try
@@ -69,6 +71,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("GetBooksByAuthor")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> GetBooksByAuthor([FromForm] string authorName)
         {
             try

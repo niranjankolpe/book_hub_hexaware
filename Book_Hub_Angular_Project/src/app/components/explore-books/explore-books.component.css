@@ -1,0 +1,29 @@
+div{
+    text-align: center;
+}
+
+div > *{
+    margin-top: 5px;
+    padding: 2px;
+    text-align: center;
+}
+
+div > button{
+    margin-right: 10px;
+    padding: 1%;
+    min-width: 10%;
+}
+
+div > button:last-of-type{
+    margin-right: auto;
+}
+
+div[name="bookListToDisplay"]{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+th, td{
+    border: 1px black solid;
+}

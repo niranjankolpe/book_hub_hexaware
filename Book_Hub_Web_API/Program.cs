@@ -15,7 +15,7 @@ namespace Book_Hub_Web_API
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-         
+
 
             // Add services to the container.
 
@@ -29,7 +29,7 @@ namespace Book_Hub_Web_API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-          
+
 
 
             // JWT Authentication Code Begins
@@ -59,6 +59,16 @@ namespace Book_Hub_Web_API
             builder.Services.AddScoped<IAdminRepository, AdminRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AngularAppPolicy", policy =>
+                {
+                    policy.WithOrigins("http://localhost:4200")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
+
 
             var app = builder.Build();
 
@@ -69,7 +79,7 @@ namespace Book_Hub_Web_API
                 app.UseSwaggerUI();
             }
 
-
+            app.UseCors("AngularAppPolicy");
 
             app.UseHttpsRedirection();
             app.UseAuthentication();

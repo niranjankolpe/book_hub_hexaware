@@ -92,6 +92,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [HttpGet]
         [Route("GetGenre")]
+        [AllowAnonymous]
         public async Task<ActionResult<List<Genres>>> GetAllGenre()
         {
             try
