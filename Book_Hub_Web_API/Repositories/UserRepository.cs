@@ -400,5 +400,51 @@ namespace Book_Hub_Web_API.Repositories
 
             return existingUser;
         }
+
+        public async Task<List<Notifications>> GetNotificationsByUserId(int userId)
+        {
+            List<Notifications> notifications = await _context.Notifications.Where(n => n.UserId == userId).ToListAsync();
+            if (notifications.Count < 1)
+            {
+                throw new Exception("No notifications found!");
+            }
+            return notifications;
+        }
+
+        public async Task<List<Reservations>> GetReservationsByUserId(int userId)
+        {
+            List<Reservations> reservations = await _context.Reservations.Where(n => n.UserId == userId).ToListAsync();
+            if (reservations.Count < 1)
+            {
+                throw new Exception("No reservations found!");
+            }
+            return reservations;
+        }
+
+        public async Task<List<Borrowed>> GetBorrowedByUserId(int userId)
+        {
+            List<Borrowed> borrowings = await _context.Borrowed.Where(n => n.UserId == userId).Include(b => b.Fines).ToListAsync();
+            if (borrowings.Count < 1)
+            {
+                throw new Exception("No borrowings found!");
+            }
+            return borrowings;
+
+        }
+
+        //public async Task<List<Fines>> GetFinesByUserId(int userId)
+        //{
+        //    // Both not working
+        //    // List<Fines> fines = await _context.Fines.Where(f => f.Borrowed.UserId == userId).ToListAsync();
+        //    // List<Fines> fines = await _context.Borrowed.Where(b=>b.UserId == userId).SelectMany(b => b.Fines).ToListAsync();
+
+        //    List<Fines> fines = await _context.Fines.ToListAsync();
+        //    if (fines.Count < 1)
+        //    {
+        //        throw new Exception("No fines found!");
+        //    }
+        //    Console.WriteLine(fines);
+        //    return fines;
+        //}
     }
 }

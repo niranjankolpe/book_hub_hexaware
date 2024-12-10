@@ -14,7 +14,7 @@ namespace Book_Hub_Web_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Consumer,Administrator")]
+    //[Authorize(Roles = "Consumer,Administrator")]
     public class HomeController : ControllerBase
     {
         private ICommonRepository _commonRepository;
@@ -29,7 +29,8 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("GetAllBooks")]
         [HttpGet]
-        [AllowAnonymous]
+        //[Authorize(Roles = "Consumer")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> GetAllBooks()
         {
             try
@@ -105,7 +106,7 @@ namespace Book_Hub_Web_API.Controllers
                     await Task.Delay(100);
 
                     var user = await _commonRepository.CreateUser(create_User_DTO);
-                    return Ok($"User created successfully with User Id: {user.UserId}");
+                    return Ok(new JsonResult(user));
                 }
                 else
                 {
@@ -120,6 +121,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("UpdateUser")]
         [HttpPatch]
+        [AllowAnonymous]
         public async Task<Users> UpdateUser( [FromForm][Bind("UserId", "Name", "Phone", "Address")] UpdateUser_DTO updateUser_DTO)
         {
 
@@ -130,11 +132,12 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("DeleteUser")]
         [HttpDelete]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteUser([FromForm] int userId)
         {
 
            var result =  await _commonRepository.DeleteUser(userId);
-            return Ok(result);
+            return Ok(new JsonResult(result));
         }
     }
 }

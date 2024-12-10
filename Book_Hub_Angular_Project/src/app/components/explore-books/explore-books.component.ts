@@ -1,17 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, NgModel, ReactiveFormsModule } from '@angular/forms';
+import { LoginServicesService } from '../../services/login-services.service';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-explore-books',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './explore-books.component.html',
   styleUrl: './explore-books.component.css'
 })
 
 export class ExploreBooksComponent {
+
   bookExplorerForm: FormGroup;
+  borrowBookForm: FormGroup;
 
   displaySearchBox:boolean = false;
   displayBookList:boolean = false;
@@ -22,13 +27,22 @@ export class ExploreBooksComponent {
   filterTypeSelected:string = '';
 
   bookListToDisplay:any[] = [];
+
+  userToken:any;
+  allowBorrorAndReserve: boolean = false;
   
-  constructor(private httpClient: HttpClient){
+  constructor(private authService: LoginServicesService, private httpClient: HttpClient, private router: Router){
+    this.userToken = this.authService.getToken();
+    this.userToken = this.authService.decodeToken(this.userToken);
     this.GetAllBooks();
     this.GetAllGenres();
     this.GetAllAuthors();
     this.bookExplorerForm = new FormGroup({
-      searchInput: new FormControl('')
+      searchInput: new FormControl(''),
+      bookId: new FormControl('')
+    });
+    this.borrowBookForm = new FormGroup({
+      bookId: new FormControl('')
     });
   }
 
@@ -87,11 +101,13 @@ export class ExploreBooksComponent {
   onSubmit(){
     if (this.filterTypeSelected == 'bookId'){
       const bookId = this.bookExplorerForm?.get('searchInput')?.value;
+
       const formData = new FormData();
       formData.append('bookId', bookId);
       this.httpClient.post("https://localhost:7251/api/User/GetBookByBookId", formData).subscribe((result:any)=>{
         this.bookListToDisplay = [result.value];
       });
+      
       this.displayBookList = true;
     }
     else if (this.filterTypeSelected == 'isbn'){
@@ -127,5 +143,36 @@ export class ExploreBooksComponent {
       });
       this.displayBookList = true;
     }
+  }
+  
+  borrowBook(bookId:string){
+    //const bookId = this.borrowBookForm?.get('bookId')?.value;
+    const formData = new FormData();
+    formData.append('bookId', bookId);
+    formData.append('userId', this.userToken["UserId"]);
+    this.httpClient.post("https://localhost:7251/api/User/BorrowBook", formData).subscribe((result:any)=>{
+      console.log(result);
+      alert("Success");
+    },
+    (error:Error)=>{
+      console.log("Got error: ", error.message);
+      alert("Hmm got some error. You sure you have borrowed less than 5 books?");
+    });
+    this.router.navigate(["/app-user-dashboard"]);
+  }
+
+  reserveBook(bookId:string){
+    const formData = new FormData();
+    formData.append('bookId', bookId);
+    formData.append('userId', this.userToken["UserId"]);
+    this.httpClient.post("https://localhost:7251/api/User/ReserveBook", formData).subscribe((result:any)=>{
+      console.log(result);
+      alert("Success!");
+    },
+    (error:Error)=>{
+      console.log("Got error: ", error.message);
+      alert("Hmm got some error. You sure you have borrowed less than 5 books?");
+    });
+    this.router.navigate(["/app-user-dashboard"]);
   }
 }

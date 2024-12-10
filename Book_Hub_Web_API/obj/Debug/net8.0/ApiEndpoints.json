@@ -520,6 +520,54 @@
   },
   {
     "ContainingType": "Book_Hub_Web_API.Controllers.UserController",
+    "Method": "GetBorrowedByUserId",
+    "RelativePath": "api/User/GetBorrowedByUserId",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.UserController",
+    "Method": "GetNotificationsByUserId",
+    "RelativePath": "api/User/GetNotificationsByUserId",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.UserController",
+    "Method": "GetReservationsByUserId",
+    "RelativePath": "api/User/GetReservationsByUserId",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.UserController",
     "Method": "ReportLostBook",
     "RelativePath": "api/User/ReportLostBook",
     "HttpMethod": "PATCH",

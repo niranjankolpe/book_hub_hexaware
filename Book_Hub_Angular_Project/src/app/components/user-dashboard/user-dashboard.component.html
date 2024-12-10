@@ -1,0 +1,183 @@
+<div class="container" style="text-align: center;"><br>
+    <h4>Welcome {{userToken.Email}}</h4><br><br>
+
+    <div *ngIf="displaySection == '0'">
+        <button class="btn btn-primary" (click)="ApplyFilter('notifications')">Notifications</button>
+        <button class="btn btn-primary" (click)="ApplyFilter('borrowings')">Borrowings</button>
+        <button class="btn btn-primary" (click)="ApplyFilter('reservations')">Reservations</button>
+        <button class="btn btn-primary" (click)="ApplyFilter('fines')">Fines</button>
+        <button class="btn btn-primary" routerLink="/app-explore-books" routerLinkActive="active"
+            style="background-color: green; border-color: green;">Explore More Books</button>
+        <br><br>
+
+        <!-- Notifications Table -->
+        <div class="container" name="notificationList" id="notificationList" *ngIf="displayNotificationList == true"
+            style="border: 1px green solid ">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Sr.No</th>
+                        <th scope="col">UserId</th>
+                        <th scope="col">MessageType</th>
+                        <th scope="col">MessageDescription</th>
+                        <th scope="col">SentDate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (noti of notificationList; track $index) {
+                    <tr>
+                        <td>{{noti.userId}}</td>
+                        <td>{{noti.userId}}</td>
+                        <td>{{noti.messageType}}</td>
+                        <td>{{noti.messageDescription}}</td>
+                        <td>{{noti.sentDate}}</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Borrowed Table -->
+        <div class="container" name="borrowingList" id="borrowingList" *ngIf="displayBorrowingList"
+            style="border: 1px green solid ">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Sr.No</th>
+                        <th scope="col">BookId</th>
+                        <th scope="col">UserId</th>
+                        <th scope="col">BorrowDate</th>
+                        <th scope="col">ReturnDeadline</th>
+                        <th scope="col">ReturnDate</th>
+                        <th scope="col">BorrowStatus</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (borrowed of borrowingList; track $index) {
+                    <tr>
+                        <td>{{borrowed.borrowId}}</td>
+                        <td>{{borrowed.bookId}}</td>
+                        <td>{{borrowed.userId}}</td>
+                        <td>{{borrowed.borrowDate}}</td>
+                        <td>{{borrowed.returnDeadline}}</td>
+                        <td>{{borrowed.returnDate}}</td>
+                        <td>{{borrowed.borrowStatus}}</td>
+                        <td>
+                            <button *ngIf="borrowed.borrowStatus == '0'" (click)="returnBook(borrowed.borrowId)"
+                                class="btn btn-secondary">Return</button>
+                        </td>
+                        <td>
+                            <button *ngIf="borrowed.borrowStatus == '0'" (click)="reportLostBook(borrowed.borrowId)"
+                                class="btn btn-secondary">Report Lost</button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ReservationsTable -->
+        <div class="container" name="reservationList" id="reservationList" *ngIf="displayReservationList"
+            style="border: 1px green solid ">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Sr.No</th>
+                        <th scope="col">BookId</th>
+                        <th scope="col">UserId</th>
+                        <th scope="col">ApplicationTimeStamp</th>
+                        <th scope="col">ExpectedAvailabilityDate</th>
+                        <th scope="col">ReservationExpiryDate</th>
+                        <th scope="col">ReservationStatus</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (reserv of reservationList; track $index) {
+                    <tr>
+                        <td>{{reserv.reservationId}}</td>
+                        <td>{{reserv.bookId}}</td>
+                        <td>{{reserv.userId}}</td>
+                        <td>{{reserv.applicationTimestamp}}</td>
+                        <td>{{reserv.expectedAvailabilityDate}}</td>
+                        <td>{{reserv.reservationExpiryDate}}</td>
+                        <td>{{reserv.reservationStatus}}</td>
+                        <td>
+                            <button *ngIf="reserv.reservationStatus == '0'"
+                                (click)="cancelReservation(reserv.reservationId)" class="btn btn-secondary">Cancel
+                                Reservation</button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Fines table -->
+        <div class="container" name="fineList" id="fineList" *ngIf="displayFineList" style="border: 1px green solid ">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Sr.No</th>
+                        <th scope="col">BorrowId</th>
+                        <th scope="col">FineType</th>
+                        <th scope="col">FineAmount</th>
+                        <th scope="col">FinePaidStatus</th>
+                        <th scope="col">PaidDate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (fines of fineList; track $index) {
+                    <tr>
+                        <td>{{fines.fineId}}</td>
+                        <td>{{fines.borrowId}}</td>
+                        <td>{{fines.fineType}}</td>
+                        <td>{{fines.fineAmount}}</td>
+                        <td>{{fines.finePaidStatus}}</td>
+                        <td>{{fines.paidDate}}</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <br>
+
+    <div *ngIf="displaySection == '1'">
+        <button (click)="ApplySettingsFilter('updateAccount')" class="btn btn-primary">Update Account Details</button>
+        <button (click)="ApplySettingsFilter('resetPassword')" class="btn btn-primary">Reset Password</button>
+        <button (click)="ApplySettingsFilter('deleteAccount')" class="btn btn-primary">Delete Account</button><br><br>
+
+        <form *ngIf="displayUpdateAccountForm ==  true" (ngSubmit)="updateUser()" class="userAccountSettings">
+            <h2>Update Account Details</h2><br>
+            <label for="name">Enter your Name:</label>
+            <input type="text" name="name" id="name" [(ngModel)]="updateUserModel.name"><br><br>
+
+            <label for="phone">Enter Phone Number:</label>
+            <input type="text" name="phone" id="phone" [(ngModel)]="updateUserModel.phone"><br><br>
+
+            <label for="address">Enter Address:</label>
+            <input type="text" name="address" id="address" [(ngModel)]="updateUserModel.address"><br><br>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+
+        <form *ngIf="displayUpdatePasswordForm ==  true" (ngSubmit)="resetUserPassword()" class="userAccountSettings">
+            <h2>Reset Password</h2><br>
+            <label for="oldPassword">Enter old Password:</label>
+            <input type="password" name="oldPassword" id="oldPassword" [(ngModel)]="resetUserPasswordModel.oldPassword"><br><br>
+
+            <label for="newPassword">Enter new Password:</label>
+            <input type="password" name="newPassword" id="newPassword" [(ngModel)]="resetUserPasswordModel.newPassword"><br><br>
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        </form>
+
+        <form *ngIf="displayDeleteAccountForm ==  true" (ngSubmit)="deleteUser()"  class="userAccountSettings">
+            <h2>Delete Account</h2><br>
+            <input type="text" name="userId" id="userId" hidden>
+            <button type="submit" class="btn btn-danger">Delete Account</button>
+        </form>
+    </div>
+</div>

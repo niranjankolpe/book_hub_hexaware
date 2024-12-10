@@ -11,7 +11,8 @@ namespace Book_Hub_Web_API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize(Roles = "Consumer")]
+    //[Authorize(Roles = "Consumer")]
+    [AllowAnonymous]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
@@ -117,6 +118,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("ReportLostBook")]
         [HttpPatch]
+        [AllowAnonymous]
         public async Task<IActionResult> ReportLostBook([FromForm] int borrowId)
         {
             try
@@ -181,5 +183,94 @@ namespace Book_Hub_Web_API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Route("GetNotificationsByUserId")]
+        [HttpPost]
+        public async Task<IActionResult> GetNotificationsByUserId([FromForm] int userId)
+        {
+            try
+            {
+
+                var notificationRecords = await _userRepository.GetNotificationsByUserId(userId);
+
+
+                if (notificationRecords == null || !notificationRecords.Any())
+                {
+
+                    return NotFound(new { Message = "No Notification records found for the specified user." });
+                }
+                return Ok(new JsonResult(notificationRecords));
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Route("GetReservationsByUserId")]
+        [HttpPost]
+        public async Task<IActionResult> GetReservationsByUserId([FromForm] int userId)
+        {
+            try
+            {
+
+                var reservationRecords = await _userRepository.GetReservationsByUserId(userId);
+
+                if (reservationRecords == null || !reservationRecords.Any())
+                {
+
+                    return NotFound(new { Message = "No Reservation records found for the specified user." });
+                }
+                return Ok(new JsonResult(reservationRecords));
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Route("GetBorrowedByUserId")]
+        [HttpPost]
+        public async Task<IActionResult> GetBorrowedByUserId([FromForm] int userId)
+        {
+            try
+            {
+
+                var borrowedRecords = await _userRepository.GetBorrowedByUserId(userId);
+                if (borrowedRecords == null || !borrowedRecords.Any())
+                {
+
+                    return NotFound(new { Message = "No borrowed records found for the specified user." });
+                }
+
+                return Ok(new JsonResult(borrowedRecords));
+
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        //[Route("GetFinesByUserId")]
+        //[HttpPost]
+        //public async Task<IActionResult> GetFinesByUserId(int userId)
+        //{
+        //    try
+        //    {
+        //        var fines = await _userRepository.GetFinesByUserId(userId);
+        //        return Ok(new JsonResult(fines));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
     }
 }

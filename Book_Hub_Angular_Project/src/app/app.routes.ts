@@ -6,6 +6,8 @@ import { ContactUsComponent } from './components/contact-us/contact-us.component
 import { UserRegisterFormComponent } from './components/user-register-form/user-register-form.component';
 import { LoginComponent } from './components/login/login.component';
 import { ExploreBooksComponent } from './components/explore-books/explore-books.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
 
 export const routes: Routes = [
     {
@@ -40,5 +42,13 @@ export const routes: Routes = [
     {
         path: 'app-contact-us',
         component: ContactUsComponent
+    },
+    {
+      path:   'app-admin-dashboard'  ,
+      component:AdminDashboardComponent
+    },
+    {
+        path: 'app-user-dashboard',
+        component: UserDashboardComponent
     }
 ];

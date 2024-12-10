@@ -18,8 +18,23 @@
         <li class="nav-item">
           <a class="nav-link active text-black" aria-current="page" routerLink="/app-contact-us" routerLinkActive="active">Contact Us</a>
         </li>
-        <li class="nav-item ms-auto">
+        <li *ngIf="displayUserInHeader == false" class="nav-item ms-auto">
           <a class="nav-link active text-black" aria-current="page" routerLink="/app-login" routerLinkActive="active">Login</a>
+        </li>
+        <li *ngIf="displayUserInHeader == true" class="nav-item ms-auto dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{userToken["Email"]}}</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" routerLink="{{roleBasedDashboard}}" [queryParams]="{ displaySection: '0' }" routerLinkActive="active">Profile</a></li>
+            <!-- <li><a class="dropdown-item" (click)="toggleNotifications()">Notifications</a>
+              <div *ngIf="isNotificationDropdownOpen == true">
+                <ul>
+                    <li>asd</li>
+                    <li>asdsdss</li>
+                </ul>
+            </div></li> -->
+            <li><a class="dropdown-item" routerLink="{{roleBasedDashboard}}" [queryParams]="{ displaySection: '1' }" routerLinkActive="active">Settings</a></li>
+            <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
+          </ul>
         </li>
       </ul>
     </div>

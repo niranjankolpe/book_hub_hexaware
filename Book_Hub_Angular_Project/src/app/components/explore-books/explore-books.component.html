@@ -12,10 +12,12 @@
         <form [formGroup]="bookExplorerForm" (submit)="onSubmit()">
 
             <label *ngSwitchCase="'bookId'" for="searchInput" style="margin-right: 5px;">Enter Book ID: </label>
-            <input *ngSwitchCase="'bookId'" type="search" name="searchInput" formControlName="searchInput" style="margin-right: 5px;">
+            <input *ngSwitchCase="'bookId'" type="search" name="searchInput" formControlName="searchInput"
+                style="margin-right: 5px;">
 
             <label *ngSwitchCase="'isbn'" for="searchInput" style="margin-right: 5px;">Enter ISBN Number: </label>
-            <input *ngSwitchCase="'isbn'" type="search" name="searchInput" formControlName="searchInput" style="margin-right: 5px;">
+            <input *ngSwitchCase="'isbn'" type="search" name="searchInput" formControlName="searchInput"
+                style="margin-right: 5px;">
 
             <label *ngSwitchCase="'genre'" for="searchInput" style="margin-right: 5px;">Select Genre: </label>
             <select *ngSwitchCase="'genre'" name="searchInput" formControlName="searchInput">
@@ -29,9 +31,15 @@
 
             <button class="btn btn-secondary" type="submit">Search</button>
         </form>
-    </div>
+    </div><br><br><br>
+
+    <!-- <form [formGroup]="borrowBookForm" (submit)="borrowBook()">
+        <input type="text" formControlName="bookId" id="bookId" name="bookId" placeholder="Enter Book ID here">
+        <button class="btn btn-secondary" type="submit">Borrow</button>
+    </form><br><br> -->
 
     <div class="container" name="bookListToDisplay" id="bookListToDisplay" *ngIf="displayBookList">
+       <form [formGroup]="borrowBookForm">
         <table class="table">
             <thead>
                 <tr>
@@ -54,11 +62,16 @@
                     <td>{{book.author}}</td>
                     <td>{{book.availableQuantity}}</td>
                     <td>{{book.genreId}}</td>
-                    <td><form onsubmit="alert('This facility is not available yet!'); return false;"><input class="btn btn-secondary" type="submit" value="Borrow"></form></td>
-                    <td><form onsubmit="alert('This facility is not available yet!'); return false;"><input class="btn btn-secondary" type="submit" value="Reserve"></form></td>
+                    <td>
+                        <button (click)="borrowBook(book.bookId)" class="btn btn-secondary">Borrow</button>
+                    </td>
+                    <td>
+                        <button (click)="reserveBook(book.bookId)" class="btn btn-secondary">Reserve</button>
+                    </td>
                 </tr>
                 }
             </tbody>
         </table>
+       </form>
     </div>
 </div>

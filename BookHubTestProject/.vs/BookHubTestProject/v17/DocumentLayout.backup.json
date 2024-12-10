@@ -39,7 +39,7 @@
           ]
         },
         {
-          "DockedHeight": 120,
+          "DockedHeight": 86,
           "SelectedChildIndex": 0,
           "Children": [
             {
@@ -50,7 +50,7 @@
               "RelativeDocumentMoniker": "Tests\\HomeControllerTests.cs",
               "ToolTip": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\BookHubTestProject\\Tests\\HomeControllerTests.cs",
               "RelativeToolTip": "Tests\\HomeControllerTests.cs",
-              "ViewState": "AgIAALsAAAAAAAAAAAAEwMgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAMYAAAAAAAAAAAAswMgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-05T05:04:01.522Z",
               "EditorCaption": ""
@@ -84,7 +84,7 @@
           ]
         },
         {
-          "DockedHeight": 104,
+          "DockedHeight": 138,
           "SelectedChildIndex": -1,
           "Children": [
             {

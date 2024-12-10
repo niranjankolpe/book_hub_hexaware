@@ -1,0 +1,183 @@
+div{
+  text-align: center;
+}
+
+div > *{
+  margin-top: 5px;
+  padding: 2px;
+  text-align: center;
+}
+
+div > button{
+  margin-right: 10px;
+  padding: 1%;
+  min-width: 10%;
+}
+
+div > button:last-of-type{
+  margin-right: auto;
+}
+
+div[name="bookListToDisplay"]{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+th, td{
+  border: 1px black solid;
+}
+
+/* //Forms Css */
+
+.AddBook-form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+
+.AddBook-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between rows */
+}
+
+.AddBook-form div {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between label and input */
+}
+
+.AddBook-form label {
+  flex: 0 0 150px; /* Fixed width for labels */
+  font-weight: bold;
+}
+
+.AddBook-form input {
+  flex: 1; /* Input fields take up remaining space */
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.AddBook-form button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.AddBook-form button:hover {
+  background-color: #0056b3;
+}
+
+
+/* //UpdateForm Css */
+.updatebook-form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+
+.updatebook-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Adds spacing between rows */
+}
+
+.updatebook-form div {
+  display: flex;
+  align-items: center;
+}
+
+.updatebook-form label {
+  flex: 0 0 150px; /* Fixed width for labels */
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.updatebook-form input {
+  flex: 1; /* Fills the remaining space */
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.updatebook-form button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.updatebook-form button:hover {
+  background-color: #0056b3;
+}
+
+
+/* //Remove bookForm */
+
+.removebook-form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+}
+
+.removebook-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between rows */
+}
+
+.removebook-form div {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between label and input */
+}
+
+.removebook-form label {
+  flex: 0 0 150px; /* Fixed width for labels */
+  font-weight: bold;
+}
+
+.removebook-form input {
+  flex: 1; /* Input fields take up remaining space */
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.removebook-form button {
+  padding: 10px;
+  background-color: #0056b3; /* Bootstrap danger color */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.removebook-form button:hover {
+  background-color:  #0056b3;
+}

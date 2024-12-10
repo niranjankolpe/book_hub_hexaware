@@ -10,7 +10,8 @@ namespace Book_Hub_Web_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Administrator")]
+    //[Authorize(Roles = "Administrator")]
+    [AllowAnonymous]
     public class AdminController : ControllerBase
     {
         private IAdminRepository _adminRepository;

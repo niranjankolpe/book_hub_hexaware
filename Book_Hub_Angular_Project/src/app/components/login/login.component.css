@@ -1,54 +1,58 @@
-.registration-form {
-    width: 400px;
-    margin: 20px auto;
+.login-container {
+    background-color:white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .login-container form {
+    width: 300px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .login-container form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .login-container form .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .login-container form label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .login-container form input {
+    width: 90%; /* changed from 100% to 90% */
+    height: 40px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    background-color: #f9f9f9;
-    font-size: 12px; 
-    color: black; 
-    overflow-y: auto;
-}
-
-label {
-    display: block;
-    margin: 10px 0 5px;
-    font-size: 12px; 
-}
-
-input,
-select {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    font-size: 12px;
-    color: black; 
-}
-
-button {
-    width: 100%;
+    margin: 0 auto; /* added margin: 0 auto to center the input fields */
+  }
+  
+  .login-container form button {
+    width: 90%; /* changed from 100% to 90% */
+    height: 40px;
     padding: 10px;
-    background-color: orange; 
-    color: white;
+    background-color: orange;
+    color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px; 
-}
-
-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-h2 {
-    font-size: 16px; 
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-h3 {
-    font-size: 14px; 
-    margin-top: 20px;
-}
-
+    margin: 0 auto; 
+  }
+  
+  .login-container form button:hover {
+    background-color: #3e8e41;
+  }
