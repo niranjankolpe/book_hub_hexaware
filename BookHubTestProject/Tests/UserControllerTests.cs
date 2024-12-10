@@ -376,7 +376,7 @@ namespace BookHubTestProject.Tests
 
             var result = await _userController.ReserveBook(bookId, userId);
             var badRequestObjectResult = result as BadRequestObjectResult;
-            foreach(string expMessage in exceptionMessagesList)
+            foreach (string expMessage in exceptionMessagesList)
             {
                 Console.Write(expMessage + ", ");
             }
@@ -423,9 +423,9 @@ namespace BookHubTestProject.Tests
         }
 
         [Test]
-        [TestCase(2, "tony@gmail.com",  "tony@avengers1",  "tony@avengers123")]
+        [TestCase(2, "tony@gmail.com", "tony@avengers1", "tony@avengers123")]
         [TestCase(5, "steve@gmail.com", "steve@avengers2", "steve@avengers123")]
-        [TestCase(9, "sam@gmail.com",   "sam@avengers3",   "tony@avengers123")]
+        [TestCase(9, "sam@gmail.com", "sam@avengers3", "tony@avengers123")]
         public async Task ResetPassword_Reset_Password_DTO_ReturnsOkObjectResult(int userId, string email, string oldPassword, string newPassword)
         {
             Reset_Password_DTO reset_Password_DTO = new Reset_Password_DTO()
@@ -451,7 +451,7 @@ namespace BookHubTestProject.Tests
         }
 
         [Test]
-        [TestCase(2, "nonexistentindbtony@gmail.com",  "tony@avengers1",  "tony@avengers123", $"User Id: 2 not found!")]
+        [TestCase(2, "nonexistentindbtony@gmail.com", "tony@avengers1", "tony@avengers123", $"User Id: 2 not found!")]
         [TestCase(5, "steve@gmail.com", "randominvalidpassword", "steve@avengers123", $"Old password does not match")]
         public async Task ResetPassword_Reset_Password_DTO_ReturnsBadObjectResult(int userId, string email, string oldPassword, string newPassword, string exceptionMessage)
         {
@@ -476,5 +476,214 @@ namespace BookHubTestProject.Tests
             Assert.That(400, Is.EqualTo(badRequestObjectResult?.StatusCode));
             Assert.That(exceptionMessage, Is.EqualTo(badRequestObjectResult?.Value));
         }
+
+        //New Test Methods 
+
+        [Test]
+        [TestCase(1)]
+        public async Task GetNotificationsByUserId_Returns_ListOfNotifications(int userId)
+        {
+            var notifications = new List<Notifications>
+{
+    new Notifications
+    {
+        NotificationId = 1,
+        UserId = 1,
+        MessageType = Notification_Type.Account_Related, // Assuming Notification_Type is an enum
+        MessageDescription = "Your book reservation is confirmed.",
+        SentDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-2)) // Sent 2 days ago
+    },
+    new Notifications
+    {
+        NotificationId = 2,
+        UserId = 1,
+        MessageType = Notification_Type.Account_Related, // Assuming Notification_Type is an enum
+        MessageDescription = "Your reserved book will be available in 3 days.",
+        SentDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-5)) // Sent 5 days ago
+    },
+    new Notifications
+    {
+        NotificationId = 3,
+        UserId = 1,
+        MessageType = Notification_Type.Other,
+        MessageDescription = "Your request for an extension has been approved.",
+        SentDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-1)) // Sent 1 day ago
+    }
+};
+          
+            _userRepository.Setup(repo => repo.GetNotificationsByUserId(userId)).ReturnsAsync(notifications);
+
+            var result = await _userController.GetNotificationsByUserId(userId);
+            var okObjectResult = result as OkObjectResult;
+            Assert.That(200, Is.EqualTo(okObjectResult?.StatusCode));
+
+
+        }
+
+        //If the list is emp
+
+        [Test]
+        [TestCase(1)]
+        public async Task GetNotificationsByUserId_Returns_NotFoundObject(int userId)
+        {
+          
+            var exceptionMessage = "No notifications found!";
+
+
+            _userRepository.Setup(repo => repo.GetNotificationsByUserId(userId)).ThrowsAsync(new Exception(exceptionMessage));
+
+            var result = await _userController.GetNotificationsByUserId(userId);
+            var badRequestObjectResult = result as BadRequestObjectResult;
+            Assert.That(400, Is.EqualTo(badRequestObjectResult?.StatusCode));
+            Assert.That(exceptionMessage, Is.EqualTo(badRequestObjectResult?.Value));
+
+        }
+
+
+        [Test]
+        [TestCase(3)]
+        public async Task GetReservationsByUserId_Returns_ListOfNotifications(int userId)
+        {
+            var reservations = new List<Reservations>
+{
+    new Reservations
+    {
+        ReservationId = 1,
+        BookId = 101,
+        UserId = 3,
+        ApplicationTimestamp = DateTime.Now.AddDays(-3),
+        ExpectedAvailabilityDate = DateOnly.FromDateTime(DateTime.Now.AddDays(7)),
+        ReservationExpiryDate = DateOnly.FromDateTime(DateTime.Now.AddDays(14)),
+        ReservationStatus = Reservation_Status.Pending // Pending status
+    },
+    new Reservations
+    {
+        ReservationId = 2,
+        BookId = 102,
+        UserId = 3,
+        ApplicationTimestamp = DateTime.Now.AddDays(-10), // Application timestamp 10 days ago
+        ExpectedAvailabilityDate = DateOnly.FromDateTime(DateTime.Now.AddDays(5)), // Expected availability in 5 days
+        ReservationExpiryDate = DateOnly.FromDateTime(DateTime.Now.AddDays(12)), // Reservation expiry in 12 days
+        ReservationStatus = Reservation_Status.Fullfilled // Confirmed status
+    },
+    new Reservations
+    {
+        ReservationId = 3,
+        BookId = 103,
+        UserId = 1003,
+        ApplicationTimestamp = DateTime.Now.AddDays(-1), // Application timestamp 1 day ago
+        ExpectedAvailabilityDate = DateOnly.FromDateTime(DateTime.Now.AddDays(3)), // Expected availability in 3 days
+        ReservationExpiryDate = DateOnly.FromDateTime(DateTime.Now.AddDays(10)), // Reservation expiry in 10 days
+        ReservationStatus = Reservation_Status.Pending // Pending status
+    }
+};
+
+            _userRepository.Setup(repo => repo.GetReservationsByUserId(userId)).ReturnsAsync(reservations);
+
+            var result = await _userController.GetReservationsByUserId(userId);
+            var okObjectResult = result as OkObjectResult;
+            Assert.That(200, Is.EqualTo(okObjectResult?.StatusCode));
+
+
+        }
+        //if list is empty
+        [Test]
+        [TestCase(1)]
+        public async Task GetReservationsByUserId_Returns_BadRequestObject(int userId)
+        {
+           
+            var exceptionMessage = "No reservations found!";
+
+
+            _userRepository.Setup(repo => repo.GetReservationsByUserId(userId)).ThrowsAsync(new Exception(exceptionMessage));
+
+            var result = await _userController.GetReservationsByUserId(userId);
+            var badRequestObjectResult = result as BadRequestObjectResult;
+            Assert.That(400, Is.EqualTo(badRequestObjectResult?.StatusCode));
+            Assert.That(exceptionMessage, Is.EqualTo(badRequestObjectResult?.Value));
+
+        }
+
+
+
+        [Test]
+        [TestCase(1)]
+        public async Task GetBorrowedByUserId_Returns_ListOfNotifications(int userId)
+        {
+            List<Borrowed> borrowedBooks = new List<Borrowed>
+        {
+            new Borrowed
+            {
+                BorrowId = 1,
+                BookId = 101,
+                UserId = 1001,
+                BorrowDate = new DateOnly(2024, 11, 1),
+                ReturnDeadline = new DateOnly(2024, 12, 1),
+                ReturnDate = null, // Not yet returned
+                BorrowStatus = Borrow_Status.Borrowed
+            },
+            new Borrowed
+            {
+                BorrowId = 2,
+                BookId = 102,
+                UserId = 1002,
+                BorrowDate = new DateOnly(2024, 11, 5),
+                ReturnDeadline = new DateOnly(2024, 12, 5),
+                ReturnDate = null, // Not yet returned
+                BorrowStatus = Borrow_Status.Borrowed
+            },
+            new Borrowed
+            {
+                BorrowId = 3,
+                BookId = 103,
+                UserId = 1003,
+                BorrowDate = new DateOnly(2024, 11, 10),
+                ReturnDeadline = new DateOnly(2024, 12, 10),
+                ReturnDate = new DateOnly(2024, 11, 25), // Returned early
+                BorrowStatus = Borrow_Status.Returned
+            }
+        };
+
+            _userRepository.Setup(repo => repo.GetBorrowedByUserId(userId)).ReturnsAsync(borrowedBooks);
+
+            var result = await _userController.GetBorrowedByUserId(userId);
+            var okObjectResult = result as OkObjectResult;
+            Assert.That(200, Is.EqualTo(okObjectResult?.StatusCode));
+
+
+        }
+        //if list is empty 
+
+
+
+
+        [Test]
+        [TestCase(1)]
+        public async Task GetBorrowedByUserId_Returns_BadRequestObject(int userId)
+        {
+
+            var exceptionMessage = "No borrowings found!";
+
+
+            _userRepository.Setup(repo => repo.GetBorrowedByUserId(userId)).ThrowsAsync(new Exception(exceptionMessage));
+
+            var result = await _userController.GetBorrowedByUserId(userId);
+            var badRequestObjectResult = result as BadRequestObjectResult;
+            Assert.That(400, Is.EqualTo(badRequestObjectResult?.StatusCode));
+            Assert.That(exceptionMessage, Is.EqualTo(badRequestObjectResult?.Value));
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
