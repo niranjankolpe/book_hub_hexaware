@@ -2,6 +2,7 @@
 using Book_Hub_Web_API.Data.DTO;
 using Book_Hub_Web_API.Data.Enums;
 using Book_Hub_Web_API.Models;
+using Book_Hub_Web_API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,13 +12,19 @@ namespace Book_Hub_Web_API.Repositories
     {
 
         private BookHubDBContext _bookHubDBContext;
-        
+
+        //private INotificationService _notificationService;
+
         public CommonRepository(BookHubDBContext bookHubDBContext)
         {
             _bookHubDBContext = bookHubDBContext;
         }
 
-
+        //public CommonRepository(BookHubDBContext bookHubDBContext, NotificationService notificationService)
+        //{
+        //    _bookHubDBContext = bookHubDBContext;
+        //    _notificationService = notificationService;
+        //}
 
         public async Task<List<Books>>GetAllBooks()
         {
@@ -50,6 +57,10 @@ namespace Book_Hub_Web_API.Repositories
 
                 await _bookHubDBContext.SaveChangesAsync();
 
+                // _notificationService.SendNotification(u.UserId, Notification_Type.Account_Related, $"Your Book Hub account has been created successfully!");
+
+                
+
                 return u;
             }
             catch (Exception ex)
@@ -73,7 +84,7 @@ namespace Book_Hub_Web_API.Repositories
             return "User not found!";
         }
 
-
+        
 
         public async Task<Users> ValidateUser(Validate_User_DTO validate_User_DTO)
         {
@@ -85,6 +96,35 @@ namespace Book_Hub_Web_API.Repositories
             return user;
         }
 
+        public async Task Login(int userId)
+        {
+            // Create the log entry
+            LogUserActivity logUserActivity = new LogUserActivity
+            {
+                UserId = userId,
+                ActionType = Action_Type.Login,
+                Timestamp = DateTime.UtcNow
+            };
+
+            // Add the log entry and save changes
+            await _bookHubDBContext.LogUserActivity.AddAsync(logUserActivity);
+            await _bookHubDBContext.SaveChangesAsync(); // Save the log entry
+        }
+
+        public async Task Logout(int userId)
+        {
+            // Create the log entry
+            LogUserActivity logUserActivity = new LogUserActivity
+            {
+                UserId = userId,
+                ActionType = Action_Type.Logout,
+                Timestamp = DateTime.UtcNow
+            };
+
+            // Add the log entry and save changes
+            await _bookHubDBContext.LogUserActivity.AddAsync(logUserActivity);
+            await _bookHubDBContext.SaveChangesAsync(); // Save the log entry
+        }
 
 
         public async Task<Users> UpdateUser(UpdateUser_DTO updateUser_DTO)
@@ -120,6 +160,33 @@ namespace Book_Hub_Web_API.Repositories
             await _bookHubDBContext.SaveChangesAsync(); // Save the log entry
 
             return existingUser;
+        }
+
+        public async Task<string> ForgotPassword(string emailAddress, string newPassword)
+        {
+            Users existingUser = await _bookHubDBContext.Users.FirstOrDefaultAsync(u => u.Email == emailAddress);
+            if (existingUser == null)
+            {
+                throw new Exception("User with this email not found");
+            }
+            existingUser.PasswordHash = newPassword;
+
+            // Update the user in the database
+            _bookHubDBContext.Update(existingUser);
+            await _bookHubDBContext.SaveChangesAsync(); // Save the updated user details
+
+            // Create the log entry
+            LogUserActivity logUserActivity = new LogUserActivity
+            {
+                UserId = existingUser.UserId,
+                ActionType = Action_Type.UpdatedAccount,
+                Timestamp = DateTime.UtcNow
+            };
+
+            // Add the log entry and save changes
+            await _bookHubDBContext.LogUserActivity.AddAsync(logUserActivity);
+            await _bookHubDBContext.SaveChangesAsync(); // Save the log entry
+            return existingUser.PasswordHash;
         }
     }
 }

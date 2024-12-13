@@ -4,12 +4,15 @@ using Book_Hub_Web_API.Models;
 using Book_Hub_Web_API.Data.DTO;
 using System.Net;
 using Microsoft.EntityFrameworkCore;
+using Book_Hub_Web_API.Services;
 
 namespace Book_Hub_Web_API.Repositories
 {
-    public class UserRepository(BookHubDBContext context) : IUserRepository
+    public class UserRepository(BookHubDBContext context, IEmailService emailService) : IUserRepository
     {
         private readonly BookHubDBContext _context = context;
+
+        private readonly IEmailService _emailService = emailService;
 
         public async Task<Books> GetBookByBookId(int bookId)
         {
@@ -127,6 +130,9 @@ namespace Book_Hub_Web_API.Repositories
             _context.Notifications.Add(notification);
             await _context.SaveChangesAsync();
 
+            Users user = _context.Users.First(u => u.UserId == userId);
+            _emailService.SendEmail([user.Email], notification.MessageType.ToString(), notification.MessageDescription);
+
             return borrowed;
         }
 
@@ -168,6 +174,9 @@ namespace Book_Hub_Web_API.Repositories
                 };
                 _context.Notifications.Add(availableForBorrow);
                 await _context.SaveChangesAsync();
+
+                Users currentUser = _context.Users.First(u => u.UserId == availableForBorrow.UserId);
+                _emailService.SendEmail([currentUser.Email], availableForBorrow.MessageType.ToString(), availableForBorrow.MessageDescription);
             }
 
             List<Fines> fines = _context.Fines.Where(f => f.BorrowId == borrowId).ToList();
@@ -192,6 +201,9 @@ namespace Book_Hub_Web_API.Repositories
 
             _context.Notifications.Add(notification);
             await _context.SaveChangesAsync();
+
+            Users user = _context.Users.First(u => u.UserId == userId);
+            _emailService.SendEmail([user.Email], notification.MessageType.ToString(), notification.MessageDescription);
 
             return borrowed;
         }
@@ -239,11 +251,16 @@ namespace Book_Hub_Web_API.Repositories
             _context.Notifications.Add(notification);
             await _context.SaveChangesAsync();
 
+            Users user = _context.Users.First(u => u.UserId == userId);
+            _emailService.SendEmail([user.Email], notification.MessageType.ToString(), notification.MessageDescription);
+
             return borrowed;
         }
 
         public async Task<Reservations> ReserveBook(int bookId, int userId)
         {
+            Users user = _context.Users.First(u => u.UserId == userId);
+
             Reservations reservation = new Reservations()
             {
                 BookId = bookId,
@@ -278,6 +295,10 @@ namespace Book_Hub_Web_API.Repositories
                     _context.Notifications.Add(notification1);
                     await _context.SaveChangesAsync();
 
+                    
+                    _emailService.SendEmail([user.Email], notification1.MessageType.ToString(), notification1.MessageDescription);
+
+
                     Notifications notification2 = new Notifications()
                     {
                         UserId = userId,
@@ -287,6 +308,8 @@ namespace Book_Hub_Web_API.Repositories
                     };
                     _context.Notifications.Add(notification2);
                     await _context.SaveChangesAsync();
+
+                    _emailService.SendEmail([user.Email], notification2.MessageType.ToString(), notification2.MessageDescription);
 
                     return reservation;
                     //return $"Reservation Successful! Reservation Id: {reservation.ReservationId}. Also, the book is available for borrowing now!";
@@ -311,6 +334,9 @@ namespace Book_Hub_Web_API.Repositories
                 };
                 _context.Notifications.Add(notification3);
                 await _context.SaveChangesAsync();
+
+                _emailService.SendEmail([user.Email], notification3.MessageType.ToString(), notification3.MessageDescription);
+
                 return reservation;
                 //return $"Reservation Successful! Reservation Id: {reservation.ReservationId}, Book Id: {bookId}.";
             }
@@ -344,6 +370,9 @@ namespace Book_Hub_Web_API.Repositories
             };
             _context.Notifications.Add(notification);
             await _context.SaveChangesAsync();
+
+            _emailService.SendEmail([user.Email], notification.MessageType.ToString(), notification.MessageDescription);
+
             return reservation;
             //return $"Reservation Successful! Reservation Id: {reservation.ReservationId}, Book Id: {bookId}.";
         }
@@ -359,6 +388,21 @@ namespace Book_Hub_Web_API.Repositories
             reservation.ReservationStatus = Reservation_Status.Cancelled;
             _context.Reservations.Update(reservation);
             await _context.SaveChangesAsync();
+
+            Users user = _context.Users.First(u => u.UserId == reservation.UserId);
+
+            Notifications notification = new Notifications()
+            {
+                UserId = user.UserId,
+                MessageType = Notification_Type.Reservation_Book_Related,
+                MessageDescription = $"Reservation Cancelled Successfully! Reservation Id: {reservation.ReservationId}",
+                SentDate = DateOnly.FromDateTime(DateTime.Now)
+            };
+            _context.Notifications.Add(notification);
+            await _context.SaveChangesAsync();
+
+            _emailService.SendEmail([user.Email], notification.MessageType.ToString(), notification.MessageDescription);
+
             return reservation;
         }
 
@@ -388,6 +432,11 @@ namespace Book_Hub_Web_API.Repositories
             };
             _context.Notifications.Add(notification);
             await _context.SaveChangesAsync();
+
+            Users user = _context.Users.First(u => u.UserId ==existingUser.UserId);
+
+            _emailService.SendEmail([user.Email], notification.MessageType.ToString(), notification.MessageDescription);
+
 
             LogUserActivity logUserActivity = new LogUserActivity()
             {

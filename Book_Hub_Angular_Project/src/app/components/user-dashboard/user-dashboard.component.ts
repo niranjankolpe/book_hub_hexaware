@@ -4,11 +4,13 @@ import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/r
 import { HttpClient } from '@angular/common/http';
 import { Constant } from '../../constants/constants';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule } from '@angular/forms';
+import { OtpServiceService } from '../../services/otp-service.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-user-dashboard',
-  imports: [CommonModule, RouterLink, RouterLinkActive, FormsModule],
+  imports: [CommonModule, RouterLink, RouterLinkActive, FormsModule, ReactiveFormsModule],
   templateUrl: './user-dashboard.component.html',
   styleUrl: './user-dashboard.component.css'
 })
@@ -48,7 +50,11 @@ export class UserDashboardComponent {
     newPassword: ''
   };
 
-  constructor(private authService: LoginServicesService, private router: Router, private route: ActivatedRoute, private httpClient: HttpClient) {
+  otpValidationForm: FormGroup;
+  displayOTPForm: boolean = false;
+  generatedOTP: any;
+
+  constructor(private authService: LoginServicesService, private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, private otpService: OtpServiceService) {
     this.userToken = this.authService.getToken();
     if (this.userToken == null) {
       this.router.navigate(["/app-login"]);
@@ -65,6 +71,10 @@ export class UserDashboardComponent {
     this.route.queryParams.subscribe((params) => {
       this.displaySection = params['displaySection'];// Convert to boolean if necessary
     });
+    this.otpValidationForm = new FormGroup({
+      otp: new FormControl('')
+    });
+
     // if (this.userRole != "Consumer"){
     //   this.router.navigate(["/app-login"]);
     //   alert("Login with consumer account to access User Dashboard!");
@@ -225,20 +235,36 @@ export class UserDashboardComponent {
 
   deleteUser() {
     confirm("This will delete your entire account! Confirm?");
+    this.displayDeleteAccountForm = false;
+    this.displayOTPForm = true;
     const formData = new FormData();
     const userId = this.userToken["UserId"];
+    const emailAddress = this.userToken["Email"];
     formData.append('userId', userId);
+
+    this.otpService.sendDeleteOTP(emailAddress);
     console.log("User ID: ", userId);
-    //return this.httpClient.request('DELETE', url, { body: formData });
-    this.httpClient.request('DELETE', "https://localhost:7251/api/Home/DeleteUser", { body: formData }).subscribe((result: any) => {
-      this.authService.removeToken();
-      console.log("Success: ", result);
-    },
-      (error: Error) => {
-        console.log("Got error: ", error.message);
-        alert("Hmm got some error");
-      });
-    this.router.navigate(["/app-home"]);
+  }
+
+  validateDeleteOTP(actionType: string | null) {
+    const otp = this.otpValidationForm.get('otp')?.value;
+    var result = this.otpService.validateOTP(otp);
+    if (result == true) {
+      const formData = new FormData();
+      const userId = this.userToken["UserId"];
+      formData.append('userId', userId);
+      console.log("Sending delete request...........");
+      this.httpClient.post("https://localhost:7251/api/Home/DeleteUser", formData).subscribe((result: any) => {
+        this.authService.removeToken();
+        console.log("Success: ", result);
+        alert("Account deleted successfully!");
+      },
+        (error: Error) => {
+          console.log("Got error: ", error.message);
+          alert("Hmm got some error");
+        });
+      this.router.navigate(["/app-home"]);
+    }
   }
 
   GetUserNotifications() {
@@ -273,7 +299,7 @@ export class UserDashboardComponent {
 
   GetUserFines() {
     this.GetUserBorrowings();
-    this.borrowingList.forEach((borrowed)=>{
+    this.borrowingList.forEach((borrowed) => {
       this.fineList = this.fineList.concat(borrowed.fines.$values);
       console.log(borrowed.fines.$values);
     })

@@ -58,6 +58,7 @@ export class HeaderComponent {
   }
 
   logout() {
+    this.authService.logout();
     this.authService.removeToken();
     this.router.navigate(["app-home"]);
     alert("Logged out successfully!");

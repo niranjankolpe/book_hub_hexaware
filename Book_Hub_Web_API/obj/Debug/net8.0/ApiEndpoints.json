@@ -312,13 +312,50 @@
     "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
     "Method": "DeleteUser",
     "RelativePath": "api/Home/DeleteUser",
-    "HttpMethod": "DELETE",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
         "Name": "userId",
         "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
+    "Method": "ForgotPassword",
+    "RelativePath": "api/Home/ForgotPassword",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "emailAddress",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "newPassword",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
+    "Method": "GenerateOTP",
+    "RelativePath": "api/Home/GenerateOTP",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "emailAddress",
+        "Type": "System.String",
         "IsRequired": false
       }
     ],
@@ -350,6 +387,22 @@
       {
         "Name": "PasswordHash",
         "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
+    "Method": "Logout",
+    "RelativePath": "api/Home/Logout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userId",
+        "Type": "System.Int32",
         "IsRequired": false
       }
     ],

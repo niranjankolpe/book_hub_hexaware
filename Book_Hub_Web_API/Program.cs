@@ -2,7 +2,9 @@ using System.Text;
 using System.Text.Encodings;
 using System.Text.Json.Serialization;
 using Book_Hub_Web_API.Data;
+using Book_Hub_Web_API.Data.Enums;
 using Book_Hub_Web_API.Repositories;
+using Book_Hub_Web_API.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -51,10 +53,14 @@ namespace Book_Hub_Web_API
             builder.Services.AddAuthorization();
             // JWT Authentication Code Ends
 
-
-
+            
+            
 
             builder.Services.AddDbContext<BookHubDBContext>();
+
+            builder.Services.AddScoped<IEmailService, EmailService>();
+            builder.Services.AddScoped<INotificationService, NotificationService>();
+
             builder.Services.AddScoped<ICommonRepository, CommonRepository>();
             builder.Services.AddScoped<IAdminRepository, AdminRepository>();
             builder.Services.AddScoped<IUserRepository, UserRepository>();

@@ -1,4 +1,4 @@
-<div class="registration-form">
+<div class="registration-form" *ngIf="displayOTPForm == false">
   <h2>User Registration</h2>
   <form #registrationForm="ngForm" (ngSubmit)="onSubmit()">
     <div>
@@ -26,6 +26,17 @@
       <input type="password" id="confirmpassword" name="confirmpassword" [(ngModel)]="user.confirmpassword" required />
     </div>
     <button type="submit" [disabled]="registrationForm.invalid">Submit</button>
+  </form>
+</div>
+
+<div class="otp-container" *ngIf="displayOTPForm == true">
+  <form [formGroup]="otpValidationForm" (ngSubmit)="validateOTP()">
+    <h2>Login</h2>
+    <div class="form-group">
+      <label>Enter One-Time-Password (OTP):</label>
+      <input formControlName="otp" type="text">
+    </div>
+    <button type="submit">Verify</button>
   </form>
 </div>
 

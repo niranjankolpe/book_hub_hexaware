@@ -6,20 +6,23 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Book_Hub_Web_API.Data.DTO;
 using Microsoft.AspNetCore.Authorization;
+using Book_Hub_Web_API.Services;
 
 namespace Book_Hub_Web_API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    //[Authorize(Roles = "Consumer")]
-    [AllowAnonymous]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
 
-        public UserController(IUserRepository userRepository)
+        private IEmailService _emailService;
+
+        public UserController(IUserRepository userRepository, IEmailService emailService)
         {
             _userRepository = userRepository;
+            _emailService = emailService;
+            //_emailService.SendEmail(["trialofdjango@gmail.com"], Notification_Type.Other.ToString(), "Testing New Email Service from Book Hub!");
         }
 
         [Route("GetBookByBookId")]
@@ -88,11 +91,25 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("BorrowBook")]
         [HttpPost]
+        [Authorize(Roles = "Consumer")]
         public async Task<IActionResult> BorrowBook([FromForm] int bookId, [FromForm] int userId)
         {
             try
             {
                 var borrowed = await _userRepository.BorrowBook(bookId, userId);
+
+                Notifications notification = new Notifications()
+                {
+                    UserId = userId,
+                    MessageType = Notification_Type.Borrowed_Book_Related,
+                    MessageDescription = "Enjoy borrowed book!",
+                    SentDate = DateOnly.FromDateTime(DateTime.Now)
+                };
+
+                _emailService.SendEmail(["trialofdjango@gmail.com"], notification.MessageType.ToString(), notification.MessageDescription.ToString());
+
+                //_notificationService.SendNotification(userId, Notification_Type.Borrowed_Book_Related, $"Borrowed Successfully! Borrow ID: {borrowed.BorrowId}, Book ID: {borrowed.BookId}");
+
                 return Ok(new JsonResult(borrowed));
             }
             catch (Exception ex)
@@ -103,6 +120,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("ReturnBook")]
         [HttpPatch]
+        [Authorize(Roles = "Consumer")]
         public async Task<IActionResult> ReturnBook([FromForm] int borrowId)
         {
             try
@@ -118,7 +136,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("ReportLostBook")]
         [HttpPatch]
-        [AllowAnonymous]
+        [Authorize(Roles = "Consumer")]
         public async Task<IActionResult> ReportLostBook([FromForm] int borrowId)
         {
             try
@@ -134,6 +152,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("ReserveBook")]
         [HttpPost]
+        [Authorize(Roles = "Consumer")]
         public async Task<IActionResult> ReserveBook([FromForm] int bookId, [FromForm] int userId)
         {
             try
@@ -149,6 +168,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("CancelBookReservation")]
         [HttpPatch]
+        [Authorize(Roles = "Consumer")]
         public async Task<IActionResult> CancelBookReservation([FromForm] int reservationId)
         {
             try
@@ -164,6 +184,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("ResetPassword")]
         [HttpPatch]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> ResetPassword([FromForm] [Bind("UserId", "Email", "OldPassword", "NewPassword")] Reset_Password_DTO reset_password_dto)
         {
             try
@@ -186,6 +207,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("GetNotificationsByUserId")]
         [HttpPost]
+        [Authorize(Roles = "Consumer")]
         public async Task<IActionResult> GetNotificationsByUserId([FromForm] int userId)
         {
             try
@@ -211,6 +233,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("GetReservationsByUserId")]
         [HttpPost]
+        [Authorize(Roles = "Consumer")]
         public async Task<IActionResult> GetReservationsByUserId([FromForm] int userId)
         {
             try
@@ -235,6 +258,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("GetBorrowedByUserId")]
         [HttpPost]
+        [Authorize(Roles = "Consumer")]
         public async Task<IActionResult> GetBorrowedByUserId([FromForm] int userId)
         {
             try

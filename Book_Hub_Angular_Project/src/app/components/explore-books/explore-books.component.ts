@@ -156,7 +156,7 @@ export class ExploreBooksComponent {
     },
     (error:Error)=>{
       console.log("Got error: ", error.message);
-      alert("Hmm got some error. You sure you have borrowed less than 5 books?");
+      alert(error.message);
     });
     this.router.navigate(["/app-user-dashboard"]);
   }
@@ -168,10 +168,6 @@ export class ExploreBooksComponent {
     this.httpClient.post("https://localhost:7251/api/User/ReserveBook", formData).subscribe((result:any)=>{
       console.log(result);
       alert("Success!");
-    },
-    (error:Error)=>{
-      console.log("Got error: ", error.message);
-      alert("Hmm got some error. You sure you have borrowed less than 5 books?");
     });
     this.router.navigate(["/app-user-dashboard"]);
   }

@@ -3,7 +3,7 @@
     public enum Action_Type
     {
         Login,
-        Logouit,
+        Logout,
         UpdatedAccount
     }
 }

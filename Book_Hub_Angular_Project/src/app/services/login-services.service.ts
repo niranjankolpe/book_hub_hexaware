@@ -35,6 +35,18 @@ export class LoginServicesService {
       observe: 'body',      // Observe the body only
     });
   }
+
+  logout(){
+    const formData = new FormData();
+    const userId = this.decodeToken(this.getToken());
+
+    formData.append('userId', userId["UserId"]);
+  
+    return this.http.post("https://localhost:7251/api/Home/Logout", formData).subscribe((result)=>{
+      
+      console.log("Logged Out Successfully!");
+    });
+  }
   
   getToken(): string | null  {
     return localStorage.getItem('token');

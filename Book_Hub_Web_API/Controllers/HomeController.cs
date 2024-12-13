@@ -9,6 +9,9 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Book_Hub_Web_API.Services;
+using Book_Hub_Web_API.Data.Enums;
+using System.Diagnostics;
 
 namespace Book_Hub_Web_API.Controllers
 {
@@ -21,16 +24,26 @@ namespace Book_Hub_Web_API.Controllers
 
         private readonly IConfiguration _configuration;
 
-        public HomeController(ICommonRepository commonRepository, IConfiguration configuration)
+        private IEmailService _emailService;
+
+        public HomeController(ICommonRepository commonRepository, IConfiguration configuration, IEmailService emailService)
         {
             _commonRepository = commonRepository;
             _configuration = configuration;
+            _emailService = emailService;
         }
+
+        //public HomeController(ICommonRepository commonRepository, IConfiguration configuration)
+        //{
+        //    _commonRepository = commonRepository;
+        //    _configuration = configuration;
+        //}
 
         [Route("GetAllBooks")]
         [HttpGet]
         //[Authorize(Roles = "Consumer")]
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "Administrator")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAllBooks()
         {
             try
@@ -43,6 +56,20 @@ namespace Book_Hub_Web_API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [Route("GenerateOTP")]
+        [HttpPost]
+        [AllowAnonymous]
+        public JsonResult GenerateOTP([FromForm] string emailAddress)
+        {
+            Random random = new Random();
+            string otp = random.Next(100000, 999999).ToString();
+
+            _emailService.SendEmail([emailAddress], Notification_Type.Account_Related.ToString(), $"Your OTP for Book Hub Platform is: {otp}");
+
+            return new JsonResult(new { value = otp });
+        }
+
 
         [Route("Validate")]
         [HttpPost]
@@ -85,10 +112,30 @@ namespace Book_Hub_Web_API.Controllers
                     expires: DateTime.Now.AddHours(2),
                     signingCredentials: signInCreds
                 );
+
                 string tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
+
+                await _commonRepository.Login(user.UserId);
+
                 return Ok(tokenValue);
             }
             catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Route("Logout")]
+        [HttpPost]
+        [Authorize(Roles = "Consumer,Administrator")]
+        public async Task<IActionResult> Logout([FromForm]int userId)
+        {
+            try
+            {
+                await _commonRepository.Logout(userId);
+                return Ok();
+            }
+            catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }
@@ -121,23 +168,52 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("UpdateUser")]
         [HttpPatch]
-        [AllowAnonymous]
+        [Authorize(Roles = "Consumer,Administrator")]
         public async Task<Users> UpdateUser( [FromForm][Bind("UserId", "Name", "Phone", "Address")] UpdateUser_DTO updateUser_DTO)
         {
-
-            Users u = await _commonRepository.UpdateUser(updateUser_DTO);
-            return u;
+            try
+            {
+                Users u = await _commonRepository.UpdateUser(updateUser_DTO);
+                return u;
+            }
+            catch(Exception)
+            {
+                return new Users();
+            }
         }
 
 
         [Route("DeleteUser")]
-        [HttpDelete]
-        [AllowAnonymous]
+        [HttpPost]
+        [Authorize(Roles = "Consumer,Administrator")]
         public async Task<IActionResult> DeleteUser([FromForm] int userId)
         {
+            try
+            {
+                var result = await _commonRepository.DeleteUser(userId);
+                return Ok(new JsonResult(result));
+            }
+            catch(Exception ex) { 
+                return BadRequest(ex.Message);
+            }
+        }
 
-           var result =  await _commonRepository.DeleteUser(userId);
-            return Ok(new JsonResult(result));
+        [Route("ForgotPassword")]
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword([FromForm] string emailAddress, [FromForm] string newPassword)
+        {
+            try
+            {
+                //Debug.WriteLine("\n\nEmail Address: ", emailAddress, "\n\n");
+                var password = await _commonRepository.ForgotPassword(emailAddress, newPassword);
+                _emailService.SendEmail([emailAddress], Notification_Type.Account_Related.ToString(), $"Your password was Updated Successfully!");
+                return Ok(new JsonResult(value: "Password successfully Updated!"));
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

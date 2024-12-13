@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\Book_Hub_Web_API\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|c:\\users\\niran\\desktop\\my files\\hexaware\\book hub\\book_hub_web_api\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|solutionrelative:repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|c:\\users\\niran\\desktop\\my files\\hexaware\\book hub\\book_hub_web_api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|c:\\users\\niran\\desktop\\my files\\hexaware\\book hub\\book_hub_web_api\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|solutionrelative:repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|c:\\users\\niran\\desktop\\my files\\hexaware\\book hub\\book_hub_web_api\\services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|solutionrelative:services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|c:\\users\\niran\\desktop\\my files\\hexaware\\book hub\\book_hub_web_api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -19,12 +19,20 @@
       "RelativeMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|solutionrelative:data\\bookhubdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|c:\\users\\niran\\desktop\\my files\\hexaware\\book hub\\book_hub_web_api\\models\\borrowed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|solutionrelative:models\\borrowed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|c:\\users\\niran\\desktop\\my files\\hexaware\\book hub\\book_hub_web_api\\repositories\\adminrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|solutionrelative:repositories\\adminrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|c:\\users\\niran\\desktop\\my files\\hexaware\\book hub\\book_hub_web_api\\repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|solutionrelative:repositories\\iuserrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|c:\\users\\niran\\desktop\\my files\\hexaware\\book hub\\book_hub_web_api\\repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|solutionrelative:repositories\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|c:\\users\\niran\\desktop\\my files\\hexaware\\book hub\\book_hub_web_api\\models\\borrowed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B3782BFA-22F9-4918-9A1F-3707DA3D45B9}|Book_Hub_Web_API.csproj|solutionrelative:models\\borrowed.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -33,8 +41,8 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 158,
-          "SelectedChildIndex": 9,
+          "DockedHeight": 114,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -49,8 +57,29 @@
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\Book_Hub_Web_API\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\Book_Hub_Web_API\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAADIAAAAAAAAAAAAQwDkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-13T18:22:38.55Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EmailService.cs",
+              "DocumentMoniker": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\Book_Hub_Web_API\\Services\\EmailService.cs",
+              "RelativeDocumentMoniker": "Services\\EmailService.cs",
+              "ToolTip": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\Book_Hub_Web_API\\Services\\EmailService.cs",
+              "RelativeToolTip": "Services\\EmailService.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAYwCcAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-13T18:21:58.398Z"
             },
             {
               "$type": "Document",
@@ -60,14 +89,13 @@
               "RelativeDocumentMoniker": "Data\\BookHubDBContext.cs",
               "ToolTip": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\Book_Hub_Web_API\\Data\\BookHubDBContext.cs",
               "RelativeToolTip": "Data\\BookHubDBContext.cs",
-              "ViewState": "AgIAAFMAAAAAAAAAAAAgwGMAAAAvAAAAAAAAAA==",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAgwFgAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-10T05:21:40.561Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-10T05:21:40.561Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "AdminRepository.cs",
               "DocumentMoniker": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\Book_Hub_Web_API\\Repositories\\AdminRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\AdminRepository.cs",
@@ -75,12 +103,11 @@
               "RelativeToolTip": "Repositories\\AdminRepository.cs",
               "ViewState": "AgIAADgAAAAAAAAAAAAgwCUAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-10T05:10:01.776Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-10T05:10:01.776Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "Borrowed.cs",
               "DocumentMoniker": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\Book_Hub_Web_API\\Models\\Borrowed.cs",
               "RelativeDocumentMoniker": "Models\\Borrowed.cs",
@@ -88,8 +115,7 @@
               "RelativeToolTip": "Models\\Borrowed.cs",
               "ViewState": "AgIAABkAAAAAAAAAAAAkwCkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-10T04:49:49.311Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-10T04:49:49.311Z"
             },
             {
               "$type": "Document",
@@ -99,36 +125,47 @@
               "RelativeDocumentMoniker": "Controllers\\UserController.cs",
               "ToolTip": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\Book_Hub_Web_API\\Controllers\\UserController.cs",
               "RelativeToolTip": "Controllers\\UserController.cs",
-              "ViewState": "AgIAAAABAAAAAAAAAAAYwBEBAAALAAAAAAAAAA==",
+              "ViewState": "AgIAADgAAAAAAAAAAAAgwKcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-09T05:27:16.679Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-09T05:27:16.679Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\Book_Hub_Web_API\\Repositories\\UserRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\UserRepository.cs",
               "ToolTip": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\Book_Hub_Web_API\\Repositories\\UserRepository.cs",
               "RelativeToolTip": "Repositories\\UserRepository.cs",
-              "ViewState": "AgIAAK0BAAAAAAAAAAAuwLgBAABBAAAAAAAAAA==",
+              "ViewState": "AgIAAJ0BAAAAAAAAAAAmwKMBAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-10T04:15:09.326Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-10T04:15:09.326Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "IUserRepository.cs",
               "DocumentMoniker": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\Book_Hub_Web_API\\Repositories\\IUserRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\IUserRepository.cs",
               "ToolTip": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\Book_Hub_Web_API\\Repositories\\IUserRepository.cs",
               "RelativeToolTip": "Repositories\\IUserRepository.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAAkwCEAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-10T04:15:10.693Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-10T04:15:10.693Z"
+            }
+          ]
+        },
+        {
+          "DockedHeight": 75,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             }
           ]
         }

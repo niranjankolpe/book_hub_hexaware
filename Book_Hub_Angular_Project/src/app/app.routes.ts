@@ -8,6 +8,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ExploreBooksComponent } from './components/explore-books/explore-books.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
 export const routes: Routes = [
     {
@@ -50,5 +51,9 @@ export const routes: Routes = [
     {
         path: 'app-user-dashboard',
         component: UserDashboardComponent
+    },
+    {
+        path: 'app-forgot-password',
+        component: ForgotPasswordComponent
     }
 ];
