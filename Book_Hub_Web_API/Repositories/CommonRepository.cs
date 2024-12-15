@@ -20,12 +20,6 @@ namespace Book_Hub_Web_API.Repositories
             _bookHubDBContext = bookHubDBContext;
         }
 
-        //public CommonRepository(BookHubDBContext bookHubDBContext, NotificationService notificationService)
-        //{
-        //    _bookHubDBContext = bookHubDBContext;
-        //    _notificationService = notificationService;
-        //}
-
         public async Task<List<Books>>GetAllBooks()
         {
             var books = await _bookHubDBContext.Books.ToListAsync();
@@ -35,8 +29,6 @@ namespace Book_Hub_Web_API.Repositories
             }
             return books;
         }
-
-
 
         public async Task<Users> CreateUser(Create_User_DTO create_User_DTO)
         {
@@ -57,9 +49,27 @@ namespace Book_Hub_Web_API.Repositories
 
                 await _bookHubDBContext.SaveChangesAsync();
 
-                // _notificationService.SendNotification(u.UserId, Notification_Type.Account_Related, $"Your Book Hub account has been created successfully!");
+                Notifications notification = new Notifications()
+                {
+                    UserId = u.UserId,
+                    MessageType = Notification_Type.Account_Related,
+                    MessageDescription = $"Welcome to Book Hub, Dear {u.Name}",
+                    SentDate = DateOnly.FromDateTime(DateTime.Now)
+                };
+                await _bookHubDBContext.Notifications.AddAsync(notification);
+                await _bookHubDBContext.SaveChangesAsync();
 
-                
+                // Create the log entry
+                LogUserActivity logUserActivity = new LogUserActivity
+                {
+                    UserId = u.UserId,
+                    ActionType = Action_Type.UpdatedAccount,
+                    Timestamp = DateTime.Now
+                };
+
+                // Add the log entry and save changes
+                await _bookHubDBContext.LogUserActivity.AddAsync(logUserActivity);
+                await _bookHubDBContext.SaveChangesAsync(); // Save the log entry
 
                 return u;
             }
@@ -71,17 +81,57 @@ namespace Book_Hub_Web_API.Repositories
 
 
 
-        public async Task<string> DeleteUser(int userId)
+        public async Task<Users> DeleteUser(int userId)
         {
-            Users ? user = await _bookHubDBContext.Users.FirstOrDefaultAsync(u => u.UserId == userId);
+            Users ? user = _bookHubDBContext.Users.First(u => u.UserId == userId);
             if (user != null)
             {
-               _bookHubDBContext.Users.Remove(user);
+                List<Borrowed> borrows = _bookHubDBContext.Borrowed.Where(b => b.UserId == userId && b.BorrowStatus == Borrow_Status.Borrowed).ToList();
+                List<Reservations> reservations = _bookHubDBContext.Reservations.Where(b => b.UserId == userId && b.ReservationStatus == Reservation_Status.Pending).ToList();
+
+                if (borrows.Count > 0)
+                {
+                    throw new Exception("You have some borrowed books. Return them before deleting your account!");
+                }
+                else if (reservations.Count > 0)
+                {
+                    throw new Exception("You have some pending reservations. Cancel them before deleting your account!");
+                }
+
+                Users temporayUser = new Users()
+                {
+                    Name = user.Name,
+                    Email = user.Email
+                };
+
+                Notifications notification = new Notifications()
+                {
+                    UserId = user.UserId,
+                    MessageType = Notification_Type.Account_Related,
+                    MessageDescription = $"\nDear {user.Name},\n\nSuccessfully Deleted your Account details at Book Hub! Sorry to see you go :(\n\nRegards,\nBook Hub",
+                    SentDate = DateOnly.FromDateTime(DateTime.Now)
+                };
+                await _bookHubDBContext.Notifications.AddAsync(notification);
                 await _bookHubDBContext.SaveChangesAsync();
-                
-                return $"User deleted successfully with User Id: {user.UserId}";
+
+                // Create the log entry
+                LogUserActivity logUserActivity = new LogUserActivity
+                {
+                    UserId = user.UserId,
+                    ActionType = Action_Type.UpdatedAccount,
+                    Timestamp = DateTime.Now
+                };
+
+                // Add the log entry and save changes
+                await _bookHubDBContext.LogUserActivity.AddAsync(logUserActivity);
+                await _bookHubDBContext.SaveChangesAsync(); // Save the log entry
+
+                _bookHubDBContext.Users.Remove(user);
+                await _bookHubDBContext.SaveChangesAsync();
+
+                return temporayUser;
             }
-            return "User not found!";
+            throw new Exception($"No user of User Id: {userId} found!");
         }
 
         
@@ -103,7 +153,7 @@ namespace Book_Hub_Web_API.Repositories
             {
                 UserId = userId,
                 ActionType = Action_Type.Login,
-                Timestamp = DateTime.UtcNow
+                Timestamp = DateTime.Now
             };
 
             // Add the log entry and save changes
@@ -118,7 +168,7 @@ namespace Book_Hub_Web_API.Repositories
             {
                 UserId = userId,
                 ActionType = Action_Type.Logout,
-                Timestamp = DateTime.UtcNow
+                Timestamp = DateTime.Now
             };
 
             // Add the log entry and save changes
@@ -139,20 +189,39 @@ namespace Book_Hub_Web_API.Repositories
             }
 
             // Update the user's details
-            existingUser.Name = updateUser_DTO.Name;
-            existingUser.Phone = updateUser_DTO.Phone;
-            existingUser.Address = updateUser_DTO.Address;
+            if (updateUser_DTO.Name != null)
+            {
+                existingUser.Name = updateUser_DTO.Name;
+            }
+            if (updateUser_DTO.Phone != null)
+            {
+                existingUser.Phone = updateUser_DTO.Phone;
+            }
+            if (updateUser_DTO.Address != null)
+            {
+                existingUser.Address = updateUser_DTO.Address;
+            }
 
             // Update the user in the database
             _bookHubDBContext.Update(existingUser);
             await _bookHubDBContext.SaveChangesAsync(); // Save the updated user details
+
+            Notifications notification = new Notifications()
+            {
+                UserId = existingUser.UserId,
+                MessageType = Notification_Type.Account_Related,
+                MessageDescription = $"Dear {existingUser.Name},\n\nSuccessfully Updated your Account details at Book Hub!\n\nRegards,\nBook Hub",
+                SentDate = DateOnly.FromDateTime(DateTime.Now)
+            };
+            await _bookHubDBContext.Notifications.AddAsync(notification);
+            await _bookHubDBContext.SaveChangesAsync();
 
             // Create the log entry
             LogUserActivity logUserActivity = new LogUserActivity
             {
                 UserId = updateUser_DTO.UserId,
                 ActionType = Action_Type.UpdatedAccount,
-                Timestamp = DateTime.UtcNow
+                Timestamp = DateTime.Now
             };
 
             // Add the log entry and save changes
@@ -162,7 +231,7 @@ namespace Book_Hub_Web_API.Repositories
             return existingUser;
         }
 
-        public async Task<string> ForgotPassword(string emailAddress, string newPassword)
+        public async Task<Users> ForgotPassword(string emailAddress, string newPassword)
         {
             Users existingUser = await _bookHubDBContext.Users.FirstOrDefaultAsync(u => u.Email == emailAddress);
             if (existingUser == null)
@@ -175,18 +244,43 @@ namespace Book_Hub_Web_API.Repositories
             _bookHubDBContext.Update(existingUser);
             await _bookHubDBContext.SaveChangesAsync(); // Save the updated user details
 
+            Notifications notification = new Notifications()
+            {
+                UserId = existingUser.UserId,
+                MessageType = Notification_Type.Account_Related,
+                MessageDescription = $"Dear {existingUser.Name},\n\nSuccessfully Updated your Account Password at Book Hub!\n\nRegards,\nBook Hub",
+                SentDate = DateOnly.FromDateTime(DateTime.Now)
+            };
+            await _bookHubDBContext.Notifications.AddAsync(notification);
+            await _bookHubDBContext.SaveChangesAsync();
+
             // Create the log entry
             LogUserActivity logUserActivity = new LogUserActivity
             {
                 UserId = existingUser.UserId,
                 ActionType = Action_Type.UpdatedAccount,
-                Timestamp = DateTime.UtcNow
+                Timestamp = DateTime.Now
             };
 
             // Add the log entry and save changes
             await _bookHubDBContext.LogUserActivity.AddAsync(logUserActivity);
             await _bookHubDBContext.SaveChangesAsync(); // Save the log entry
-            return existingUser.PasswordHash;
+            return existingUser;
+        }
+
+        public async Task<ContactUs> AddContactUsQuery(Contact_Us_DTO contact_Us_DTO)
+        {
+            ContactUs contactUs = new ContactUs()
+            {
+                Email = contact_Us_DTO.Email,
+                Query_Type = contact_Us_DTO.Query_Type,
+                Description = contact_Us_DTO.Description,
+                QueryCreatedDate = DateOnly.FromDateTime(DateTime.Now),
+                Query_Status = Contact_Us_Query_Status.Pending
+            };
+            await _bookHubDBContext.ContactUs.AddAsync(contactUs);
+            await _bookHubDBContext.SaveChangesAsync();
+            return contactUs;
         }
     }
 }

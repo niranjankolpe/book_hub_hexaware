@@ -16,6 +16,25 @@ namespace Book_Hub_Web_API.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // ContactUs Model
+            modelBuilder.Entity<ContactUs>(entity =>
+            {
+                entity.HasKey(c => c.QueryId);
+
+                entity.Property(c => c.Query_Type)
+                .HasConversion<string>();
+
+                entity.Property(c => c.QueryCreatedDate)
+                .HasColumnType("date")
+                .HasConversion(
+                    v => v.ToDateTime(new TimeOnly(0, 0)),
+                    v => DateOnly.FromDateTime(v)
+                );
+
+                entity.Property(c => c.Query_Status)
+                .HasConversion<string>();
+            });
+
             // Book Model 
             modelBuilder.Entity<Books>(entity =>
             {
@@ -253,5 +272,7 @@ namespace Book_Hub_Web_API.Data
         public DbSet<Reservations> Reservations { get; set; } = default!;
 
         public DbSet<Users> Users { get; set; } = default!;
+
+        public DbSet<ContactUs> ContactUs { get; set; } = default!;
     }
 }

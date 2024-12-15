@@ -12,7 +12,7 @@
         <li class="nav-item">
           <a class="nav-link active text-black" aria-current="page" routerLink="/app-explore-books" routerLinkActive="active">Explore</a>
         </li>
-        <li class="nav-item">
+        <li *ngIf="displayRegistrationInHeader == true" class="nav-item">
           <a class="nav-link active text-black" aria-current="page" routerLink="/app-user-register-form" routerLinkActive="active">Register</a>
         </li>
         <li class="nav-item">

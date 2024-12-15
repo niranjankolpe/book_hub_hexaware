@@ -18,7 +18,6 @@ namespace Book_Hub_Web_API.Repositories
         {
             Books? book = await _context.Books.FirstOrDefaultAsync(b => b.BookId == bookId);
             return book != null ? book : throw new Exception($"No such book found! Book Id: {bookId}");
-            // return book ?? new Books();
         }
 
         public async Task<Books> GetBookByISBN(string isbn)
@@ -30,13 +29,13 @@ namespace Book_Hub_Web_API.Repositories
         public async Task<List<Books>> GetBooksByGenre(int genreId)
         {
             List<Books> books = await _context.Books.Where(b => b.GenreId == genreId).ToListAsync();
-            return books != null ? books : throw new Exception($"No book found for Genre Id: {genreId}");
+            return books.Count > 0 ? books : throw new Exception($"No book found for Genre Id: {genreId}");
         }
         
         public async Task<List<Books>> GetBooksByAuthor(string authorName)
         {
             List<Books> books = await _context.Books.Where(b => b.Author == authorName).ToListAsync();
-            return books != null ? books : throw new Exception($"No book found for Author: {authorName}");
+            return books.Count > 0 ? books : throw new Exception($"No book found for Author: {authorName}");
         }
 
         public async Task<Borrowed> BorrowBook(int bookId, int userId)
@@ -437,7 +436,6 @@ namespace Book_Hub_Web_API.Repositories
 
             _emailService.SendEmail([user.Email], notification.MessageType.ToString(), notification.MessageDescription);
 
-
             LogUserActivity logUserActivity = new LogUserActivity()
             {
                 UserId = existingUser.UserId,
@@ -478,22 +476,23 @@ namespace Book_Hub_Web_API.Repositories
                 throw new Exception("No borrowings found!");
             }
             return borrowings;
-
         }
 
-        //public async Task<List<Fines>> GetFinesByUserId(int userId)
-        //{
-        //    // Both not working
-        //    // List<Fines> fines = await _context.Fines.Where(f => f.Borrowed.UserId == userId).ToListAsync();
-        //    // List<Fines> fines = await _context.Borrowed.Where(b=>b.UserId == userId).SelectMany(b => b.Fines).ToListAsync();
+        /*
+        public async Task<List<Fines>> GetFinesByUserId(int userId)
+        {
+            // Both not working
+            // List<Fines> fines = await _context.Fines.Where(f => f.Borrowed.UserId == userId).ToListAsync();
+            // List<Fines> fines = await _context.Borrowed.Where(b=>b.UserId == userId).SelectMany(b => b.Fines).ToListAsync();
 
-        //    List<Fines> fines = await _context.Fines.ToListAsync();
-        //    if (fines.Count < 1)
-        //    {
-        //        throw new Exception("No fines found!");
-        //    }
-        //    Console.WriteLine(fines);
-        //    return fines;
-        //}
+            List<Fines> fines = await _context.Fines.ToListAsync();
+            if (fines.Count < 1)
+            {
+                throw new Exception("No fines found!");
+            }
+            Console.WriteLine(fines);
+            return fines;
+        }
+        */
     }
 }

@@ -1,6 +1,22 @@
 [
   {
     "ContainingType": "Book_Hub_Web_API.Controllers.AdminController",
+    "Method": "AcknowledgeConsumerQuery",
+    "RelativePath": "api/Admin/AcknowledgeConsumerQuery",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "queryId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.AdminController",
     "Method": "AddBooks",
     "RelativePath": "api/Admin/AddBook",
     "HttpMethod": "POST",
@@ -68,6 +84,16 @@
         "IsRequired": false
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.AdminController",
+    "Method": "GetAllConsumerQueries",
+    "RelativePath": "api/Admin/GetAllConsumerQueries",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
@@ -274,6 +300,32 @@
   },
   {
     "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
+    "Method": "AddContactUsQuery",
+    "RelativePath": "api/Home/AddContactUsQuery",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Email",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Query_Type",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Description",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",
     "Method": "CreateUser",
     "RelativePath": "api/Home/CreateUser",
     "HttpMethod": "POST",
@@ -437,17 +489,7 @@
         "IsRequired": false
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "Book_Hub_Web_API.Models.Users",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Book_Hub_Web_API.Controllers.HomeController",

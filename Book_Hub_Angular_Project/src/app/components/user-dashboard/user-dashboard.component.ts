@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/r
 import { HttpClient } from '@angular/common/http';
 import { Constant } from '../../constants/constants';
 import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup, FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { OtpServiceService } from '../../services/otp-service.service';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -39,16 +39,8 @@ export class UserDashboardComponent {
   displayUpdatePasswordForm = false;
   displayDeleteAccountForm = false;
 
-  updateUserModel = {
-    name: '',
-    phone: '',
-    address: ''
-  };
-
-  resetUserPasswordModel = {
-    oldPassword: '',
-    newPassword: ''
-  };
+  updatePasswordForm!: FormGroup;
+  updateUserForm!: FormGroup;
 
   otpValidationForm: FormGroup;
   displayOTPForm: boolean = false;
@@ -67,6 +59,17 @@ export class UserDashboardComponent {
     this.GetUserBorrowings();
     this.GetUserReservations();
     this.GetUserFines();
+
+    this.updatePasswordForm = new FormGroup({
+      oldPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
+      newPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
+    });
+
+    this.updateUserForm = new FormGroup({
+      name: new FormControl('', [Validators.pattern(/^[A-Za-z\s]+$/)]),
+      phone: new FormControl('', [Validators.pattern(/^\d{10}$/)]),
+      address: new FormControl('')
+    });
 
     this.route.queryParams.subscribe((params) => {
       this.displaySection = params['displaySection'];// Convert to boolean if necessary
@@ -182,55 +185,67 @@ export class UserDashboardComponent {
     this.displayReservationList = false;
   }
 
-
-
   updateUser() {
+    if (this.updateUserForm.valid) {
+      const formData = new FormData();
+      const name = this.updateUserForm.get("name")?.value;
+      const phone = this.updateUserForm.get("phone")?.value;
+      const address = this.updateUserForm.get("address")?.value;
 
-    const formData = new FormData();
+      formData.append('Name', name);
+      formData.append('Phone', phone);
+      formData.append('Address', address);
+      formData.append('UserId', this.userToken["UserId"]);
 
-    formData.append('Name', this.updateUserModel.name);
-    formData.append('Phone', this.updateUserModel.phone);
-    formData.append('Address', this.updateUserModel.address);
+      console.log(this.userToken["UserId"]);
+      console.log(name);
+      console.log(phone);
+      console.log(address);
 
-    formData.append('UserId', this.userToken["UserId"]);
-    console.log(this.userToken["UserId"]);
-    console.log(this.updateUserModel.name);
-    console.log(this.updateUserModel.phone);
-    console.log(this.updateUserModel.address);
-    this.httpClient.patch("https://localhost:7251/api/Home/UpdateUser", formData).subscribe((result: any) => {
-      console.log("Success: ", result);
-      alert("Success");
-    },
-      (error: Error) => {
-        console.log("Got error: ", error.message);
-        alert("Hmm got some error");
-      });
+      this.httpClient.patch("https://localhost:7251/api/Home/UpdateUser", formData).subscribe((result: any) => {
+        console.log("Success: ", result);
+        alert("Success");
+      },
+        (error: Error) => {
+          console.log("Got error: ", error.message);
+          alert("Hmm got some error");
+        });
 
-    this.router.navigate(['/app-home']);
+      this.router.navigate(['/app-home']);
+    }
+    else{
+      alert("One or more input fields have incorrect format!");
+    }
   }
 
   resetUserPassword() {
-    const formData = new FormData();
+    if (this.updatePasswordForm.valid) {
+      const formData = new FormData();
+      const userId = this.userToken["UserId"];
+      const email = this.userToken["Email"];
+      const oldPassword = this.updatePasswordForm.get("oldPassword")?.value;
+      const newPassword = this.updatePasswordForm.get("newPassword")?.value;
+      formData.append('UserId', userId);
+      formData.append('Email', email);
+      console.log("Reset Password Old Password: ", oldPassword);
+      console.log("Reset Password New Password: ", newPassword);
+      formData.append('OldPassword', oldPassword);
+      formData.append('NewPassword', newPassword);
 
-    const userId = this.userToken["UserId"];
-    const email = this.userToken["Email"];
+      this.httpClient.patch("https://localhost:7251/api/User/ResetPassword", formData).subscribe((result: any) => {
+        console.log("Success: ", result);
+        alert("Success");
+      },
+        (error: Error) => {
+          console.log("Got error: ", error.message);
+          alert("Hmm got some error");
+        });
 
-
-    formData.append('UserId', userId);
-    formData.append('Email', email);
-    formData.append('OldPassword', this.resetUserPasswordModel.oldPassword);
-    formData.append('NewPassword', this.resetUserPasswordModel.newPassword);
-
-    this.httpClient.patch("https://localhost:7251/api/User/ResetPassword", formData).subscribe((result: any) => {
-      console.log("Success: ", result);
-      alert("Success");
-    },
-      (error: Error) => {
-        console.log("Got error: ", error.message);
-        alert("Hmm got some error");
-      });
-
-    this.router.navigate(['/app-home']);
+      this.router.navigate(['/app-home']);
+    }
+    else {
+      alert("Passwords should have length 8 to 20 characters");
+    }
   }
 
   deleteUser() {
@@ -246,7 +261,7 @@ export class UserDashboardComponent {
     console.log("User ID: ", userId);
   }
 
-  validateDeleteOTP(actionType: string | null) {
+  validateDeleteOTP() {
     const otp = this.otpValidationForm.get('otp')?.value;
     var result = this.otpService.validateOTP(otp);
     if (result == true) {
@@ -259,11 +274,13 @@ export class UserDashboardComponent {
         console.log("Success: ", result);
         alert("Account deleted successfully!");
       },
-        (error: Error) => {
-          console.log("Got error: ", error.message);
-          alert("Hmm got some error");
+        (error: any) => {
+          alert(error.error);
         });
       this.router.navigate(["/app-home"]);
+    }
+    else{
+      alert("OTP does not match try again");
     }
   }
 

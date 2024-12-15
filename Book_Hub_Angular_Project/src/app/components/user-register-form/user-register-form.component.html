@@ -1,53 +1,35 @@
 <div class="registration-form" *ngIf="displayOTPForm == false">
   <h2>User Registration</h2>
-  <form #registrationForm="ngForm" (ngSubmit)="onSubmit()">
-    <div>
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" [(ngModel)]="user.name" required />
-    </div>
-    <div>
-      <label for="email">Email:</label>
-      <input type="text" id="email" name="email" [(ngModel)]="user.email" required />
-    </div>
-    <div>
-      <label for="phone">Phone:</label>
-      <input type="text" id="phone" name="phone" [(ngModel)]="user.phone" required />
-    </div>
-    <div>
-      <label for="address">Address:</label>
-      <input type="text" id="address" name="address" [(ngModel)]="user.address" required />
-    </div>
-    <div>
-      <label for="address">Create Password:</label>
-      <input type="password" id="password" name="password" [(ngModel)]="user.password" required />
-    </div>
-    <div>
-      <label for="address">Confirm Password:</label>
-      <input type="password" id="confirmpassword" name="confirmpassword" [(ngModel)]="user.confirmpassword" required />
-    </div>
-    <button type="submit" [disabled]="registrationForm.invalid">Submit</button>
+  <form [formGroup]="registrationForm" (submit)="onSubmit()">
+    <label for="name">Name:</label>
+    <input type="text" formControlName="name"><br>
+
+    <label for="name">Email:</label>
+    <input type="text" formControlName="email"><br>
+
+    <label for="phone">Phone Number:</label>
+    <input type="text" formControlName="phone"><br>
+
+    <label for="address">Address:</label>
+    <input type="text" formControlName="address"><br>
+
+    <label for="password">Create Password:</label>
+    <input type="password" formControlName="password"><br>
+
+    <label for="confirmPassword">Confirm Password:</label>
+    <input type="password" formControlName="confirmPassword"><br>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 </div>
 
 <div class="otp-container" *ngIf="displayOTPForm == true">
   <form [formGroup]="otpValidationForm" (ngSubmit)="validateOTP()">
-    <h2>Login</h2>
+    <h2>OTP Validation</h2>
     <div class="form-group">
       <label>Enter One-Time-Password (OTP):</label>
       <input formControlName="otp" type="text">
     </div>
     <button type="submit">Verify</button>
   </form>
-</div>
-
-<div>
-  <button (click)="fetchData()">Fetch Data from LocalStorage</button>
-  <div *ngIf="fetcheduser">
-    <h3>Stored User Details:</h3>
-    <p>Name: {{ fetcheduser.name }}</p>
-    <p>Email: {{ fetcheduser.email }}</p>
-    <p>Phone: {{ fetcheduser.phone }}</p>
-    <p>Address: {{ fetcheduser.address }}</p>
-    <p>Password: {{ fetcheduser.password }}</p>
-  </div>
 </div>

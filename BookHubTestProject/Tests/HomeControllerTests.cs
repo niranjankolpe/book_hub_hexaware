@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 using Microsoft.Extensions.Configuration;
+using Book_Hub_Web_API.Services;
 
 namespace BookHubTestProject.Tests
 {
@@ -24,13 +25,16 @@ namespace BookHubTestProject.Tests
 
         private Mock<IConfiguration> _configuration;
 
+        private Mock<IEmailService> _emailService;
+
         [SetUp]
         public void Setup()
         {
             _configuration = new Mock<IConfiguration>();
             _commonRepository = new Mock<ICommonRepository>();
+            _emailService = new Mock<IEmailService>();
 
-            _homeController = new HomeController(_commonRepository.Object, _configuration.Object);
+            _homeController = new HomeController(_commonRepository.Object, _configuration.Object, _emailService.Object);
         }
 
         [Test]
@@ -120,9 +124,13 @@ namespace BookHubTestProject.Tests
         [TestCase(1)]
         public async Task DeleteUser_Returns_String(int id)
         {
-            string s = "User Deleted SuccessFully";
+            Users user = new Users()
+            {
+                Name = "John",
+                Email = "john@samplemail.com"
+            };
 
-            _commonRepository.Setup(repo => repo.DeleteUser(id)).ReturnsAsync(s);
+            _commonRepository.Setup(repo => repo.DeleteUser(id)).ReturnsAsync(user);
 
             var result = await _homeController.DeleteUser(id);
             var okObjectResult = result as OkObjectResult;

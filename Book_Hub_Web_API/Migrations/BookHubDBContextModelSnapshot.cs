@@ -111,6 +111,38 @@ namespace Book_Hub_Web_API.Migrations
                     b.ToTable("Borrowed");
                 });
 
+            modelBuilder.Entity("Book_Hub_Web_API.Models.ContactUs", b =>
+                {
+                    b.Property<int>("QueryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("QueryId"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("QueryCreatedDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Query_Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Query_Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("QueryId");
+
+                    b.ToTable("ContactUs");
+                });
+
             modelBuilder.Entity("Book_Hub_Web_API.Models.Fines", b =>
                 {
                     b.Property<int>("FineId")

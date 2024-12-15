@@ -105,10 +105,13 @@ export class ExploreBooksComponent {
       const formData = new FormData();
       formData.append('bookId', bookId);
       this.httpClient.post("https://localhost:7251/api/User/GetBookByBookId", formData).subscribe((result:any)=>{
-        this.bookListToDisplay = [result.value];
-      });
-      
-      this.displayBookList = true;
+          this.bookListToDisplay = [result.value];
+          this.displayBookList = true;
+      },
+      ()=>{
+        alert(`No book with Book ID: ${bookId} found!`);
+      }
+      ); 
     }
     else if (this.filterTypeSelected == 'isbn'){
       const isbn = this.bookExplorerForm?.get('searchInput')?.value;
@@ -116,8 +119,11 @@ export class ExploreBooksComponent {
       formData.append('isbn', isbn);
       this.httpClient.post("https://localhost:7251/api/User/GetBookByISBN", formData).subscribe((result:any)=>{
         this.bookListToDisplay = [result.value];
+        this.displayBookList = true;
+      },
+      ()=>{
+        alert(`No book with ISBN Number: ${isbn} found!`);
       });
-      this.displayBookList = true;
     }
     else if (this.filterTypeSelected == 'genre'){
       const genreId = this.bookExplorerForm?.get('searchInput')?.value;

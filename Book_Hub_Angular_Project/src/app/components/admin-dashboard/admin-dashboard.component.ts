@@ -10,6 +10,8 @@ import { NgForm } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { LoginServicesService } from '../../services/login-services.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -18,6 +20,8 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './admin-dashboard.component.css'
 })
 export class AdminDashboardComponent {
+
+  adminEmail:any;
 
   bookExplorerForm: FormGroup;
   //AddBook
@@ -57,6 +61,7 @@ export class AdminDashboardComponent {
   displayUserList: boolean = false;
   displayLogList: boolean = false;
   displayFineList: boolean = false;
+  displayContactUsQueries: boolean = false;
 
   displayAddBookForm: boolean = false;
   displayUpdateBookForm: boolean = false;
@@ -69,6 +74,7 @@ export class AdminDashboardComponent {
   logList: any[] = [];
   notificationList: any[] = [];
   reservationList: any[] = [];
+  consumerQueriesList: any[] = [];
 
   // Addbookcomponent
 
@@ -77,7 +83,9 @@ export class AdminDashboardComponent {
 
   bookListToDisplay: any[] = [];
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private router:Router, private authService:LoginServicesService) {
+    this.adminEmail =  this.authService.decodeToken(this.authService.getToken())["Email"];
+    
     this.GetAllBooks();
     this.GetAllGenres();
     this.GetAllBorrowed();
@@ -86,6 +94,7 @@ export class AdminDashboardComponent {
     this.GetAllLogs();
     this.GetAllNotifications();
     this.GetAllReservations();
+    this.GetAllConsumerQueries();
 
     this.bookExplorerForm = new FormGroup({
       searchInput: new FormControl('')
@@ -111,6 +120,7 @@ export class AdminDashboardComponent {
       this.displayAddBookForm = false;
       this.displayUpdateBookForm = false;
       this.displayRemovekForm = false;
+      this.displayContactUsQueries = false;
     }
 
     else if (filterType == 'genre') {
@@ -127,6 +137,7 @@ export class AdminDashboardComponent {
       this.displayAddBookForm = false;
       this.displayUpdateBookForm = false;
       this.displayRemovekForm = false;
+      this.displayContactUsQueries = false;
     }
     else if (filterType == 'borrowed') {
       this.GetAllBorrowed();
@@ -142,6 +153,7 @@ export class AdminDashboardComponent {
       this.displayAddBookForm = false;
       this.displayUpdateBookForm = false;
       this.displayRemovekForm = false;
+      this.displayContactUsQueries = false;
     }
     else if (filterType == 'fines') {
       this.GetAllFines();
@@ -157,6 +169,7 @@ export class AdminDashboardComponent {
       this.displayAddBookForm = false;
       this.displayUpdateBookForm = false;
       this.displayRemovekForm = false;
+      this.displayContactUsQueries = false;
     }
     else if (filterType == 'users') {
       this.GetAllUsers();
@@ -173,6 +186,7 @@ export class AdminDashboardComponent {
       this.displayAddBookForm = false;
       this.displayUpdateBookForm = false;
       this.displayRemovekForm = false;
+      this.displayContactUsQueries = false;
     }
     else if (filterType == 'logs') {
       this.GetAllLogs();
@@ -189,6 +203,7 @@ export class AdminDashboardComponent {
       this.displayAddBookForm = false;
       this.displayUpdateBookForm = false;
       this.displayRemovekForm = false;
+      this.displayContactUsQueries = false;
     }
     else if (filterType == 'notifications') {
 
@@ -207,6 +222,7 @@ export class AdminDashboardComponent {
       this.displayAddBookForm = false;
       this.displayUpdateBookForm = false;
       this.displayRemovekForm = false;
+      this.displayContactUsQueries = false;
     }
     else if (filterType == 'reservations') {
       this.GetAllReservations();
@@ -223,6 +239,7 @@ export class AdminDashboardComponent {
       this.displayAddBookForm = false;
       this.displayUpdateBookForm = false;
       this.displayRemovekForm = false;
+      this.displayContactUsQueries = false;
     }
     else if (filterType == 'addBook') {
       this.displayAddBookForm = true;
@@ -240,6 +257,7 @@ export class AdminDashboardComponent {
 
       this.displayUpdateBookForm = false;
       this.displayRemovekForm = false;
+      this.displayContactUsQueries = false;
     }
     else if (filterType == 'updateBook') {
       this.displayUpdateBookForm = true;
@@ -257,6 +275,7 @@ export class AdminDashboardComponent {
 
       this.displayAddBookForm = false;
       this.displayRemovekForm = false;
+      this.displayContactUsQueries = false;
     }
     else if (filterType == 'removeBook') {
       this.displayRemovekForm = true;
@@ -274,8 +293,27 @@ export class AdminDashboardComponent {
 
       this.displayUpdateBookForm = false;
       this.displayAddBookForm = false;
+      this.displayContactUsQueries = false;
     }
+    else if (filterType == 'consumerQueries') {
+      this.displayContactUsQueries = true;
 
+      this.displayRemovekForm = false;
+
+      this.displayReservationList = false;
+
+      this.displayGenreList = false;
+      this.displayBookList = false;
+      this.displayBorrowedList = false;
+
+      this.displayNotificationList = false;
+      this.displayUserList = false;
+      this.displayLogList = false;
+      this.displayFineList = false;
+
+      this.displayUpdateBookForm = false;
+      this.displayAddBookForm = false;
+    }
     else {
       this.displaySearchBox = false;
       this.displayBookList = false;
@@ -331,66 +369,33 @@ export class AdminDashboardComponent {
     })
 
   }
+
   GetAllReservations() {
     this.httpClient.get(Constant.BASE_URI + Constant.Get_Reservations).subscribe((result: any) => {
       this.reservationList = result.$values;
       console.log(result);
     })
-
   }
 
+  GetAllConsumerQueries() {
+    this.httpClient.get("https://localhost:7251/api/Admin/GetAllConsumerQueries").subscribe((result: any) => {
+      this.consumerQueriesList = result.$values;
+      console.log(result);
+    })
+  }
 
-  // onSubmit(){
-  //   if (this.filterTypeSelected == 'AddBook'){
+  acknowledgeConsumerQuery(queryId:string){
+    const formData = new FormData();
+    formData.append("queryId", queryId);
+    this.httpClient.post("https://localhost:7251/api/Admin/AcknowledgeConsumerQuery", formData).subscribe((result: any) => {
+      alert("Success!");
+      this.router.navigate(["/app-home"]);
+    },
+    (error)=>{
+      alert("Some error occured!");
+    });
+  }
 
-  //     // const bookId = this.bookExplorerForm?.get('searchInput')?.value;
-  //     // const formData = new FormData();
-  //     // formData.append('bookId', bookId);
-  //     // this.httpClient.post("https://localhost:7251/api/User/GetBookByBookId", formData).subscribe((result:any)=>{
-  //     //   this.bookListToDisplay = [result.value];
-  //     // });
-  //     // this.displayBookList = true;
-
-
-
-  // }
-
-  //   else if (this.filterTypeSelected == 'isbn'){
-  //     const isbn = this.bookExplorerForm?.get('searchInput')?.value;
-  //     const formData = new FormData();
-  //     formData.append('isbn', isbn);
-  //     this.httpClient.post("https://localhost:7251/api/User/GetBookByISBN", formData).subscribe((result:any)=>{
-  //       this.bookListToDisplay = [result.value];
-  //     });
-  //     this.displayBookList = true;
-  //   }
-  //   else if (this.filterTypeSelected == 'genre'){
-  //     const genreId = this.bookExplorerForm?.get('searchInput')?.value;
-  //     const formData = new FormData();
-  //     formData.append('genreId', genreId);
-  //     console.log(genreId);
-  //     this.httpClient.post("https://localhost:7251/api/User/GetBooksByGenre", formData).subscribe((result:any)=>{
-  //       console.log(result);
-  //       this.bookListToDisplay = result.value.$values;
-  //     });
-  //     this.displayBookList = true;
-  //   }
-  //   else if (this.filterTypeSelected == 'author'){
-  //     console.log("Book List to Display before Author:", this.bookListToDisplay, ", and is display true: ", this.displayBookList);
-  //     const authorName = this.bookExplorerForm?.get('searchInput')?.value;
-  //     const formData = new FormData();
-  //     formData.append('authorName', authorName);
-  //     console.log(authorName);
-  //     this.httpClient.post("https://localhost:7251/api/User/GetBooksByAuthor", formData).subscribe((result:any)=>{
-  //       console.log(result);
-  //       this.bookListToDisplay = result.value.$values;
-  //       console.log("Book List to Display after Author:", this.bookListToDisplay, ", and is display true: ", this.displayBookList);
-  //     });
-  //     this.displayBookList = true;
-  //   }
-  // }
-  //***********************************************working new code******************************************************************* */
-  //AddBookSubmit Correct Code is working in html 294 line
   onBookAdd(addbookForm: any): void {
     if (addbookForm.valid) {
       const apiUrl = 'https://localhost:7251/api/Admin/AddBook'; // Replace with your actual API URL

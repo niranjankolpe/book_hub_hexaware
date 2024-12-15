@@ -3,7 +3,7 @@ using Book_Hub_Web_API.Data;
 using Microsoft.EntityFrameworkCore;
 using Book_Hub_Web_API.Data.DTO;
 using System.Net;
-
+using Book_Hub_Web_API.Data.Enums;
 
 namespace Book_Hub_Web_API.Repositories
 {
@@ -152,7 +152,30 @@ namespace Book_Hub_Web_API.Repositories
 
         }
 
-         
+        public async Task<List<ContactUs>> GetAllConsumerQueries()
+        {
+            List<ContactUs> queries = await _DBContext.ContactUs.ToListAsync();
+            if (queries.Count < 1)
+            {
+                throw new Exception("No consumer queries found!");
+            }
+            return queries;
+        }
+
+        public async Task<ContactUs> AcknowledgeConsumerQuery(int queryId)
+        {
+            ContactUs query = await _DBContext.ContactUs.FirstAsync(c => c.QueryId == queryId);
+            if (query == null)
+            {
+                throw new Exception($"No consumer query with Query ID: {queryId} found!");
+            }
+            query.Query_Status = Contact_Us_Query_Status.Acknowledged;
+
+            _DBContext.ContactUs.Update(query);
+            await _DBContext.SaveChangesAsync();
+            
+            return query;
+        }
 
         public async Task<Books> RemoveBook(int bookId)
         {
@@ -160,9 +183,7 @@ namespace Book_Hub_Web_API.Repositories
             try
             {
 
-                var book = await _DBContext.Books
-                                    .Where(b => b.BookId == bookId)
-                                    .FirstOrDefaultAsync();
+                var book = await _DBContext.Books.Where(b => b.BookId == bookId).FirstOrDefaultAsync();
                 if (book == null)
                 {
                     throw new KeyNotFoundException("Book not found.");

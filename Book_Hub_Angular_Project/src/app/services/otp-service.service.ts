@@ -13,7 +13,7 @@ export class OtpServiceService {
   userFormData: any;
   generatedOTP: any;
 
-  forgotPasswordOTP:any;
+  forgotPasswordOTP: any;
 
   constructor(private httpClient: HttpClient, private router: Router) {
     this.otpValidationForm = new FormGroup({
@@ -26,21 +26,18 @@ export class OtpServiceService {
 
     const formD = new FormData();
     formD.append("emailAddress", this.userFormData.get("Email"));
-
-    var genVal;
+    console.log("Sending otp for email: ", formD.get("emailAddress"));
     this.httpClient.post("https://localhost:7251/api/Home/GenerateOTP", formD).subscribe((result: any) => {
-      genVal = result.value;
       console.log("Got OTP value: ", result.value);
-      this.generatedOTP = genVal;
-    console.log("Got temp gen val: ", genVal);
-    console.log("Got Generated value: ", this.generatedOTP);
+      this.generatedOTP = result.value;
+      console.log("Got Generated value: ", this.generatedOTP);
     });
-    
+
     // console.log("Email to send: ", this.userFormData.get("Email"));
     // this.generatedOTP = "randomstring";
   }
 
-  sendForgotPassOTP(emailAddress:string){
+  sendForgotPassOTP(emailAddress: string) {
     var formData = new FormData();
     formData.append('emailAddress', emailAddress);
     console.log("Have email address:", emailAddress);
@@ -50,16 +47,16 @@ export class OtpServiceService {
     });
   }
 
-  validateForgotPassOTP(otp:any){
-    if (this.forgotPasswordOTP == otp){
+  validateForgotPassOTP(otp: any) {
+    if (this.forgotPasswordOTP == otp) {
       return true;
     }
-    else{
+    else {
       return false;
-    } 
+    }
   }
 
-  sendDeleteOTP(emailAddress:any){
+  sendDeleteOTP(emailAddress: any) {
     const formD = new FormData();
     formD.append("emailAddress", emailAddress);
 
@@ -68,22 +65,21 @@ export class OtpServiceService {
       genVal = result.value;
       console.log("Got OTP value: ", result.value);
       this.generatedOTP = genVal;
-    console.log("Got temp gen val: ", genVal);
-    console.log("Got Generated value: ", this.generatedOTP);
+      console.log("Got temp gen val: ", genVal);
+      console.log("Got Generated value: ", this.generatedOTP);
     });
   }
 
-  validateOTP(otp:any):boolean {
-    if (this.generatedOTP == otp){
+  validateOTP(otp: any): boolean {
+    if (this.generatedOTP == otp) {
       return true;
     }
-    else{
+    else {
       return false;
     }
   }
 
   createUser() {
-    alert("Successfully created user");
     this.httpClient.post("https://localhost:7251/api/Home/CreateUser", this.userFormData).subscribe((result: any) => {
       console.log("Got a response from Create/Register API as: ", result);
       alert("Success");

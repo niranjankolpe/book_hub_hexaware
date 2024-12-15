@@ -38,11 +38,15 @@ go
 select * from Books;
 select * from Genres;
 select * from Users;
-select * from LogUserActivity;
+select * from LogUserActivity where LogId>60;
 select * from Borrowed;
 select * from Fines;
-select * from Notifications where UserId=4;
+select * from Notifications;
 select * from Reservations;
+select * from ContactUs;
 go
 
-update Users set Role='Administrator' where UserId=1;
+-- delete from Users where UserId<6;
+
+update Users set Role='Consumer' where UserId=10;
+update Users set Role='Administrator' where UserId=11;

@@ -97,19 +97,6 @@ namespace Book_Hub_Web_API.Controllers
             try
             {
                 var borrowed = await _userRepository.BorrowBook(bookId, userId);
-
-                Notifications notification = new Notifications()
-                {
-                    UserId = userId,
-                    MessageType = Notification_Type.Borrowed_Book_Related,
-                    MessageDescription = "Enjoy borrowed book!",
-                    SentDate = DateOnly.FromDateTime(DateTime.Now)
-                };
-
-                _emailService.SendEmail(["trialofdjango@gmail.com"], notification.MessageType.ToString(), notification.MessageDescription.ToString());
-
-                //_notificationService.SendNotification(userId, Notification_Type.Borrowed_Book_Related, $"Borrowed Successfully! Borrow ID: {borrowed.BorrowId}, Book ID: {borrowed.BookId}");
-
                 return Ok(new JsonResult(borrowed));
             }
             catch (Exception ex)
@@ -184,7 +171,7 @@ namespace Book_Hub_Web_API.Controllers
 
         [Route("ResetPassword")]
         [HttpPatch]
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "Consumer,Administrator")]
         public async Task<IActionResult> ResetPassword([FromForm] [Bind("UserId", "Email", "OldPassword", "NewPassword")] Reset_Password_DTO reset_password_dto)
         {
             try
@@ -212,18 +199,8 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
-
                 var notificationRecords = await _userRepository.GetNotificationsByUserId(userId);
-
-
-                if (notificationRecords == null || !notificationRecords.Any())
-                {
-
-                    return NotFound(new { Message = "No Notification records found for the specified user." });
-                }
                 return Ok(new JsonResult(notificationRecords));
-
-
             }
             catch (Exception ex)
             {
@@ -238,17 +215,8 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
-
                 var reservationRecords = await _userRepository.GetReservationsByUserId(userId);
-
-                if (reservationRecords == null || !reservationRecords.Any())
-                {
-
-                    return NotFound(new { Message = "No Reservation records found for the specified user." });
-                }
                 return Ok(new JsonResult(reservationRecords));
-
-
             }
             catch (Exception ex)
             {
@@ -263,17 +231,8 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
-
                 var borrowedRecords = await _userRepository.GetBorrowedByUserId(userId);
-                if (borrowedRecords == null || !borrowedRecords.Any())
-                {
-
-                    return NotFound(new { Message = "No borrowed records found for the specified user." });
-                }
-
                 return Ok(new JsonResult(borrowedRecords));
-
-
             }
             catch (Exception ex)
             {
@@ -281,20 +240,21 @@ namespace Book_Hub_Web_API.Controllers
             }
         }
 
-
-        //[Route("GetFinesByUserId")]
-        //[HttpPost]
-        //public async Task<IActionResult> GetFinesByUserId(int userId)
-        //{
-        //    try
-        //    {
-        //        var fines = await _userRepository.GetFinesByUserId(userId);
-        //        return Ok(new JsonResult(fines));
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //}
+        /*
+        [Route("GetFinesByUserId")]
+        [HttpPost]
+        public async Task<IActionResult> GetFinesByUserId(int userId)
+        {
+            try
+            {
+                var fines = await _userRepository.GetFinesByUserId(userId);
+                return Ok(new JsonResult(fines));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        */
     }
 }

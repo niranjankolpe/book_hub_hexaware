@@ -5,6 +5,7 @@ using Book_Hub_Web_API.Data.DTO;
 using Book_Hub_Web_API.Data.Enums;
 using Book_Hub_Web_API.Models;
 using Book_Hub_Web_API.Repositories;
+using Book_Hub_Web_API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -18,12 +19,16 @@ namespace BookHubTestProject.Tests
 
         private Mock<IUserRepository> _userRepository;
 
+        private Mock<IEmailService> _mailService;
+
         [SetUp]
         public void Setup()
         {
             _userRepository = new Mock<IUserRepository>();
 
-            _userController = new UserController(_userRepository.Object);
+            _mailService = new Mock<IEmailService>();
+
+            _userController = new UserController(_userRepository.Object, _mailService.Object);
         }
 
         [Test]
@@ -673,17 +678,5 @@ namespace BookHubTestProject.Tests
             Assert.That(exceptionMessage, Is.EqualTo(badRequestObjectResult?.Value));
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

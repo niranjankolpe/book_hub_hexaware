@@ -9,6 +9,8 @@ namespace Book_Hub_Web_API.Data.DTO
         public string? Email { get; set; }
 
         [Required]
+        [MinLength(8)]
+        [MaxLength(20)]
         public string? PasswordHash { get; set; }
 
     }

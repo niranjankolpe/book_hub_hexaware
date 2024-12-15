@@ -1,15 +1,22 @@
 <div class="contact-us-form">
-    <h2>Contact Us</h2><br>
-    <form #contactUsForm (submit)="onSubmit()">
+    <h2>Contact Us cum Complaint cum Feedback Form</h2><br>
+
+    <form [formGroup]="contactUsForm" (submit)="onSubmit()">
+        <label for="emailAddress">Enter your Email:</label>
+        <input type="text" formControlName="emailAddress"><br>
+
         <label for="queryType">Select query type:</label>
-        <select name="queryType" id="queryType" [(ngModel)]="query.type" required>
-            <option value="1">Complaint</option>
-            <option value="2">Feeback</option>
-            <option value="3">Suggestion</option>
-        </select><br><br>
+        <select formControlName="queryType">
+            <option value="0">Complaint</option>
+            <option value="1">Feeback</option>
+            <option value="2">Suggestion</option>
+        </select><br>
 
         <label for="queryDescription">Enter your thougths:</label>
-        <textarea name="queryDescription" id="queryDescription" [(ngModel)]="query.description"></textarea><br><br>
-        <button class="btn btn-primary" type="submit" [disabled]="">Submit</button>
-    </form>
+        <textarea formControlName="queryDescription"></textarea><br><br>
+
+        <button class="btn btn-primary" type="submit">Submit</button>
+    </form><br><br>
+
+    Contact Us at:<br>Email: nonexistentmail&#64;bookhub.com<br>Phone: 9999999999
 </div>

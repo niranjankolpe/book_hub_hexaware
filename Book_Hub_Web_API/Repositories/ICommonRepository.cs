@@ -18,9 +18,10 @@ namespace Book_Hub_Web_API.Repositories
 
         Task<Users> UpdateUser(UpdateUser_DTO updateUser_DTO);
 
-        Task<string> DeleteUser(int userId);
+        Task<Users> DeleteUser(int userId);
 
-        Task<string> ForgotPassword(string emailAddress, string newPassword);
+        Task<Users> ForgotPassword(string emailAddress, string newPassword);
 
+        Task<ContactUs> AddContactUsQuery(Contact_Us_DTO contact_Us_DTO);
     }
 }

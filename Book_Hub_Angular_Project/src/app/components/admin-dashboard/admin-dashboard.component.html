@@ -1,7 +1,8 @@
 <div style="text-align: center;">
     <br>
-    <h4>Welcome</h4>
+    <h4>Welcome {{adminEmail}}</h4><br>
 
+    <button class="btn btn-primary" (click)="ApplyFilter('all')">Books</button>
     <button class="btn btn-primary" (click)="ApplyFilter('genre')">Genre</button>
     <button class="btn btn-primary" (click)="ApplyFilter('borrowed')">Borrowed</button>
     <button class="btn btn-primary" (click)="ApplyFilter('fines')">Fines</button>
@@ -9,44 +10,20 @@
     <button class="btn btn-primary" (click)="ApplyFilter('logs')">UsersLogsActivity</button>
     <button class="btn btn-primary" (click)="ApplyFilter('notifications')">Notifications</button>
     <button class="btn btn-primary" (click)="ApplyFilter('reservations')">Reservations</button>
-    <button class="btn btn-primary" (click)="ApplyFilter('all')">Books</button>
+    <button class="btn btn-primary" (click)="ApplyFilter('consumerQueries')">Consumer Queries</button>
     <button class="btn btn-primary" (click)="ApplyFilter('addBook')">AddBooks</button>
     <button class="btn btn-primary" (click)="ApplyFilter('updateBook')">UpdateBook</button>
     <button class="btn btn-primary" (click)="ApplyFilter('removeBook')">RemoveBook</button>
     <br><br>
 
-    <div name="searchBox" *ngIf="displaySearchBox" [ngSwitch]="filterTypeSelected" style="border: 1px red solid;">
-        <!-- <form [formGroup]="bookExplorerForm" (submit)="onSubmit()">
-
-            <label *ngSwitchCase="'bookId'" for="searchInput" style="margin-right: 5px;">Enter Book ID: </label>
-            <input *ngSwitchCase="'bookId'" type="search" name="searchInput" formControlName="searchInput"
-                style="margin-right: 5px;">
-
-            <label *ngSwitchCase="'isbn'" for="searchInput" style="margin-right: 5px;">Enter ISBN Number: </label>
-            <input *ngSwitchCase="'isbn'" type="search" name="searchInput" formControlName="searchInput"
-                style="margin-right: 5px;">
-
-            <label *ngSwitchCase="'genre'" for="searchInput" style="margin-right: 5px;">Get All Genre: </label>
-            <select *ngSwitchCase="'genre'" name="searchInput" formControlName="searchInput">
-                <option *ngFor="let genre of genreList" [value]="genre.genreId">{{genre.name}}</option>
-            </select>
-
-
-            <button class="btn btn-secondary" type="submit">Search</button>
-        </form> -->
-    </div>
-
-
-
-    <div class="container" name="genreListToDisplay" id="genreListToDisplay" *ngIf="displayGenreList"
-        style="border: 1px green solid ">
+    <div class="container" name="genreListToDisplay" id="genreListToDisplay" *ngIf="displayGenreList">
         <table class="table">
             <thead>
                 <tr>
                     <th scope="col">Sr. No.</th>
                     <th scope="col">Name</th>
                     <th scope="col">Description</th>
-                    <th scope="col">Action</th>
+                    <!-- <th scope="col">Action</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -55,19 +32,17 @@
                     <td>{{genre.genreId}}</td>
                     <td>{{genre.name}}</td>
                     <td>{{genre.description}}</td>
-                    <td>
+                    <!-- <td>
                         <form onsubmit="alert('This facility is not available yet!'); return false;"><input
                                 class="btn btn-secondary" type="submit" value="Delete"></form>
-                    </td>
-
+                    </td> -->
                 </tr>
                 }
             </tbody>
         </table>
     </div>
 
-    <div class="container" name="borrowedListToDisplay" id="borrowedListToDisplay" *ngIf="displayBorrowedList"
-        style="border: 1px green solid ">
+    <div class="container" name="borrowedListToDisplay" id="borrowedListToDisplay" *ngIf="displayBorrowedList">
         <table class="table">
             <thead>
                 <tr>
@@ -78,7 +53,7 @@
                     <th scope="col">ReturnDeadline</th>
                     <th scope="col">ReturnDate</th>
                     <th scope="col">BorrowStatus</th>
-                    <th scope="col">Action</th>
+                    <!-- <th scope="col">Action</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -91,11 +66,10 @@
                     <td>{{borrowed.returnDeadline}}</td>
                     <td>{{borrowed.returnDate}}</td>
                     <td>{{borrowed.borrowStatus}}</td>
-                    <td>
+                    <!-- <td>
                         <form onsubmit="alert('This facility is not available yet!'); return false;"><input
                                 class="btn btn-secondary" type="submit" value="Delete"></form>
-                    </td>
-
+                    </td> -->
                 </tr>
                 }
             </tbody>
@@ -104,8 +78,7 @@
 
 
     <!-- //Fines table -->
-    <div class="container" name="finesListToDisplay" id="finesListToDisplay" *ngIf="displayFineList"
-        style="border: 1px green solid ">
+    <div class="container" name="finesListToDisplay" id="finesListToDisplay" *ngIf="displayFineList">
         <table class="table">
             <thead>
                 <tr>
@@ -133,10 +106,8 @@
         </table>
     </div>
 
-    <!-- //UsersTable -->
-
-    <div class="container" name="usersListToDisplay" id="usersListToDisplay" *ngIf="displayUserList"
-        style="border: 1px green solid ">
+    <!-- Users Table -->
+    <div class="container" name="usersListToDisplay" id="usersListToDisplay" *ngIf="displayUserList">
         <table class="table">
             <thead>
                 <tr>
@@ -168,9 +139,7 @@
 
 
     <!-- //LogActivityTable -->
-
-    <div class="container" name="logListToDisplay" id="logListToDisplay" *ngIf="displayLogList"
-        style="border: 1px green solid ">
+    <div class="container" name="logListToDisplay" id="logListToDisplay" *ngIf="displayLogList">
         <table class="table">
             <thead>
                 <tr>
@@ -178,8 +147,6 @@
                     <th scope="col">UserId</th>
                     <th scope="col">ActionType</th>
                     <th scope="col">TimeStamp</th>
-
-
                 </tr>
             </thead>
             <tbody>
@@ -196,10 +163,8 @@
     </div>
 
 
-    <!-- //NotificationsTable -->
-
-    <div class="container" name="notificationsListToDisplay" id="notificationsListToDisplay"
-        *ngIf="displayNotificationList" style="border: 1px green solid ">
+    <!-- Notifications Table -->
+    <div class="container" name="notificationsListToDisplay" id="notificationsListToDisplay" *ngIf="displayNotificationList">
         <table class="table">
             <thead>
                 <tr>
@@ -208,8 +173,6 @@
                     <th scope="col">MessageType</th>
                     <th scope="col">MessageDescription</th>
                     <th scope="col">SentDate</th>
-
-
                 </tr>
             </thead>
             <tbody>
@@ -226,12 +189,8 @@
         </table>
     </div>
 
-
-
-    <!-- //ReservationsTable -->
-
-    <div class="container" name="reservationsListToDisplay" id="reservationsListToDisplay"
-        *ngIf="displayReservationList" style="border: 1px green solid ">
+    <!-- Reservations Table -->
+    <div class="container" name="reservationsListToDisplay" id="reservationsListToDisplay" *ngIf="displayReservationList">
         <table class="table">
             <thead>
                 <tr>
@@ -242,8 +201,6 @@
                     <th scope="col">ExpectedAvailabilityDate</th>
                     <th scope="col">ReservationExpiryDate</th>
                     <th scope="col">ReservationStatus</th>
-
-
                 </tr>
             </thead>
             <tbody>
@@ -261,7 +218,8 @@
             </tbody>
         </table>
     </div>
-    <!-- //BooksList -->
+
+    <!-- Books Table -->
     <div class="container" name="bookListToDisplay" id="bookListToDisplay" *ngIf="displayBookList">
         <table class="table">
             <thead>
@@ -272,7 +230,6 @@
                     <th scope="col">Author</th>
                     <th scope="col">AvailableQuantity</th>
                     <th scope="col">Genre ID</th>
-
                 </tr>
             </thead>
             <tbody>
@@ -284,15 +241,45 @@
                     <td>{{book.author}}</td>
                     <td>{{book.availableQuantity}}</td>
                     <td>{{book.genreId}}</td>
-
                 </tr>
                 }
             </tbody>
         </table>
     </div>
 
-    <!-- ***************************************//AddBook  CotrrectCode******************************************************-->
+    <!-- Consumer Queries Table -->
+    <div class="container" name="consumerQueriesList" id="consumerQueriesList" *ngIf="displayContactUsQueries">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Query ID</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Query Type</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Created Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Acknowledge</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (query of consumerQueriesList; track $index) {
+                <tr>
+                    <td>{{query.queryId}}</td>
+                    <td>{{query.email}}</td>
+                    <td>{{query.query_Type}}</td>
+                    <td>{{query.description}}</td>
+                    <td>{{query.queryCreatedDate}}</td>
+                    <td>{{query.query_Status}}</td>
+                    <td>
+                        <button *ngIf="query.query_Status != 1" (click)="acknowledgeConsumerQuery(query.queryId)" class="btn btn-secondary">Acknowledge</button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 
+    <!-- Add Book Form -->
     <div *ngIf="displayAddBookForm == true" class="AddBook-form">
         <form #addbookForm="ngForm" (ngSubmit)="onBookAdd(addbookForm)">
             <div>
@@ -340,21 +327,15 @@
                 <label for="totalquantity">TotalQuantity:</label>
                 <input type="text" id="totalquantity" name="totalquantity" [(ngModel)]="book.TotalQuantity" required />
             </div>
-
-
             <div>
                 <label for="genreid">GenreId:</label>
                 <input type="text" id="genreid" name="genreid" [(ngModel)]="book.GenreId" required />
             </div>
-
             <button type="submit">Submit</button>
         </form>
     </div>
 
-
-    <!-- //UpdateBookForm -->
-    <!-- //Correct Code is working -->
-    
+    <!-- Update Book Form -->
     <div *ngIf="displayUpdateBookForm == true" class="updatebook-form">
         <form #updatebookForm="ngForm" (ngSubmit)="onBookUpdate(updatebookForm)">
             <div>
@@ -375,7 +356,7 @@
         </form>
     </div>
 
-    <!-- //Remove book -->
+    <!-- Remove Book Form -->
     <div *ngIf="displayRemovekForm == true" class="removebook-form">
         <form #removebookForm="ngForm" (ngSubmit)="onBookRemove(removebookForm)">
             <div>
@@ -385,8 +366,4 @@
             <button type="submit">Submit</button>
         </form>
     </div>
-
-
-
-
 </div>

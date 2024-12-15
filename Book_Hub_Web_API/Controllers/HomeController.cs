@@ -17,7 +17,6 @@ namespace Book_Hub_Web_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Roles = "Consumer,Administrator")]
     public class HomeController : ControllerBase
     {
         private ICommonRepository _commonRepository;
@@ -33,16 +32,8 @@ namespace Book_Hub_Web_API.Controllers
             _emailService = emailService;
         }
 
-        //public HomeController(ICommonRepository commonRepository, IConfiguration configuration)
-        //{
-        //    _commonRepository = commonRepository;
-        //    _configuration = configuration;
-        //}
-
         [Route("GetAllBooks")]
         [HttpGet]
-        //[Authorize(Roles = "Consumer")]
-        //[Authorize(Roles = "Administrator")]
         [AllowAnonymous]
         public async Task<IActionResult> GetAllBooks()
         {
@@ -60,10 +51,11 @@ namespace Book_Hub_Web_API.Controllers
         [Route("GenerateOTP")]
         [HttpPost]
         [AllowAnonymous]
-        public JsonResult GenerateOTP([FromForm] string emailAddress)
+        public JsonResult GenerateOTP([FromForm] [Bind("emailAddress")] string emailAddress)
         {
             Random random = new Random();
             string otp = random.Next(100000, 999999).ToString();
+            Debug.WriteLine("\n\nGot email address to send mail is: ", emailAddress, "\n\n");
 
             _emailService.SendEmail([emailAddress], Notification_Type.Account_Related.ToString(), $"Your OTP for Book Hub Platform is: {otp}");
 
@@ -74,12 +66,19 @@ namespace Book_Hub_Web_API.Controllers
         [Route("Validate")]
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Validate([FromForm] Validate_User_DTO validate_User_DTO)
+        public async Task<IActionResult> Validate([FromForm][Bind("Email", "PasswordHash")] Validate_User_DTO validate_User_DTO)
         {
             try
             {
-                Users result = await _commonRepository.ValidateUser(validate_User_DTO);
-                return Ok(result);
+                if (ModelState.IsValid)
+                {
+                    Users result = await _commonRepository.ValidateUser(validate_User_DTO);
+                    return Ok(result);
+                }
+                else
+                {
+                    return BadRequest("Invalid input format!");
+                }
             }
             catch (Exception ex)
             {
@@ -94,6 +93,11 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
                 Users user = await _commonRepository.ValidateUser(validate_User_DTO);
                 List<Claim> claims = new List<Claim>()
                 {
@@ -153,6 +157,7 @@ namespace Book_Hub_Web_API.Controllers
                     await Task.Delay(100);
 
                     var user = await _commonRepository.CreateUser(create_User_DTO);
+                    _emailService.SendEmail([user.Email], Notification_Type.Account_Related.ToString(), $"Welcome to Book Hub, Dear {user.Name}");
                     return Ok(new JsonResult(user));
                 }
                 else
@@ -169,16 +174,24 @@ namespace Book_Hub_Web_API.Controllers
         [Route("UpdateUser")]
         [HttpPatch]
         [Authorize(Roles = "Consumer,Administrator")]
-        public async Task<Users> UpdateUser( [FromForm][Bind("UserId", "Name", "Phone", "Address")] UpdateUser_DTO updateUser_DTO)
+        public async Task<IActionResult> UpdateUser( [FromForm][Bind("UserId", "Name", "Phone", "Address")] UpdateUser_DTO updateUser_DTO)
         {
             try
             {
-                Users u = await _commonRepository.UpdateUser(updateUser_DTO);
-                return u;
+                if (ModelState.IsValid)
+                {
+                    Users u = await _commonRepository.UpdateUser(updateUser_DTO);
+                    _emailService.SendEmail([u.Email], Notification_Type.Account_Related.ToString(), $"Dear {u.Name}, Successfully Updated your Account details at Book Hub!");
+                    return Ok(u);
+                }
+                else
+                {
+                    return BadRequest("One or more input values are invalid!");
+                }
             }
-            catch(Exception)
+            catch(Exception ex)
             {
-                return new Users();
+                return BadRequest(ex.Message);
             }
         }
 
@@ -190,8 +203,9 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
-                var result = await _commonRepository.DeleteUser(userId);
-                return Ok(new JsonResult(result));
+                var temporaryUser = await _commonRepository.DeleteUser(userId);
+                _emailService.SendEmail([temporaryUser.Email], Notification_Type.Account_Related.ToString(), $"Dear {temporaryUser.Name},\n\nSuccessfully Deleted your Account details at Book Hub!\n\nSorry to see you go :(\n\nRegards,\nBook Hub");
+                return Ok(new JsonResult(temporaryUser));
             }
             catch(Exception ex) { 
                 return BadRequest(ex.Message);
@@ -205,8 +219,7 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
-                //Debug.WriteLine("\n\nEmail Address: ", emailAddress, "\n\n");
-                var password = await _commonRepository.ForgotPassword(emailAddress, newPassword);
+                var user = await _commonRepository.ForgotPassword(emailAddress, newPassword);
                 _emailService.SendEmail([emailAddress], Notification_Type.Account_Related.ToString(), $"Your password was Updated Successfully!");
                 return Ok(new JsonResult(value: "Password successfully Updated!"));
             }
@@ -214,6 +227,15 @@ namespace Book_Hub_Web_API.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [Route("AddContactUsQuery")]
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> AddContactUsQuery([FromForm][Bind("Email", "Query_Type", "Description")] Contact_Us_DTO contact_Us_DTO)
+        {
+            var contact_us = await _commonRepository.AddContactUsQuery(contact_Us_DTO);
+            return Ok(new JsonResult(value: "Query submitted successfully!"));
         }
     }
 }

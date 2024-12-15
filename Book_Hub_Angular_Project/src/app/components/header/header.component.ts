@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 export class HeaderComponent {
   userToken: any;
   displayUserInHeader: boolean = false;
+  displayRegistrationInHeader: boolean = true;
   roleBasedDashboard: any;
   userRole: any;
 
@@ -23,10 +24,12 @@ export class HeaderComponent {
       this.userToken = this.authService.getToken();
       if (this.userToken == null) {
         this.displayUserInHeader = false;
+        this.displayRegistrationInHeader = true;
       }
       else {
         this.userToken = this.authService.decodeToken(this.userToken);
         this.displayUserInHeader = true;
+        this.displayRegistrationInHeader = false;
         this.userRole = this.userToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
 
         if (this.userRole == "Administrator") {
@@ -49,6 +52,9 @@ export class HeaderComponent {
         else if (event.urlAfterRedirects === '/app-login' && this.userToken != null) {
           this.router.navigate([this.roleBasedDashboard]);
         }
+        else if (event.urlAfterRedirects === '/app-user-register-form' && this.userToken != null) {
+          this.router.navigate([this.roleBasedDashboard]);
+        }
       }
     });
   }
@@ -58,7 +64,9 @@ export class HeaderComponent {
   }
 
   logout() {
-    this.authService.logout();
+    this.authService.logout().subscribe((result:any)=>{
+      console.log("Logged out result: ",result);
+    });
     this.authService.removeToken();
     this.router.navigate(["app-home"]);
     alert("Logged out successfully!");

@@ -10,8 +10,8 @@ namespace Book_Hub_Web_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize(Roles = "Administrator")]
-    [AllowAnonymous]
+    [Authorize(Roles = "Administrator")]
+    //[AllowAnonymous]
     public class AdminController : ControllerBase
     {
         private IAdminRepository _adminRepository;
@@ -200,7 +200,37 @@ namespace Book_Hub_Web_API.Controllers
             }
         }
 
+        [Route("GetAllConsumerQueries")]
+        [HttpGet]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> GetAllConsumerQueries()
+        {
+            try
+            {
+                var queries = await _adminRepository.GetAllConsumerQueries();
+                return Ok(queries);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"An error occurred: {ex.Message}" });
+            }
+        }
 
+        [Route("AcknowledgeConsumerQuery")]
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> AcknowledgeConsumerQuery([FromForm]int queryId)
+        {
+            try
+            {
+                var query = await _adminRepository.AcknowledgeConsumerQuery(queryId);
+                return Ok(query);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = $"An error occurred: {ex.Message}" });
+            }
+        }
 
         [Route("RemoveBook")]
         [HttpPatch]

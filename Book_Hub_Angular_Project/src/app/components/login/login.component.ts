@@ -3,47 +3,30 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginServicesService } from '../../services/login-services.service';
 import { Router } from '@angular/router';
-import { Constant } from '../../constants/constants';
 import { HttpClient } from '@angular/common/http';
 
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, RouterLink, RouterLinkActive],
+  imports: [ReactiveFormsModule, RouterLink, RouterLinkActive, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
   loginForm!: FormGroup;
-  constructor(private authS: LoginServicesService, private router: Router, public http: HttpClient) { }
-  ngOnInit(): void {
+
+  constructor(private authS: LoginServicesService, private router: Router, public http: HttpClient) {
+  }
+
+  ngOnInit() {
     this.loginForm = new FormGroup({
-      Email: new FormControl('', Validators.required),
-      PasswordHash: new FormControl('', Validators.required)
+      Email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+(?:\.[a-zA-Z0-9._%+-]+)*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]),
+      PasswordHash: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20)])
     });
   }
 
-  // onSubmit():void{
-  //   const Email=this.loginForm?.get('Email')?.value;
-  //   const PasswordHash = this.loginForm?.get('PasswordHash')?.value;
-  //   let token:any;
-  //   const formData = new FormData();
-  //   formData.append('Email',Email);
-  //   formData.append('PasswordHash',PasswordHash);
-
-  //   //call the API
-  //   //In Post Supply 1. URL and 2. Param
-  //    this.http.post(Constant.BASE_URI+Constant.LOGIN,formData).subscribe((result)=>{
-  //     token = result;
-  //    })
-  //   console.log("token is " ,token);
-  // //   this.authS.setToken(token);
-  // //  console.log( this.decodeToken(token));
-  // //   console.log("Token Expiry Date: ", this.authS.getTokenExpiry(token));
-
-
-  // }
   onSubmit(): void {
     if (this.loginForm.valid) {
       const Email = this.loginForm.get('Email')?.value;
@@ -51,19 +34,10 @@ export class LoginComponent {
 
       this.authS.login(Email, PasswordHash).subscribe({
         next: (token: string) => {
-          console.log('Token received:', token);
-          this.authS.setToken(token); // Store token in localStorage
-          //commonted morining decoded
-          var decodedToken = this.authS.decodeToken(token);
-          console.log("Decoded Token: ", decodedToken);
+          this.authS.setToken(token);
 
-
-          // console.log('Decoded token:', this.decodeToken(token));
-          const expiryDate = this.authS.getTokenExpiry(token);
-          console.log('Token expiry date:', expiryDate);
-
+          var decodedToken = this.authS.decodeToken(this.authS.getToken());
           var role = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-          console.log("Role: ", role);
           if (role == "Administrator") {
             this.router.navigate(['/app-admin-dashboard']);
           }
@@ -74,26 +48,20 @@ export class LoginComponent {
             this.router.navigate(['/app-home']);
             alert("Something went wrong while login!");
           }
-          //this.router.navigate(['/adashboard']); // Navigate to another route on success
         },
-        error: (err) => {
-          console.error('Login failed:', err);
-          alert('Login failed. Please check your credentials. If creds are ok, the problem is on our side');
+        error: (errorResponse) => {
+          if (errorResponse.status === 400){
+            alert(errorResponse.error);
+          }
+          else{
+            alert("Some error occured");
+            console.log(errorResponse.title);
+          }
         },
       });
-    } else {
-      alert('Please fill in the required fields.');
     }
-  }
-
-
-  decodeToken(token: any) {
-    const decodedToken = this.authS.decodeToken(token);
-    if (decodedToken) {
-      console.log('Decoded Token:', decodedToken);
-      // Now you can use the information in the token
-    } else {
-      console.log('No token found or unable to decode');
+    else {
+      alert('Invalid Input Format. Please recheck!');
     }
   }
 }

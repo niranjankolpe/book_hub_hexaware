@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OtpServiceService } from '../../services/otp-service.service';
 
@@ -12,79 +12,63 @@ import { OtpServiceService } from '../../services/otp-service.service';
   styleUrl: './user-register-form.component.css',
 })
 export class UserRegisterFormComponent {
-  // user form model
-  user = {
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    password: '',
-    confirmpassword: ''
-  };
+  registrationForm!: FormGroup;
+  otpValidationForm: FormGroup;
 
-  otpValidationForm!: FormGroup;
-  displayOTPForm:boolean = false;
-  generatedOTP:any;
+  displayOTPForm: boolean = false;
 
-  constructor(private httpClient: HttpClient, private router: Router, private otpService:OtpServiceService) {
+  constructor(private router: Router, private otpService: OtpServiceService) {
+    this.registrationForm = new FormGroup({
+      name: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]),
+      email: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+(?:\.[a-zA-Z0-9._%+-]+)*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]),
+      phone: new FormControl('', [Validators.required, Validators.pattern(/^[-+]?\d+$/), Validators.minLength(10), Validators.maxLength(10)]),
+      address: new FormControl('', Validators.required),
+      password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]),
+      confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20)])
+    });
+
     this.otpValidationForm = new FormGroup({
       otp: new FormControl('')
     });
   }
-  
-  fetcheduser: any = null;
 
   onSubmit() {
-    this.displayOTPForm = !this.displayOTPForm;
-    if (this.user.password !== this.user.confirmpassword) {
-      confirm("Passwords do not match!");
+    if (this.registrationForm.valid){
+      const password = this.registrationForm.get('password')?.value;
+      const confirmPassword = this.registrationForm.get('confirmPassword')?.value;
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+      }
+      else {
+        const dataToSubmit = new FormData();
+        const name = this.registrationForm.get('name')?.value;
+        const email = this.registrationForm.get('email')?.value;
+        const phone = this.registrationForm.get('phone')?.value;
+        const address = this.registrationForm.get('address')?.value;
+        
+        dataToSubmit.append('Name', name);
+        dataToSubmit.append('Email', email);
+        dataToSubmit.append('Phone', phone);
+        dataToSubmit.append('Address', address);
+        dataToSubmit.append('PasswordHash', password);
+        this.otpService.sendOTP(dataToSubmit);
+        this.displayOTPForm = !this.displayOTPForm;
+      }
     }
-    else {
-      // confirm("Details saved successfully!");
-      // location.replace('/app-home')
-      // console.log('User Details:', this.user);
-      // localStorage.setItem('UserDetails', JSON.stringify(this.user));
-
-      // Proceed with API Endpoint and data submission
-
-      // FromForm
-      const dataToSubmit = new FormData();
-      dataToSubmit.append('Name', this.user.name);
-      dataToSubmit.append('Email', this.user.email);
-      dataToSubmit.append('Phone', this.user.phone);
-      dataToSubmit.append('Address', this.user.address);
-      dataToSubmit.append('PasswordHash', this.user.password);
-
-      // FromBody
-      // const dataToSubmit = {
-      //   'Name': this.user.name,
-      //   'Email': this.user.email,
-      //   'Phone': this.user.phone,
-      //   'Address': this.user.address,
-      //   'PasswordHash': this.user.password
-      // };
-      console.log(this.user.name);
-      console.log(this.user.email);
-      console.log(this.user.phone);
-      console.log(this.user.address);
-      console.log(this.user.password);
-
-      this.otpService.sendOTP(dataToSubmit);
+    else{
+      alert("One or more inputs have invalid format. Please recheck!")
     }
   }
 
   validateOTP() {
     const otp = this.otpValidationForm.get('otp')?.value;
-    var result =  this.otpService.validateOTP(otp);
-    if (result == true){
+    var result = this.otpService.validateOTP(otp);
+    if (result == true) {
       this.otpService.createUser();
       this.router.navigate(["/app-login"]);
     }
-  }
-
-  fetchData() {
-    const storedEmployee = JSON.parse(localStorage.getItem('UserDetails') || '{}');
-    this.fetcheduser = storedEmployee;
-    console.log('Fetched User Data:', this.fetcheduser);
+    else{
+      alert("OTP does not match, try again!");
+    }
   }
 }

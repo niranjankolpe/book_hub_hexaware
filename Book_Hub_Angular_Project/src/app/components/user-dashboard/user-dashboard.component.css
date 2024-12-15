@@ -16,6 +16,18 @@ div>button {
   overflow-y: auto;
 }
 
+.otpValidationFormStyles:not(button) {
+  width: 400px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  font-size: 12px;
+  color: black;
+  overflow-y: auto;
+}
+
 label {
   display: block;
   margin: 10px 0 5px;
