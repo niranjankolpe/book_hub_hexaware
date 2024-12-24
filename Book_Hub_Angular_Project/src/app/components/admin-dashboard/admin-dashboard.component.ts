@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { Constant } from '../../constants/constants';
 import { GetAllGenreService } from '../../services/get-all-genre.service';
-import { FormControl, FormGroup, } from '@angular/forms';
+import { FormControl, FormGroup, Validators, } from '@angular/forms';
 import { NgForm } from '@angular/forms';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -15,13 +15,23 @@ import { LoginServicesService } from '../../services/login-services.service';
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css'
 })
-export class AdminDashboardComponent {
 
-  adminEmail:any;
+export class AdminDashboardComponent {
+  Fine_Type = Constant.Fine_Type;
+  Fine_Paid_Status = Constant.Fine_Paid_Status;
+  User_Role = Constant.User_Role;
+  Notification_Type = Constant.Notification_Type;
+  Action_Type = Constant.Action_Type;
+  Reservation_Status = Constant.Reservation_Status;
+  Contact_Us_Query_Type = Constant.Contact_Us_Query_Type;
+  Contact_Us_Query_Status = Constant.Contact_Us_Query_Status;
+  Borrow_Status = Constant.Borrow_Status;
+
+  adminEmail: any;
 
   bookExplorerForm: FormGroup;
   //AddBook
@@ -83,9 +93,9 @@ export class AdminDashboardComponent {
 
   bookListToDisplay: any[] = [];
 
-  constructor(private httpClient: HttpClient, private router:Router, private authService:LoginServicesService) {
-    this.adminEmail =  this.authService.decodeToken(this.authService.getToken())["Email"];
-    
+  constructor(private httpClient: HttpClient, private router: Router, private authService: LoginServicesService) {
+    this.adminEmail = this.authService.decodeToken(this.authService.getToken())["Email"];
+
     this.GetAllBooks();
     this.GetAllGenres();
     this.GetAllBorrowed();
@@ -98,6 +108,21 @@ export class AdminDashboardComponent {
 
     this.bookExplorerForm = new FormGroup({
       searchInput: new FormControl('')
+    });
+
+    this.addbookForm = new FormGroup({
+      isbn: new FormControl('', Validators.required),
+      title: new FormControl('', [Validators.required, Validators.pattern(/^[A-Za-z\s]+$/)]),
+      author: new FormControl('', [Validators.pattern(/^[A-Za-z\s]+$/)]),
+      publication: new FormControl('', [Validators.pattern(/^[A-Za-z\s]+$/)]),
+      publishedDate: new FormControl(''),
+      edition: new FormControl(''),
+      language: new FormControl('', [Validators.pattern(/^[A-Za-z\s]+$/)]),
+      description: new FormControl(''),
+      cost: new FormControl('', Validators.required),
+      availableQuantity: new FormControl('', Validators.required),
+      totalQuantity: new FormControl('', Validators.required),
+      genreId: new FormControl('', Validators.required),
     });
   }
 
@@ -384,51 +409,73 @@ export class AdminDashboardComponent {
     })
   }
 
-  acknowledgeConsumerQuery(queryId:string){
+  acknowledgeConsumerQuery(queryId: string) {
     const formData = new FormData();
     formData.append("queryId", queryId);
     this.httpClient.post("https://localhost:7251/api/Admin/AcknowledgeConsumerQuery", formData).subscribe((result: any) => {
       alert("Success!");
       this.router.navigate(["/app-home"]);
     },
-    (error)=>{
-      alert("Some error occured!");
-    });
+      (error) => {
+        alert("Some error occured!");
+      });
   }
-
-  onBookAdd(addbookForm: any): void {
-    if (addbookForm.valid) {
+  addbookForm!: FormGroup;
+  onBookAdd(): void {
+    if (this.addbookForm.valid) {
       const apiUrl = 'https://localhost:7251/api/Admin/AddBook'; // Replace with your actual API URL
 
       // Create FormData to send form data as a traditional form submission
       const formData = new FormData();
-      formData.append('Isbn', this.book.Isbn);
-      formData.append('Title', this.book.Title);
-      formData.append('Author', this.book.Author);
-      formData.append('Publication', this.book.Publication);
-      formData.append('PublishedDate', this.book.PublishedDate);
-      formData.append('Edition', this.book.Edition);
-      formData.append('Language', this.book.Language);
-      formData.append('Description', this.book.Description);
-      formData.append('Cost', this.book.Cost.toString());
-      formData.append('AvailableQuantity', this.book.AvailableQuantity.toString());
-      formData.append('TotalQuantity', this.book.TotalQuantity.toString());
-      formData.append('GenreId', this.book.GenreId);
+      const isbn = this.addbookForm.get("isbn")?.value;
+      const title = this.addbookForm.get("title")?.value;
+      const author = this.addbookForm.get("author")?.value;
+      const publication = this.addbookForm.get("publication")?.value;
+      const publishedDate = this.addbookForm.get("publishedDate")?.value;
+      const edition = this.addbookForm.get("edition")?.value;
+      const language = this.addbookForm.get("language")?.value;
+      const description = this.addbookForm.get("description")?.value;
+      const cost = this.addbookForm.get("cost")?.value;
+      const availableQuantity = this.addbookForm.get("availableQuantity")?.value;
+      const totalQuantity = this.addbookForm.get("totalQuantity")?.value;
+      const genreId = this.addbookForm.get("genreId")?.value;
 
-      // Send the POST request with FormData
-      this.httpClient.post(apiUrl, formData).subscribe({
-        next: (response) => {
-          console.log('Book added successfully:', response);
-          alert('Book added successfully!');
-          addbookForm.resetForm(); // Reset the form
-        },
-        error: (error) => {
-          console.error('Error adding book:', error);
-          alert('An error occurred while adding the book.');
-        },
+      formData.append('Isbn', isbn);
+      formData.append('Title', title);
+      formData.append('Author', author);
+      formData.append('Publication', publication);
+      formData.append('PublishedDate', publishedDate);
+      formData.append('Edition', edition);
+      formData.append('Language', language);
+      formData.append('Description', description);
+      formData.append('Cost', cost);
+      formData.append('AvailableQuantity', availableQuantity);
+      formData.append('TotalQuantity', totalQuantity);
+      formData.append('GenreId', genreId);
+
+      console.log("Got isbn as: ", isbn);
+      console.log("Got title as: ", title);
+      console.log("Got author as: ", author);
+      console.log("Got publication as: ", publication);
+      console.log("Got publishedDate as: ", publishedDate);
+      console.log("Got edition as: ", edition);
+      console.log("Got language as: ", language);
+      console.log("Got description as: ", description);
+      console.log("Got cost as: ", cost);
+      console.log("Got availableQuantity as: ", availableQuantity);
+      console.log("Got totalQuantity as: ", totalQuantity);
+      console.log("Got genreId as: ", genreId);
+
+      this.httpClient.post(apiUrl, formData).subscribe((result:any)=>{
+        alert("Successfully added Book!");
+      },
+      (error:any)=>{
+        alert("Unsuccessful to add new book!");
       });
+      this.displayAddBookForm = false;
+
     } else {
-      alert('Please fill out all required fields.');
+      alert('Invalid input for one or more fields');
     }
   }
 

@@ -15,6 +15,11 @@ import { ReactiveFormsModule } from '@angular/forms';
   styleUrl: './user-dashboard.component.css'
 })
 export class UserDashboardComponent {
+  Notification_Type = Constant.Notification_Type;
+  Borrow_Status = Constant.Borrow_Status;
+  Reservation_Status = Constant.Reservation_Status;
+  Fine_Type = Constant.Fine_Type;
+  Fine_Paid_Status = Constant.Fine_Paid_Status;
   userToken: any;
   userRole: any;
 
@@ -290,7 +295,8 @@ export class UserDashboardComponent {
     formData.append("userId", userId);
     this.httpClient.post("https://localhost:7251/api/User/GetNotificationsByUserId", formData).subscribe((result: any) => {
       this.notificationList = result.value.$values;
-      console.log(result);
+      console.log("Notifications by User: ", result);
+      console.log("Notifications by User: ", result.value.$values);
     });
   }
 

@@ -12,6 +12,8 @@ using System.Text;
 using Book_Hub_Web_API.Services;
 using Book_Hub_Web_API.Data.Enums;
 using System.Diagnostics;
+using log4net;
+using static System.Net.WebRequestMethods;
 
 namespace Book_Hub_Web_API.Controllers
 {
@@ -24,6 +26,8 @@ namespace Book_Hub_Web_API.Controllers
         private readonly IConfiguration _configuration;
 
         private IEmailService _emailService;
+
+        private static readonly ILog _logger = LogManager.GetLogger(typeof(HomeController));
 
         public HomeController(ICommonRepository commonRepository, IConfiguration configuration, IEmailService emailService)
         {
@@ -39,11 +43,14 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
+                _logger.Info($"Called:{nameof(GetAllBooks)}");
                 var books = await _commonRepository.GetAllBooks();
+                //_logger.Debug(nameof(GetAllBooks));
                 return Ok(books);
             }
             catch(Exception ex)
             {
+                _logger.Error($"{ex.GetType().Name}:{ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -53,13 +60,22 @@ namespace Book_Hub_Web_API.Controllers
         [AllowAnonymous]
         public JsonResult GenerateOTP([FromForm] [Bind("emailAddress")] string emailAddress)
         {
-            Random random = new Random();
-            string otp = random.Next(100000, 999999).ToString();
-            Debug.WriteLine("\n\nGot email address to send mail is: ", emailAddress, "\n\n");
+            try
+            {
+                // _logger.Info($"Called:{nameof(GenerateOTP)}");
+                Random random = new Random();
+                string otp = random.Next(100000, 999999).ToString();
+                Debug.WriteLine("\n\nGot email address to send mail is: ", emailAddress, "\n\n");
 
-            _emailService.SendEmail([emailAddress], Notification_Type.Account_Related.ToString(), $"Your OTP for Book Hub Platform is: {otp}");
+                _emailService.SendEmail([emailAddress], Notification_Type.Account_Related.ToString(), $"Your OTP for Book Hub Platform is: {otp}");
 
-            return new JsonResult(new { value = otp });
+                return new JsonResult(new { value = otp });
+            }
+            catch (Exception ex)
+            {
+                // _logger.Error($"{ex.GetType().Name}:{ex.Message}");
+                return new JsonResult(new { value = "Error" });
+            }
         }
 
 
@@ -70,6 +86,7 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
+                _logger.Info($"Called:{nameof(Validate)}");
                 if (ModelState.IsValid)
                 {
                     Users result = await _commonRepository.ValidateUser(validate_User_DTO);
@@ -82,6 +99,7 @@ namespace Book_Hub_Web_API.Controllers
             }
             catch (Exception ex)
             {
+                _logger.Error($"{ex.GetType().Name}:{ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -93,6 +111,7 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
+                // _logger.Info($"Called:{nameof(Login)}");
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
@@ -125,6 +144,7 @@ namespace Book_Hub_Web_API.Controllers
             }
             catch (Exception ex)
             {
+                // _logger.Error($"{ex.GetType().Name}:{ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -136,11 +156,13 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
+                // _logger.Info($"Called:{nameof(Logout)}");
                 await _commonRepository.Logout(userId);
                 return Ok();
             }
             catch(Exception ex)
             {
+                // _logger.Error($"{ex.GetType().Name}:{ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -152,6 +174,7 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
+                // _logger.Info($"Called:{nameof(CreateUser)}");
                 if (ModelState.IsValid)
                 {
                     await Task.Delay(100);
@@ -167,6 +190,7 @@ namespace Book_Hub_Web_API.Controllers
             }
             catch(Exception ex)
             {
+                // _logger.Error($"{ex.GetType().Name}:{ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -178,6 +202,7 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
+                // _logger.Info($"Called:{nameof(UpdateUser)}");
                 if (ModelState.IsValid)
                 {
                     Users u = await _commonRepository.UpdateUser(updateUser_DTO);
@@ -191,6 +216,7 @@ namespace Book_Hub_Web_API.Controllers
             }
             catch(Exception ex)
             {
+                // _logger.Error($"{ex.GetType().Name}:{ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -203,11 +229,14 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
+                // _logger.Info($"Called:{nameof(DeleteUser)}");
                 var temporaryUser = await _commonRepository.DeleteUser(userId);
                 _emailService.SendEmail([temporaryUser.Email], Notification_Type.Account_Related.ToString(), $"Dear {temporaryUser.Name},\n\nSuccessfully Deleted your Account details at Book Hub!\n\nSorry to see you go :(\n\nRegards,\nBook Hub");
                 return Ok(new JsonResult(temporaryUser));
             }
-            catch(Exception ex) { 
+            catch(Exception ex)
+            {
+                // _logger.Error($"{ex.GetType().Name}:{ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -219,12 +248,14 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
+                // _logger.Info($"Called:{nameof(ForgotPassword)}");
                 var user = await _commonRepository.ForgotPassword(emailAddress, newPassword);
                 _emailService.SendEmail([emailAddress], Notification_Type.Account_Related.ToString(), $"Your password was Updated Successfully!");
                 return Ok(new JsonResult(value: "Password successfully Updated!"));
             }
             catch(Exception ex)
             {
+                // _logger.Error($"{ex.GetType().Name}:{ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -234,8 +265,17 @@ namespace Book_Hub_Web_API.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> AddContactUsQuery([FromForm][Bind("Email", "Query_Type", "Description")] Contact_Us_DTO contact_Us_DTO)
         {
-            var contact_us = await _commonRepository.AddContactUsQuery(contact_Us_DTO);
-            return Ok(new JsonResult(value: "Query submitted successfully!"));
+            try
+            {
+                // _logger.Info($"Called:{nameof(AddContactUsQuery)}");
+                var contact_us = await _commonRepository.AddContactUsQuery(contact_Us_DTO);
+                return Ok(new JsonResult(value: "Query submitted successfully!"));
+            }
+            catch(Exception ex)
+            {
+                // _logger.Error($"{ex.GetType().Name}:{ex.Message}");
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

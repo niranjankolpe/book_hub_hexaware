@@ -17,13 +17,15 @@ namespace Book_Hub_Web_API.Services
 
         private SmtpClient _smtpClient;
 
-        private BookHubDBContext _dbContext;
-
-        public EmailService(IConfiguration configuration, BookHubDBContext dbContext)
+        public EmailService(IConfiguration configuration)
         {
             _configuration = configuration;
             _hostEmailAddress = _configuration["EmailService:HostEmailAddress"];
             _hostAppPassword = _configuration["EmailService:HostAppPassword"];
+            if (_hostEmailAddress == null || _hostAppPassword == null)
+            {
+                throw new Exception("Host Email or Password for Email Service are empty!");
+            }
             _smtpClient = new SmtpClient()
             {
                 Host = "smtp.gmail.com",
@@ -31,14 +33,12 @@ namespace Book_Hub_Web_API.Services
                 EnableSsl = true,
                 Credentials = new NetworkCredential(_hostEmailAddress, _hostAppPassword)
             };
-            _dbContext = dbContext;
         }
 
         public void SendEmail(List<string> receiverEmailAddressList, string subject, string body)
         {
             MailMessage email = new MailMessage();
-            email.From = new MailAddress(_hostEmailAddress); ;
-            receiverEmailAddressList = receiverEmailAddressList == null ? ["trialofdjango@gmail.com"] : receiverEmailAddressList;
+            email.From = new MailAddress(_hostEmailAddress);
             email.Subject = subject;
             receiverEmailAddressList.ForEach(receiverEmailAddress =>
             {
@@ -48,18 +48,11 @@ namespace Book_Hub_Web_API.Services
 
             try
             {
-                //Debug.WriteLine($"Email is as follows:");
-                //Debug.WriteLine($"Email: {email}");
-                //Debug.WriteLine($"To: {email.To}");
-                //Debug.WriteLine($"Subject: {email.Subject}");
-                //Debug.WriteLine($"Body: {email.Body}");
-
                 _smtpClient.Send(email);
-                Debug.WriteLine("\n\nEmail sent successfully!\n\n");
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"\n\nError Occured: {ex.Message}, Details: {ex}\n\n");
+                Debug.WriteLine($"\n\nError while sending Email: {ex.Message}\nDetails: {ex}\n\n");
             }
         }
     }

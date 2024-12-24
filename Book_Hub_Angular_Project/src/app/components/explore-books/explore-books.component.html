@@ -63,10 +63,10 @@
                     <td>{{book.availableQuantity}}</td>
                     <td>{{book.genreId}}</td>
                     <td>
-                        <button (click)="borrowBook(book.bookId)" class="btn btn-secondary">Borrow</button>
+                        <button *ngIf="book.availableQuantity>0" (click)="borrowBook(book.bookId)" class="btn btn-secondary">Borrow</button>
                     </td>
                     <td>
-                        <button (click)="reserveBook(book.bookId)" class="btn btn-secondary">Reserve</button>
+                        <button *ngIf="book.availableQuantity>0" (click)="reserveBook(book.bookId)" class="btn btn-secondary">Reserve</button>
                     </td>
                 </tr>
                 }

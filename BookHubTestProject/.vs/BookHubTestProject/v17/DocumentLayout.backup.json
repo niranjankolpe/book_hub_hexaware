@@ -7,12 +7,16 @@
       "RelativeMoniker": "D:0:0:{4B6D8A84-09E7-4255-81A9-A8A1217468F9}|BookHubTestProject.csproj|solutionrelative:tests\\homecontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{4B6D8A84-09E7-4255-81A9-A8A1217468F9}|BookHubTestProject.csproj|c:\\users\\niran\\desktop\\my files\\hexaware\\book hub\\bookhubtestproject\\tests\\admincontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{4B6D8A84-09E7-4255-81A9-A8A1217468F9}|BookHubTestProject.csproj|solutionrelative:tests\\admincontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{4B6D8A84-09E7-4255-81A9-A8A1217468F9}|BookHubTestProject.csproj|c:\\users\\niran\\desktop\\my files\\hexaware\\book hub\\bookhubtestproject\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B6D8A84-09E7-4255-81A9-A8A1217468F9}|BookHubTestProject.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{4B6D8A84-09E7-4255-81A9-A8A1217468F9}|BookHubTestProject.csproj|c:\\users\\niran\\desktop\\my files\\hexaware\\book hub\\bookhubtestproject\\tests\\usercontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{4B6D8A84-09E7-4255-81A9-A8A1217468F9}|BookHubTestProject.csproj|solutionrelative:tests\\usercontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B6D8A84-09E7-4255-81A9-A8A1217468F9}|BookHubTestProject.csproj|c:\\users\\niran\\desktop\\my files\\hexaware\\book hub\\bookhubtestproject\\tests\\admincontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B6D8A84-09E7-4255-81A9-A8A1217468F9}|BookHubTestProject.csproj|solutionrelative:tests\\admincontrollertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -39,8 +43,8 @@
           ]
         },
         {
-          "DockedHeight": 61,
-          "SelectedChildIndex": 2,
+          "DockedHeight": 59,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -52,26 +56,39 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\BookHubTestProject\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\BookHubTestProject\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-18T03:47:47.984Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "HomeControllerTests.cs",
               "DocumentMoniker": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\BookHubTestProject\\Tests\\HomeControllerTests.cs",
               "RelativeDocumentMoniker": "Tests\\HomeControllerTests.cs",
               "ToolTip": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\BookHubTestProject\\Tests\\HomeControllerTests.cs",
               "RelativeToolTip": "Tests\\HomeControllerTests.cs",
-              "ViewState": "AgIAAH8AAAAAAAAAAAAAAIYAAAA+AAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-15T08:47:09.026Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "AdminControllerTests.cs",
               "DocumentMoniker": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\BookHubTestProject\\Tests\\AdminControllerTests.cs",
               "RelativeDocumentMoniker": "Tests\\AdminControllerTests.cs",
               "ToolTip": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\BookHubTestProject\\Tests\\AdminControllerTests.cs",
               "RelativeToolTip": "Tests\\AdminControllerTests.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEAAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAuwBEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-10T04:26:03.646Z",
               "EditorCaption": ""
@@ -84,7 +101,7 @@
               "RelativeDocumentMoniker": "Tests\\UserControllerTests.cs",
               "ToolTip": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\BookHubTestProject\\Tests\\UserControllerTests.cs",
               "RelativeToolTip": "Tests\\UserControllerTests.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAAwB4AAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAowCQAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-05T05:06:07.782Z",
               "EditorCaption": ""
@@ -92,7 +109,7 @@
           ]
         },
         {
-          "DockedHeight": 105,
+          "DockedHeight": 82,
           "SelectedChildIndex": -1,
           "Children": [
             {

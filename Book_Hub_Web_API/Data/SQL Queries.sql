@@ -46,7 +46,7 @@ select * from Reservations;
 select * from ContactUs;
 go
 
--- delete from Users where UserId<6;
+delete from Books where BookId>10;
 
 update Users set Role='Consumer' where UserId=10;
 update Users set Role='Administrator' where UserId=11;

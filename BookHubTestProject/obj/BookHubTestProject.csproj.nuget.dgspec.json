@@ -62,6 +62,10 @@
               "target": "Package",
               "version": "[6.6.2, )"
             },
+            "log4net": {
+              "target": "Package",
+              "version": "[3.0.3, )"
+            },
             "microsoft.net.test.sdk": {
               "target": "Package",
               "version": "[17.12.0, )"

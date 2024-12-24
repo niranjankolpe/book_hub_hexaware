@@ -152,6 +152,9 @@ export class ExploreBooksComponent {
   }
   
   borrowBook(bookId:string){
+    if (this.userToken == null){
+      alert("Login first to access this service!");
+    }
     //const bookId = this.borrowBookForm?.get('bookId')?.value;
     const formData = new FormData();
     formData.append('bookId', bookId);
@@ -168,6 +171,9 @@ export class ExploreBooksComponent {
   }
 
   reserveBook(bookId:string){
+    if (this.userToken == null){
+      alert("Login first to access this service!");
+    }
     const formData = new FormData();
     formData.append('bookId', bookId);
     formData.append('userId', this.userToken["UserId"]);

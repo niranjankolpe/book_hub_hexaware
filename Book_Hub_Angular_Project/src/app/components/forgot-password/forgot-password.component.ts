@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { OtpServiceService } from '../../services/otp-service.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -21,44 +21,54 @@ export class ForgotPasswordComponent {
 
   constructor(private otpService: OtpServiceService, private httpClient: HttpClient, private authService: LoginServicesService, private router: Router) {
     this.forgotPasswordForm = new FormGroup({
-      emailAddress: new FormControl('')
+      emailAddress: new FormControl('', [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+(?:\.[a-zA-Z0-9._%+-]+)*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)])
     });
     this.otpValidationForm = new FormGroup({
       otp: new FormControl(''),
-      newPassword: new FormControl('')
+      newPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(20)])
     });
   }
 
   sendForgotPassOTP() {
-    this.displayOTPForm = !this.displayOTPForm;
-    var formData = new FormData();
-    const emailAddress = this.forgotPasswordForm.get('emailAddress')?.value;
-    formData.append("emailAddress", emailAddress);
+    if (this.forgotPasswordForm.valid) {
+      this.displayOTPForm = !this.displayOTPForm;
+      var formData = new FormData();
+      const emailAddress = this.forgotPasswordForm.get('emailAddress')?.value;
+      formData.append("emailAddress", emailAddress);
 
-    this.otpService.sendForgotPassOTP(emailAddress);
+      this.otpService.sendForgotPassOTP(emailAddress);
+    }
+    else {
+      alert("Invalid Email Input format!");
+    }
   }
 
   validateForgotPassOTP() {
-    const otp = this.otpValidationForm.get('otp')?.value;
-    var result = this.otpService.validateForgotPassOTP(otp);
-    if (result == true) {
-      var formData = new FormData();
-      const emailAddress = this.forgotPasswordForm.get('emailAddress')?.value;
-      const newPassword = this.otpValidationForm.get('newPassword')?.value;
-      formData.append("emailAddress", emailAddress);
-      formData.append("newPassword", newPassword);
-      this.httpClient.post("https://localhost:7251/api/Home/ForgotPassword", formData).subscribe((result: any) => {
-        console.log("Success: ", result);
-        alert("Password updated successfully!");
-      },
-        (error: Error) => {
-          console.log("Got error: ", error.message);
-          alert("Hmm got some error");
-        });
-      this.router.navigate(["/app-login"]);
+    if (this.otpValidationForm.valid) {
+      const otp = this.otpValidationForm.get('otp')?.value;
+      var result = this.otpService.validateForgotPassOTP(otp);
+      if (result == true) {
+        var formData = new FormData();
+        const emailAddress = this.forgotPasswordForm.get('emailAddress')?.value;
+        const newPassword = this.otpValidationForm.get('newPassword')?.value;
+        formData.append("emailAddress", emailAddress);
+        formData.append("newPassword", newPassword);
+        this.httpClient.post("https://localhost:7251/api/Home/ForgotPassword", formData).subscribe((result: any) => {
+          console.log("Success: ", result);
+          alert("Password updated successfully!");
+        },
+          (error: Error) => {
+            console.log("Got error: ", error.message);
+            alert("Hmm got some error");
+          });
+        this.router.navigate(["/app-login"]);
+      }
+      else {
+        alert("Invalid otp entered!");
+      }
     }
-    else {
-      alert("Invalid otp entered!");
+    else{
+      alert("Invalid one or more input fields!");
     }
   }
 }

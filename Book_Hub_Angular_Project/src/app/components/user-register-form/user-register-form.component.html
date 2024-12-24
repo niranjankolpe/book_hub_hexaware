@@ -1,22 +1,22 @@
 <div class="registration-form" *ngIf="displayOTPForm == false">
   <h2>User Registration</h2>
   <form [formGroup]="registrationForm" (submit)="onSubmit()">
-    <label for="name">Name:</label>
+    <label for="name">Name (required):</label>
     <input type="text" formControlName="name"><br>
 
-    <label for="name">Email:</label>
+    <label for="name">Email (required):</label>
     <input type="text" formControlName="email"><br>
 
-    <label for="phone">Phone Number:</label>
+    <label for="phone">Phone Number (required):</label>
     <input type="text" formControlName="phone"><br>
 
-    <label for="address">Address:</label>
+    <label for="address">Address (required):</label>
     <input type="text" formControlName="address"><br>
 
-    <label for="password">Create Password:</label>
+    <label for="password">Create Password (required)(8 to 20 characters only):</label>
     <input type="password" formControlName="password"><br>
 
-    <label for="confirmPassword">Confirm Password:</label>
+    <label for="confirmPassword">Confirm Password (required)(8 to 20 characters only):</label>
     <input type="password" formControlName="confirmPassword"><br>
 
     <button type="submit" class="btn btn-primary">Submit</button>

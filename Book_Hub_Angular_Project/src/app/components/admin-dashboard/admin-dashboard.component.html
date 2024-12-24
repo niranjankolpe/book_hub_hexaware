@@ -1,29 +1,29 @@
 <div style="text-align: center;">
     <br>
-    <h4>Welcome {{adminEmail}}</h4><br>
+    <h4>Welcome Admin {{adminEmail}}</h4><br>
 
     <button class="btn btn-primary" (click)="ApplyFilter('all')">Books</button>
     <button class="btn btn-primary" (click)="ApplyFilter('genre')">Genre</button>
     <button class="btn btn-primary" (click)="ApplyFilter('borrowed')">Borrowed</button>
     <button class="btn btn-primary" (click)="ApplyFilter('fines')">Fines</button>
     <button class="btn btn-primary" (click)="ApplyFilter('users')">Users</button>
-    <button class="btn btn-primary" (click)="ApplyFilter('logs')">UsersLogsActivity</button>
+    <button class="btn btn-primary" (click)="ApplyFilter('logs')">User's Logs Activity</button>
     <button class="btn btn-primary" (click)="ApplyFilter('notifications')">Notifications</button>
     <button class="btn btn-primary" (click)="ApplyFilter('reservations')">Reservations</button>
     <button class="btn btn-primary" (click)="ApplyFilter('consumerQueries')">Consumer Queries</button>
-    <button class="btn btn-primary" (click)="ApplyFilter('addBook')">AddBooks</button>
-    <button class="btn btn-primary" (click)="ApplyFilter('updateBook')">UpdateBook</button>
-    <button class="btn btn-primary" (click)="ApplyFilter('removeBook')">RemoveBook</button>
+    <button class="btn btn-primary" (click)="ApplyFilter('addBook')">Add New Book</button>
+    <button class="btn btn-primary" (click)="ApplyFilter('updateBook')">Update Existing Books</button>
+    <button class="btn btn-primary" (click)="ApplyFilter('removeBook')">Remove Existing Books</button>
     <br><br>
 
+    <!-- Genre Table -->
     <div class="container" name="genreListToDisplay" id="genreListToDisplay" *ngIf="displayGenreList">
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Sr. No.</th>
+                    <th scope="col">Genre ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Description</th>
-                    <!-- <th scope="col">Action</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -32,28 +32,24 @@
                     <td>{{genre.genreId}}</td>
                     <td>{{genre.name}}</td>
                     <td>{{genre.description}}</td>
-                    <!-- <td>
-                        <form onsubmit="alert('This facility is not available yet!'); return false;"><input
-                                class="btn btn-secondary" type="submit" value="Delete"></form>
-                    </td> -->
                 </tr>
                 }
             </tbody>
         </table>
     </div>
 
+    <!-- Borrowed Table -->
     <div class="container" name="borrowedListToDisplay" id="borrowedListToDisplay" *ngIf="displayBorrowedList">
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Sr.No</th>
-                    <th scope="col">BookId</th>
-                    <th scope="col">UserId</th>
-                    <th scope="col">BorrowDate</th>
-                    <th scope="col">ReturnDeadline</th>
-                    <th scope="col">ReturnDate</th>
-                    <th scope="col">BorrowStatus</th>
-                    <!-- <th scope="col">Action</th> -->
+                    <th scope="col">Borrow ID</th>
+                    <th scope="col">Book ID</th>
+                    <th scope="col">User ID</th>
+                    <th scope="col">Borrow Date</th>
+                    <th scope="col">Return Deadline</th>
+                    <th scope="col">Return Date</th>
+                    <th scope="col">Borrow Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -65,29 +61,24 @@
                     <td>{{borrowed.borrowDate}}</td>
                     <td>{{borrowed.returnDeadline}}</td>
                     <td>{{borrowed.returnDate}}</td>
-                    <td>{{borrowed.borrowStatus}}</td>
-                    <!-- <td>
-                        <form onsubmit="alert('This facility is not available yet!'); return false;"><input
-                                class="btn btn-secondary" type="submit" value="Delete"></form>
-                    </td> -->
+                    <td>{{Borrow_Status[borrowed.borrowStatus]}}</td>
                 </tr>
                 }
             </tbody>
         </table>
     </div>
 
-
-    <!-- //Fines table -->
+    <!-- Fines table -->
     <div class="container" name="finesListToDisplay" id="finesListToDisplay" *ngIf="displayFineList">
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Sr.No</th>
-                    <th scope="col">BorrowId</th>
-                    <th scope="col">FineType</th>
-                    <th scope="col">FineAmount</th>
-                    <th scope="col">FinePaidStatus</th>
-                    <th scope="col">PaidDate</th>
+                    <th scope="col">Fine ID</th>
+                    <th scope="col">Borrow ID</th>
+                    <th scope="col">Fine Type</th>
+                    <th scope="col">Fine Amount</th>
+                    <th scope="col">Fine Paid Status</th>
+                    <th scope="col">Paid Date</th>
 
                 </tr>
             </thead>
@@ -96,9 +87,9 @@
                 <tr>
                     <td>{{fines.fineId}}</td>
                     <td>{{fines.borrowId}}</td>
-                    <td>{{fines.fineType}}</td>
+                    <td>{{Fine_Type[fines.fineType]}}</td>
                     <td>{{fines.fineAmount}}</td>
-                    <td>{{fines.finePaidStatus}}</td>
+                    <td>{{Fine_Paid_Status[fines.finePaidStatus]}}</td>
                     <td>{{fines.paidDate}}</td>
                 </tr>
                 }
@@ -111,13 +102,13 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Sr.No</th>
+                    <th scope="col">User ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Phone</th>
                     <th scope="col">Address</th>
                     <th scope="col">Role</th>
-                    <th scope="col">AccountCreatedDate</th>
+                    <th scope="col">Account Created Date</th>
 
                 </tr>
             </thead>
@@ -129,7 +120,7 @@
                     <td>{{users.email}}</td>
                     <td>{{users.phone}}</td>
                     <td>{{users.address}}</td>
-                    <td>{{users.role}}</td>
+                    <td>{{User_Role[users.role]}}</td>
                     <td>{{users.accountCreatedDate}}</td>
                 </tr>
                 }
@@ -137,16 +128,15 @@
         </table>
     </div>
 
-
-    <!-- //LogActivityTable -->
+    <!-- Log Activity Table -->
     <div class="container" name="logListToDisplay" id="logListToDisplay" *ngIf="displayLogList">
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Sr.No</th>
-                    <th scope="col">UserId</th>
-                    <th scope="col">ActionType</th>
-                    <th scope="col">TimeStamp</th>
+                    <th scope="col">Log ID</th>
+                    <th scope="col">User ID</th>
+                    <th scope="col">Action Type</th>
+                    <th scope="col">Timestamp</th>
                 </tr>
             </thead>
             <tbody>
@@ -154,7 +144,7 @@
                 <tr>
                     <td>{{logs.logId}}</td>
                     <td>{{logs.userId}}</td>
-                    <td>{{logs.actionType}}</td>
+                    <td>{{Action_Type[logs.actionType]}}</td>
                     <td>{{logs.timestamp}}</td>
                 </tr>
                 }
@@ -162,17 +152,17 @@
         </table>
     </div>
 
-
     <!-- Notifications Table -->
-    <div class="container" name="notificationsListToDisplay" id="notificationsListToDisplay" *ngIf="displayNotificationList">
+    <div class="container" name="notificationsListToDisplay" id="notificationsListToDisplay"
+        *ngIf="displayNotificationList">
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Sr.No</th>
-                    <th scope="col">UserId</th>
-                    <th scope="col">MessageType</th>
-                    <th scope="col">MessageDescription</th>
-                    <th scope="col">SentDate</th>
+                    <th scope="col">Notification ID</th>
+                    <th scope="col">User ID</th>
+                    <th scope="col">Message Type</th>
+                    <th scope="col">Message Description</th>
+                    <th scope="col">Sent Date</th>
                 </tr>
             </thead>
             <tbody>
@@ -180,7 +170,7 @@
                 <tr>
                     <td>{{noti.userId}}</td>
                     <td>{{noti.userId}}</td>
-                    <td>{{noti.messageType}}</td>
+                    <td>{{Notification_Type[noti.messageType]}}</td>
                     <td>{{noti.messageDescription}}</td>
                     <td>{{noti.sentDate}}</td>
                 </tr>
@@ -190,17 +180,18 @@
     </div>
 
     <!-- Reservations Table -->
-    <div class="container" name="reservationsListToDisplay" id="reservationsListToDisplay" *ngIf="displayReservationList">
+    <div class="container" name="reservationsListToDisplay" id="reservationsListToDisplay"
+        *ngIf="displayReservationList">
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Sr.No</th>
-                    <th scope="col">BookId</th>
-                    <th scope="col">UserId</th>
-                    <th scope="col">ApplicationTimeStamp</th>
-                    <th scope="col">ExpectedAvailabilityDate</th>
-                    <th scope="col">ReservationExpiryDate</th>
-                    <th scope="col">ReservationStatus</th>
+                    <th scope="col">Reservation ID</th>
+                    <th scope="col">Book ID</th>
+                    <th scope="col">User ID</th>
+                    <th scope="col">Application TimeStamp</th>
+                    <th scope="col">Expected Availability Date</th>
+                    <th scope="col">Reservation Expiry Date</th>
+                    <th scope="col">Reservation Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -212,7 +203,7 @@
                     <td>{{reserv.applicationTimestamp}}</td>
                     <td>{{reserv.expectedAvailabilityDate}}</td>
                     <td>{{reserv.reservationExpiryDate}}</td>
-                    <td>{{reserv.reservationStatus}}</td>
+                    <td>{{Reservation_Status[reserv.reservationStatus]}}</td>
                 </tr>
                 }
             </tbody>
@@ -224,11 +215,11 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Sr. No.</th>
-                    <th scope="col">ISBN</th>
+                    <th scope="col">Book ID</th>
+                    <th scope="col">ISBN No.</th>
                     <th scope="col">Title</th>
-                    <th scope="col">Author</th>
-                    <th scope="col">AvailableQuantity</th>
+                    <th scope="col">Author Name</th>
+                    <th scope="col">Available Quantity</th>
                     <th scope="col">Genre ID</th>
                 </tr>
             </thead>
@@ -266,12 +257,13 @@
                 <tr>
                     <td>{{query.queryId}}</td>
                     <td>{{query.email}}</td>
-                    <td>{{query.query_Type}}</td>
+                    <td>{{Contact_Us_Query_Type[query.query_Type]}}</td>
                     <td>{{query.description}}</td>
                     <td>{{query.queryCreatedDate}}</td>
-                    <td>{{query.query_Status}}</td>
+                    <td>{{Contact_Us_Query_Status[query.query_Status]}}</td>
                     <td>
-                        <button *ngIf="query.query_Status != 1" (click)="acknowledgeConsumerQuery(query.queryId)" class="btn btn-secondary">Acknowledge</button>
+                        <button *ngIf="query.query_Status != 1" (click)="acknowledgeConsumerQuery(query.queryId)"
+                            class="btn btn-secondary">Acknowledge</button>
                     </td>
                 </tr>
                 }
@@ -281,55 +273,56 @@
 
     <!-- Add Book Form -->
     <div *ngIf="displayAddBookForm == true" class="AddBook-form">
-        <form #addbookForm="ngForm" (ngSubmit)="onBookAdd(addbookForm)">
+        <form [formGroup]="addbookForm" (submit)="onBookAdd()">
             <div>
-                <label for="isbn">Isbn:</label>
-                <input type="text" id="isbn" name="isbn" [(ngModel)]="book.Isbn" required />
+                <label for="isbn">Isbn (required):</label>
+                <input type="text" formControlName="isbn" />
             </div>
             <div>
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" [(ngModel)]="book.Title" required />
+                <label for="title">Title (required):</label>
+                <input type="text" formControlName="title" />
             </div>
             <div>
-                <label for="author">Author:</label>
-                <input type="text" id="author" name="author" [(ngModel)]="book.Author" required />
+                <label for="author">Author (text characters only):</label>
+                <input type="text" formControlName="author" />
             </div>
             <div>
-                <label for="publication">Publication:</label>
-                <input type="text" id="publication" name="publication" [(ngModel)]="book.Publication" required />
+                <label for="publication">Publication (text characters only):</label>
+                <input type="text" formControlName="publication" />
             </div>
             <div>
-                <label for="publisheddate">PublishedDate:</label>
-                <input type="text" id="publisheddate" name="publisheddate" [(ngModel)]="book.PublishedDate" required />
+                <label for="publishedDate">PublishedDate:</label>
+                <input type="date" formControlName="publishedDate" />
             </div>
             <div>
                 <label for="edition">Edition:</label>
-                <input type="text" id="edition" name="edition" [(ngModel)]="book.Edition" required />
+                <input type="text" formControlName="edition" />
             </div>
             <div>
-                <label for="language">Language:</label>
-                <input type="text" id="language" name="language" [(ngModel)]="book.Language" required />
+                <label for="language">Language (text characters only):</label>
+                <input type="text" formControlName="language" />
             </div>
             <div>
                 <label for="description">Description:</label>
-                <input type="text" id="description" name="description" [(ngModel)]="book.Description" required />
+                <input type="text" formControlName="description" />
             </div>
             <div>
-                <label for="cost">Cost:</label>
-                <input type="text" id="cost" name="cost" [(ngModel)]="book.Cost" required />
+                <label for="cost">Cost (required):</label>
+                <input type="number" formControlName="cost" step="0.01" />
             </div>
             <div>
-                <label for="availablequantity">AvailableQuantity:</label>
-                <input type="text" id="availablequantity" name="availablequantity" [(ngModel)]="book.AvailableQuantity"
-                    required />
+                <label for="availableQuantity">AvailableQuantity (required):</label>
+                <input type="text" formControlName="availableQuantity" />
             </div>
             <div>
-                <label for="totalquantity">TotalQuantity:</label>
-                <input type="text" id="totalquantity" name="totalquantity" [(ngModel)]="book.TotalQuantity" required />
+                <label for="totalQuantity">TotalQuantity (required):</label>
+                <input type="text" formControlName="totalQuantity" />
             </div>
             <div>
-                <label for="genreid">GenreId:</label>
-                <input type="text" id="genreid" name="genreid" [(ngModel)]="book.GenreId" required />
+                <label for="genreId" style="margin-right: 5px;">Select Genre (required):</label>
+                <select formControlName="genreId">
+                    <option *ngFor="let genre of genreList" [value]="genre.genreId">{{genre.name}}</option>
+                </select>
             </div>
             <button type="submit">Submit</button>
         </form>
@@ -339,8 +332,13 @@
     <div *ngIf="displayUpdateBookForm == true" class="updatebook-form">
         <form #updatebookForm="ngForm" (ngSubmit)="onBookUpdate(updatebookForm)">
             <div>
-                <label for="bookid">BookId:</label>
-                <input type="text" id="bookid" name="bookid" [(ngModel)]="updatebook.BookId" required />
+                <label for="bookid">Choose Book:</label>
+                <!-- <input type="text" id="bookid" name="bookid" [(ngModel)]="updatebook.BookId" required /> -->
+                <select name="bookid" id="bookid"  [(ngModel)]="updatebook.BookId" required>
+                    @for (book of bookListToDisplay; track $index) {
+                        <option value="{{book.bookId}}">{{book.title}}</option>
+                    }
+                </select>
             </div>
             <div>
                 <label for="availablequantitty">AvailableQuantity:</label>
@@ -360,8 +358,13 @@
     <div *ngIf="displayRemovekForm == true" class="removebook-form">
         <form #removebookForm="ngForm" (ngSubmit)="onBookRemove(removebookForm)">
             <div>
-                <label for="bookid">BookId:</label>
-                <input type="text" id="bookid" name="bookid" [(ngModel)]="removebook.bookid" required />
+                <label for="bookid">Choose Book:</label>
+                <!-- <input type="text" id="bookid" name="bookid" [(ngModel)]="removebook.bookid" required /> -->
+                <select name="bookid" id="bookid"  [(ngModel)]="removebook.bookid" required>
+                    @for (book of bookListToDisplay; track $index) {
+                        <option value="{{book.bookId}}">{{book.title}}</option>
+                    }
+                </select>
             </div>
             <button type="submit">Submit</button>
         </form>

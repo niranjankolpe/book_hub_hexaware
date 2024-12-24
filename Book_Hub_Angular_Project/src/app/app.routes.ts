@@ -14,7 +14,7 @@ export const routes: Routes = [
     {
         path:'',
         redirectTo: '/app-home',
-        pathMatch: 'full'
+        pathMatch: 'full',
     },
     {
         path: 'app-header',
