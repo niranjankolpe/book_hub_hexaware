@@ -1,13 +1,12 @@
-
-  .registration-form {
+.registration-form {
     width: 400px;
     margin: 20px auto;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
-    font-size: 12px; 
-    color: black; 
+    font-size: 12px;
+    color: black;
     overflow-y: auto;
 }
 
@@ -18,15 +17,15 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     background-color: #f9f9f9;
-    font-size: 12px; 
-    color: black; 
+    font-size: 12px;
+    color: black;
     overflow-y: auto;
 }
 
 label {
     display: block;
     margin: 10px 0 5px;
-    font-size: 12px; 
+    font-size: 12px;
 }
 
 input,
@@ -35,18 +34,18 @@ select {
     padding: 8px;
     margin-bottom: 10px;
     font-size: 12px;
-    color: black; 
+    color: black;
 }
 
 button {
     width: 100%;
     padding: 10px;
-    background-color: orange; 
+    background-color: orange;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px; 
+    font-size: 14px;
 }
 
 button:disabled {
@@ -55,14 +54,12 @@ button:disabled {
 }
 
 h2 {
-    font-size: 16px; 
+    font-size: 16px;
     text-align: center;
     margin-bottom: 20px;
 }
 
 h3 {
-    font-size: 14px; 
+    font-size: 14px;
     margin-top: 20px;
 }
-
-

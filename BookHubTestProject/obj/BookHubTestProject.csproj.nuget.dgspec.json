@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\BookHubTestProject\\BookHubTestProject.csproj": {}
+    "C:\\Users\\niran\\Desktop\\My Files\\Book Hub\\BookHubTestProject\\BookHubTestProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\BookHubTestProject\\BookHubTestProject.csproj": {
+    "C:\\Users\\niran\\Desktop\\My Files\\Book Hub\\BookHubTestProject\\BookHubTestProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\BookHubTestProject\\BookHubTestProject.csproj",
+        "projectUniqueName": "C:\\Users\\niran\\Desktop\\My Files\\Book Hub\\BookHubTestProject\\BookHubTestProject.csproj",
         "projectName": "BookHubTestProject",
-        "projectPath": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\BookHubTestProject\\BookHubTestProject.csproj",
+        "projectPath": "C:\\Users\\niran\\Desktop\\My Files\\Book Hub\\BookHubTestProject\\BookHubTestProject.csproj",
         "packagesPath": "C:\\Users\\niran\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\BookHubTestProject\\obj\\",
+        "outputPath": "C:\\Users\\niran\\Desktop\\My Files\\Book Hub\\BookHubTestProject\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -44,7 +43,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -76,7 +76,7 @@
             },
             "nunit": {
               "target": "Package",
-              "version": "[4.2.2, )"
+              "version": "[4.3.2, )"
             },
             "nunit3testadapter": {
               "target": "Package",
@@ -102,7 +102,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

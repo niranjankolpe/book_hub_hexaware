@@ -4931,11 +4931,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\Book_Hub_Web_API\\Book_Hub_Web_API.csproj",
+      "projectUniqueName": "C:\\Users\\niran\\Desktop\\My Files\\Book Hub\\Book_Hub_Web_API\\Book_Hub_Web_API.csproj",
       "projectName": "Book_Hub_Web_API",
-      "projectPath": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\Book_Hub_Web_API\\Book_Hub_Web_API.csproj",
+      "projectPath": "C:\\Users\\niran\\Desktop\\My Files\\Book Hub\\Book_Hub_Web_API\\Book_Hub_Web_API.csproj",
       "packagesPath": "C:\\Users\\niran\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\niran\\Desktop\\My Files\\Hexaware\\Book Hub\\Book_Hub_Web_API\\obj\\",
+      "outputPath": "C:\\Users\\niran\\Desktop\\My Files\\Book Hub\\Book_Hub_Web_API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -4950,7 +4950,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4968,7 +4967,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.100"
     },
     "frameworks": {
       "net8.0": {
@@ -5016,7 +5016,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

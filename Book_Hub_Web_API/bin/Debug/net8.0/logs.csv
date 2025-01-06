@@ -329,3 +329,80 @@ INFO,Called:GetAllConsumerQueries,2024-12-24,01:29:10
 INFO,Called:GetAllGenre,2024-12-24,01:31:45
 INFO,Called:GetAllBooks,2024-12-24,01:31:45
 INFO,Called:GetAllBooks,2024-12-24,01:31:45
+INFO,Called:GetAllBooks,2025-01-03,11:38:12
+INFO,Called:GetBorrowedByUserId,2025-01-03,11:41:36
+INFO,Called:GetReservationsByUserId,2025-01-03,11:41:36
+INFO,Called:GetBorrowedByUserId,2025-01-03,11:41:36
+INFO,Called:GetNotificationsByUserId,2025-01-03,11:41:36
+ERROR,Exception:No reservations found!,2025-01-03,11:41:36
+ERROR,Exception:No borrowings found!,2025-01-03,11:41:36
+ERROR,Exception:No borrowings found!,2025-01-03,11:41:36
+INFO,Called:GetAllBooks,2025-01-03,11:41:48
+INFO,Called:GetAllBooks,2025-01-03,11:41:48
+INFO,Called:GetAllGenre,2025-01-03,11:41:48
+INFO,Called:GetAllBooks,2025-01-03,11:41:49
+INFO,Called:GetAllGenre,2025-01-03,11:41:54
+INFO,Called:GetAllBooks,2025-01-03,11:41:54
+INFO,Called:GetBooksByAuthor,2025-01-03,11:41:56
+INFO,Called:GetBooksByAuthor,2025-01-03,11:41:59
+INFO,Called:GetBooksByAuthor,2025-01-03,11:42:02
+INFO,Called:GetBooksByAuthor,2025-01-03,11:42:04
+INFO,Called:GetBooksByAuthor,2025-01-03,11:42:07
+INFO,Called:GetBooksByAuthor,2025-01-03,11:42:11
+INFO,Called:GetBooksByAuthor,2025-01-03,11:42:12
+INFO,Called:GetBooksByAuthor,2025-01-03,11:42:14
+INFO,Called:GetBooksByAuthor,2025-01-03,11:42:16
+INFO,Called:GetBooksByAuthor,2025-01-03,11:42:19
+INFO,Called:GetBooksByAuthor,2025-01-03,11:42:21
+INFO,Called:GetBooksByAuthor,2025-01-03,11:42:24
+INFO,Called:GetBooksByAuthor,2025-01-03,11:42:26
+INFO,Called:GetBooksByAuthor,2025-01-03,11:42:29
+INFO,Called:GetBooksByAuthor,2025-01-03,11:42:32
+INFO,Called:GetBooksByAuthor,2025-01-03,11:42:35
+INFO,Called:GetAllBooks,2025-01-03,11:42:36
+INFO,Called:GetReservationsByUserId,2025-01-03,11:43:11
+INFO,Called:GetBorrowedByUserId,2025-01-03,11:43:11
+INFO,Called:GetBorrowedByUserId,2025-01-03,11:43:11
+INFO,Called:GetNotificationsByUserId,2025-01-03,11:43:11
+ERROR,Exception:No borrowings found!,2025-01-03,11:43:11
+ERROR,Exception:No reservations found!,2025-01-03,11:43:12
+ERROR,Exception:No borrowings found!,2025-01-03,11:43:12
+INFO,Called:GetAllFine,2025-01-03,11:43:53
+INFO,Called:GetAllBorrowed,2025-01-03,11:43:53
+INFO,Called:GetAllUser,2025-01-03,11:43:53
+INFO,Called:GetAllBooks,2025-01-03,11:43:53
+INFO,Called:GetAllGenre,2025-01-03,11:43:53
+INFO,Called:GetAllReservation,2025-01-03,11:43:53
+INFO,Called:GetAllLogUserActivity,2025-01-03,11:43:53
+INFO,Called:GetAllNotification,2025-01-03,11:43:53
+INFO,Called:GetAllConsumerQueries,2025-01-03,11:43:53
+ERROR,Exception:No consumer queries found!,2025-01-03,11:43:53
+INFO,Called:GetAllBooks,2025-01-03,11:43:56
+INFO,Called:GetAllGenre,2025-01-03,11:44:01
+INFO,Called:GetAllBorrowed,2025-01-03,11:44:04
+INFO,Called:GetAllFine,2025-01-03,11:44:06
+INFO,Called:GetAllUser,2025-01-03,11:44:07
+INFO,Called:GetAllLogUserActivity,2025-01-03,11:44:09
+INFO,Called:GetAllNotification,2025-01-03,11:44:16
+INFO,Called:GetAllReservation,2025-01-03,11:44:18
+INFO,Called:GetAllBorrowed,2025-01-03,11:44:20
+INFO,Called:GetAllBooks,2025-01-03,11:44:26
+INFO,Called:GetAllBooks,2025-01-03,11:44:36
+INFO,Called:GetAllGenre,2025-01-03,11:44:36
+INFO,Called:GetAllBooks,2025-01-03,11:44:36
+INFO,Called:GetAllGenre,2025-01-06,03:34:11
+INFO,Called:GetAllBooks,2025-01-06,03:34:11
+INFO,Called:GetAllBooks,2025-01-06,03:34:12
+INFO,Called:GetAllUser,2025-01-06,03:35:08
+INFO,Called:GetAllBorrowed,2025-01-06,03:35:08
+INFO,Called:GetAllFine,2025-01-06,03:35:08
+INFO,Called:GetAllReservation,2025-01-06,03:35:08
+INFO,Called:GetAllLogUserActivity,2025-01-06,03:35:08
+INFO,Called:GetAllConsumerQueries,2025-01-06,03:35:08
+INFO,Called:GetAllNotification,2025-01-06,03:35:08
+INFO,Called:GetAllGenre,2025-01-06,03:35:08
+INFO,Called:GetAllBooks,2025-01-06,03:35:08
+ERROR,Exception:No consumer queries found!,2025-01-06,03:35:09
+INFO,Called:GetAllBooks,2025-01-06,03:35:14
+INFO,Called:GetAllLogUserActivity,2025-01-06,03:35:18
+INFO,Called:GetAllUser,2025-01-06,03:35:19

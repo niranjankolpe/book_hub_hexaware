@@ -1,11 +1,12 @@
 {
   "Version": 1,
-  "Hash": "OkaW5o0AiNAbGFmmZuWu0OumXxau5sHLuwMi2oVsjlY=",
+  "Hash": "pLNvHXYg689qxtR3psKqzX8VpVM4plxHRQBEQQS/R/U=",
   "Source": "BookHubTestProject",
   "BasePath": "_content/BookHubTestProject",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [],
-  "Assets": []
+  "Assets": [],
+  "Endpoints": []
 }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BookHubTestProject")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+be729433332fb40e0df667acd20ec78963a4001b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e1011fdcbebd1d0372ebdc346368de4ab1db11a6")]
 [assembly: System.Reflection.AssemblyProductAttribute("BookHubTestProject")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BookHubTestProject")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
