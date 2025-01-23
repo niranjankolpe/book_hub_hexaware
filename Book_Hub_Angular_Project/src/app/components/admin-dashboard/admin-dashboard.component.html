@@ -1,372 +1,289 @@
-<div style="text-align: center;">
-    <br>
-    <h4>Welcome Admin {{adminEmail}}</h4><br>
-
-    <button class="btn btn-primary" (click)="ApplyFilter('all')">Books</button>
-    <button class="btn btn-primary" (click)="ApplyFilter('genre')">Genre</button>
-    <button class="btn btn-primary" (click)="ApplyFilter('borrowed')">Borrowed</button>
-    <button class="btn btn-primary" (click)="ApplyFilter('fines')">Fines</button>
-    <button class="btn btn-primary" (click)="ApplyFilter('users')">Users</button>
-    <button class="btn btn-primary" (click)="ApplyFilter('logs')">User's Logs Activity</button>
-    <button class="btn btn-primary" (click)="ApplyFilter('notifications')">Notifications</button>
-    <button class="btn btn-primary" (click)="ApplyFilter('reservations')">Reservations</button>
-    <button class="btn btn-primary" (click)="ApplyFilter('consumerQueries')">Consumer Queries</button>
-    <button class="btn btn-primary" (click)="ApplyFilter('addBook')">Add New Book</button>
-    <button class="btn btn-primary" (click)="ApplyFilter('updateBook')">Update Existing Books</button>
-    <button class="btn btn-primary" (click)="ApplyFilter('removeBook')">Remove Existing Books</button>
-    <br><br>
-
-    <!-- Genre Table -->
-    <div class="container" name="genreListToDisplay" id="genreListToDisplay" *ngIf="displayGenreList">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Genre ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (genre of genreList; track $index) {
-                <tr>
-                    <td>{{genre.genreId}}</td>
-                    <td>{{genre.name}}</td>
-                    <td>{{genre.description}}</td>
-                </tr>
-                }
-            </tbody>
-        </table>
+<div style="display: flex; height: 100vh;">
+    <!-- Sidebar -->
+    <div style="width: 250px; background-color: #f4f4f4; padding: 15px; border-right: 1px solid #ddd;">
+        <ul style="list-style: none; padding: 0;">
+            <li *ngFor="let filter of filters">
+                <button (click)="ApplyFilter(filter.value)" [ngStyle]="{
+                        background: filterTypeSelected === filter.value ? 'antiquewhite' : 'none'
+                    }"
+                    style="background: none; border: none; color: orange; font-weight: bold; text-align: left; padding: 5px; width: 100%; cursor: pointer; border-bottom: 1px solid #ddd;">
+                    {{ filter.label }}
+                </button>
+            </li>
+        </ul>
     </div>
 
-    <!-- Borrowed Table -->
-    <div class="container" name="borrowedListToDisplay" id="borrowedListToDisplay" *ngIf="displayBorrowedList">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Borrow ID</th>
-                    <th scope="col">Book ID</th>
-                    <th scope="col">User ID</th>
-                    <th scope="col">Borrow Date</th>
-                    <th scope="col">Return Deadline</th>
-                    <th scope="col">Return Date</th>
-                    <th scope="col">Borrow Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (borrowed of borrowedList; track $index) {
-                <tr>
-                    <td>{{borrowed.borrowId}}</td>
-                    <td>{{borrowed.bookId}}</td>
-                    <td>{{borrowed.userId}}</td>
-                    <td>{{borrowed.borrowDate}}</td>
-                    <td>{{borrowed.returnDeadline}}</td>
-                    <td>{{borrowed.returnDate}}</td>
-                    <td>{{Borrow_Status[borrowed.borrowStatus]}}</td>
-                </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+    <div
+        style="display: flex; justify-content: center; flex-direction: column; width: 100%; background-color: antiquewhite;">
+        <div>
+            <h4>Welcome Admin {{adminEmail}}</h4>
+        </div>
 
-    <!-- Fines table -->
-    <div class="container" name="finesListToDisplay" id="finesListToDisplay" *ngIf="displayFineList">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Fine ID</th>
-                    <th scope="col">Borrow ID</th>
-                    <th scope="col">Fine Type</th>
-                    <th scope="col">Fine Amount</th>
-                    <th scope="col">Fine Paid Status</th>
-                    <th scope="col">Paid Date</th>
 
-                </tr>
-            </thead>
-            <tbody>
-                @for (fines of fineList; track $index) {
-                <tr>
-                    <td>{{fines.fineId}}</td>
-                    <td>{{fines.borrowId}}</td>
-                    <td>{{Fine_Type[fines.fineType]}}</td>
-                    <td>{{fines.fineAmount}}</td>
-                    <td>{{Fine_Paid_Status[fines.finePaidStatus]}}</td>
-                    <td>{{fines.paidDate}}</td>
-                </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+        <!-- Main Content -->
 
-    <!-- Users Table -->
-    <div class="container" name="usersListToDisplay" id="usersListToDisplay" *ngIf="displayUserList">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">User ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Phone</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Role</th>
-                    <th scope="col">Account Created Date</th>
 
-                </tr>
-            </thead>
-            <tbody>
-                @for (users of userList; track $index) {
-                <tr>
-                    <td>{{users.userId}}</td>
-                    <td>{{users.name}}</td>
-                    <td>{{users.email}}</td>
-                    <td>{{users.phone}}</td>
-                    <td>{{users.address}}</td>
-                    <td>{{User_Role[users.role]}}</td>
-                    <td>{{users.accountCreatedDate}}</td>
-                </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+        <!-- Book List -->
 
-    <!-- Log Activity Table -->
-    <div class="container" name="logListToDisplay" id="logListToDisplay" *ngIf="displayLogList">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Log ID</th>
-                    <th scope="col">User ID</th>
-                    <th scope="col">Action Type</th>
-                    <th scope="col">Timestamp</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (logs of logList; track $index) {
-                <tr>
-                    <td>{{logs.logId}}</td>
-                    <td>{{logs.userId}}</td>
-                    <td>{{Action_Type[logs.actionType]}}</td>
-                    <td>{{logs.timestamp}}</td>
-                </tr>
-                }
-            </tbody>
-        </table>
-    </div>
 
-    <!-- Notifications Table -->
-    <div class="container" name="notificationsListToDisplay" id="notificationsListToDisplay"
-        *ngIf="displayNotificationList">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Notification ID</th>
-                    <th scope="col">User ID</th>
-                    <th scope="col">Message Type</th>
-                    <th scope="col">Message Description</th>
-                    <th scope="col">Sent Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (noti of notificationList; track $index) {
-                <tr>
-                    <td>{{noti.userId}}</td>
-                    <td>{{noti.userId}}</td>
-                    <td>{{Notification_Type[noti.messageType]}}</td>
-                    <td>{{noti.messageDescription}}</td>
-                    <td>{{noti.sentDate}}</td>
-                </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+        <div style="flex: 1; padding: 20px; overflow-y: auto;">
+            <div *ngIf="displayBookList" class="card-container">
+                <div class="card" *ngFor="let book of bookListToDisplay; let i = index">
+                    <div class="card-body">
+                        <h5 class="card-title">Book ID: {{book.bookId}}</h5>
+                        <p class="card-text"><strong>ISBN No.:</strong> {{book.isbn}}</p>
+                        <p class="card-text"><strong>Title:</strong> {{book.title}}</p>
+                        <p class="card-text"><strong>Author Name:</strong> {{book.author}}</p>
+                        <p class="card-text"><strong>Available Quantity:</strong> {{book.availableQuantity}}</p>
+                        <p class="card-text"><strong>Genre ID:</strong> {{book.genreId}}</p>
+                    </div>
+                </div>
+            </div>
 
-    <!-- Reservations Table -->
-    <div class="container" name="reservationsListToDisplay" id="reservationsListToDisplay"
-        *ngIf="displayReservationList">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Reservation ID</th>
-                    <th scope="col">Book ID</th>
-                    <th scope="col">User ID</th>
-                    <th scope="col">Application TimeStamp</th>
-                    <th scope="col">Expected Availability Date</th>
-                    <th scope="col">Reservation Expiry Date</th>
-                    <th scope="col">Reservation Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (reserv of reservationList; track $index) {
-                <tr>
-                    <td>{{reserv.reservationId}}</td>
-                    <td>{{reserv.bookId}}</td>
-                    <td>{{reserv.userId}}</td>
-                    <td>{{reserv.applicationTimestamp}}</td>
-                    <td>{{reserv.expectedAvailabilityDate}}</td>
-                    <td>{{reserv.reservationExpiryDate}}</td>
-                    <td>{{Reservation_Status[reserv.reservationStatus]}}</td>
-                </tr>
-                }
-            </tbody>
-        </table>
-    </div>
 
-    <!-- Books Table -->
-    <div class="container" name="bookListToDisplay" id="bookListToDisplay" *ngIf="displayBookList">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Book ID</th>
-                    <th scope="col">ISBN No.</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Author Name</th>
-                    <th scope="col">Available Quantity</th>
-                    <th scope="col">Genre ID</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (book of bookListToDisplay; track $index) {
-                <tr>
-                    <td>{{book.bookId}}</td>
-                    <td>{{book.isbn}}</td>
-                    <td>{{book.title}}</td>
-                    <td>{{book.author}}</td>
-                    <td>{{book.availableQuantity}}</td>
-                    <td>{{book.genreId}}</td>
-                </tr>
-                }
-            </tbody>
-        </table>
-    </div>
+            <!-- Genre List -->
+            <!-- <div style="flex: 1; padding: 20px; overflow-y: scroll;"> -->
+            <div *ngIf="displayGenreList" class="card-container">
+                <div class="card" *ngFor="let genre of genreList; let i = index">
+                    <div class="card-body">
+                        <h5 class="card-title">Genre ID: {{genre.genreId}}</h5>
+                        <p class="card-text"><strong>Name:</strong> {{ genre.name}}</p>
+                        <p class="card-text"><strong>Description:</strong> {{genre.description}}</p>
+                    </div>
+                </div>
+            </div>
 
-    <!-- Consumer Queries Table -->
-    <div class="container" name="consumerQueriesList" id="consumerQueriesList" *ngIf="displayContactUsQueries">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Query ID</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Query Type</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Created Date</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Acknowledge</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (query of consumerQueriesList; track $index) {
-                <tr>
-                    <td>{{query.queryId}}</td>
-                    <td>{{query.email}}</td>
-                    <td>{{Contact_Us_Query_Type[query.query_Type]}}</td>
-                    <td>{{query.description}}</td>
-                    <td>{{query.queryCreatedDate}}</td>
-                    <td>{{Contact_Us_Query_Status[query.query_Status]}}</td>
-                    <td>
-                        <button *ngIf="query.query_Status != 1" (click)="acknowledgeConsumerQuery(query.queryId)"
-                            class="btn btn-secondary">Acknowledge</button>
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </table>
-    </div>
 
-    <!-- Add Book Form -->
-    <div *ngIf="displayAddBookForm == true" class="AddBook-form">
-        <form [formGroup]="addbookForm" (submit)="onBookAdd()">
-            <div>
-                <label for="isbn">Isbn (required):</label>
-                <input type="text" formControlName="isbn" />
-            </div>
-            <div>
-                <label for="title">Title (required):</label>
-                <input type="text" formControlName="title" />
-            </div>
-            <div>
-                <label for="author">Author (text characters only):</label>
-                <input type="text" formControlName="author" />
-            </div>
-            <div>
-                <label for="publication">Publication (text characters only):</label>
-                <input type="text" formControlName="publication" />
-            </div>
-            <div>
-                <label for="publishedDate">PublishedDate:</label>
-                <input type="date" formControlName="publishedDate" />
-            </div>
-            <div>
-                <label for="edition">Edition:</label>
-                <input type="text" formControlName="edition" />
-            </div>
-            <div>
-                <label for="language">Language (text characters only):</label>
-                <input type="text" formControlName="language" />
-            </div>
-            <div>
-                <label for="description">Description:</label>
-                <input type="text" formControlName="description" />
-            </div>
-            <div>
-                <label for="cost">Cost (required):</label>
-                <input type="number" formControlName="cost" step="0.01" />
-            </div>
-            <div>
-                <label for="availableQuantity">AvailableQuantity (required):</label>
-                <input type="text" formControlName="availableQuantity" />
-            </div>
-            <div>
-                <label for="totalQuantity">TotalQuantity (required):</label>
-                <input type="text" formControlName="totalQuantity" />
-            </div>
-            <div>
-                <label for="genreId" style="margin-right: 5px;">Select Genre (required):</label>
-                <select formControlName="genreId">
-                    <option *ngFor="let genre of genreList" [value]="genre.genreId">{{genre.name}}</option>
-                </select>
-            </div>
-            <button type="submit">Submit</button>
-        </form>
-    </div>
+            <!-- Borrowed List -->
+            <!-- <div style="flex: 1; padding: 20px; overflow-y: scroll;"> -->
+            <div *ngIf="displayBorrowedList" class="card-container">
+                <div class="card" *ngFor="let borrowed of borrowedList; let i = index">
+                    <div class="card-body">
+                        <h5 class="card-title">Borrow ID: {{borrowed.borrowId}}</h5>
+                        <p class="card-text"><strong>Book ID:</strong> {{borrowed.bookId}}</p>
+                        <p class="card-text"><strong>User ID:</strong> {{borrowed.userId}}</p>
+                        <p class="card-text"><strong>Borrow Date:</strong> {{borrowed.borrowDate}}</p>
+                        <p class="card-text"><strong>Return Deadline:</strong> {{borrowed.returnDeadline}}</p>
+                        <p class="card-text"><strong>Return Date:</strong> {{borrowed.returnDate}}</p>
+                        <p class="card-text"><strong>Status:</strong> {{borrowed.status}}</p>
 
-    <!-- Update Book Form -->
-    <div *ngIf="displayUpdateBookForm == true" class="updatebook-form">
-        <form #updatebookForm="ngForm" (ngSubmit)="onBookUpdate(updatebookForm)">
-            <div>
-                <label for="bookid">Choose Book:</label>
-                <!-- <input type="text" id="bookid" name="bookid" [(ngModel)]="updatebook.BookId" required /> -->
-                <select name="bookid" id="bookid"  [(ngModel)]="updatebook.BookId" required>
-                    @for (book of bookListToDisplay; track $index) {
-                        <option value="{{book.bookId}}">{{book.title}}</option>
-                    }
-                </select>
+                    </div>
+                </div>
             </div>
-            <div>
-                <label for="availablequantitty">AvailableQuantity:</label>
-                <input type="text" id="availablequantitty" name="availablequantitty"
-                    [(ngModel)]="updatebook.AvailableQuantity" required />
-            </div>
-            <div>
-                <label for="totalquantity">TotalQuantity:</label>
-                <input type="text" id="totalquantity" name="totalquantity" [(ngModel)]="updatebook.TotalQuantity"
-                    required />
-            </div>
-            <button type="submit">Submit</button>
-        </form>
-    </div>
 
-    <!-- Remove Book Form -->
-    <div *ngIf="displayRemovekForm == true" class="removebook-form">
-        <form #removebookForm="ngForm" (ngSubmit)="onBookRemove(removebookForm)">
-            <div>
-                <label for="bookid">Choose Book:</label>
-                <!-- <input type="text" id="bookid" name="bookid" [(ngModel)]="removebook.bookid" required /> -->
-                <select name="bookid" id="bookid"  [(ngModel)]="removebook.bookid" required>
-                    @for (book of bookListToDisplay; track $index) {
-                        <option value="{{book.bookId}}">{{book.title}}</option>
-                    }
-                </select>
+            <!-- Fines Table -->
+            <div *ngIf="displayFineList" class="card-container">
+                <div class="card" *ngFor="let fines of fineList; let i = index">
+                    <div class="card-body">
+                        <h5 class="card-title">Fine ID: {{fines.fineId}}</h5>
+                        <p class="card-text"><strong>Borrow ID:</strong> {{fines.borrowId}}</p>
+                        <p class="card-text"><strong>Fine Type:</strong> {{Fine_Type[fines.fineType]}}</p>
+                        <p class="card-text"><strong>Fine Amount:</strong> {{fines.fineAmount}}</p>
+                        <p class="card-text"><strong>Fine Paid Status:</strong>
+                            {{Fine_Paid_Status[fines.finePaidStatus]}}</p>
+                        <p class="card-text"><strong>Paid Date:</strong> {{fines.paidDate}}</p>
+                    </div>
+                </div>
             </div>
-            <button type="submit">Submit</button>
-        </form>
+
+            <!-- Users Table -->
+            <div *ngIf="displayUserList" class="card-container">
+                <div class="card" *ngFor="let users of userList; let i = index">
+                    <div class="card-body">
+                        <h5 class="card-title">User ID: {{users.userId}}</h5>
+                        <p class="card-text"><strong>Name:</strong> {{users.name}}</p>
+                        <p class="card-text"><strong>Email:</strong> {{users.email}}</p>
+                        <p class="card-text"><strong>Phone:</strong> {{users.phone}}</p>
+                        <p class="card-text"><strong>Address:</strong>
+                            {{users.address}}</p>
+                        <p class="card-text"><strong>Role:</strong> {{User_Role[users.role]}}</p>
+                        <p class="card-text"><strong>Account Created Date:</strong>
+                            {{users.accountCreatedDate}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Log Activity Table -->
+            <div *ngIf="displayLogList" class="card-container">
+                <div class="card" *ngFor="let logs of logList; let i = index">
+                    <div class="card-body">
+                        <h5 class="card-title">Log ID: {{logs.logId}}</h5>
+                        <p class="card-text"><strong>User ID:</strong> {{logs.userId}}</p>
+                        <p class="card-text"><strong>Action Type:</strong>
+                            {{Action_Type[logs.actionType]}}</p>
+                        <p class="card-text"><strong>Timestamp:</strong> {{logs.timestamp}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications Table -->
+            <div *ngIf="displayNotificationList" class="card-container">
+                <div class="card" *ngFor="let noti of notificationList ; let i = index">
+                    <div class="card-body">
+                        <h5 class="card-title">Notification ID: {{noti.notificationId}}</h5>
+                        <p class="card-text"><strong>User ID:</strong> {{noti.userId}}</p>
+                        <p class="card-text"><strong>Message Type:</strong>
+                            {{Notification_Type[noti.messageType]}}</p>
+                        <p class="card-text"><strong>Message Description:</strong>
+                            {{noti.messageDescription}}</p>
+                        <p class="card-text"><strong>Sent Date:</strong> {{noti.sentDate}}</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Reservations Table -->
+            <div *ngIf="displayReservationList" class="card-container">
+                <div class="card" *ngFor="let reserv of reservationList ; let i = index">
+                    <div class="card-body">
+                        <h5 class="card-title">Reservation ID: {{reserv.reservationId}}</h5>
+                        <p class="card-text"><strong>Book ID:</strong> {{reserv.bookId}}</p>
+                        <p class="card-text"><strong>User ID:</strong> {{reserv.userId}}</p>
+                        <p class="card-text"><strong>Application TimeStamp:</strong>
+                            {{reserv.applicationTimestamp}}</p>
+                        <p class="card-text"><strong>Expected Availability Date:</strong>
+                            {{reserv.expectedAvailabilityDate}}</p>
+                        <p class="card-text"><strong>Reservation Expiry Date:</strong>
+                            {{reserv.reservationExpiryDate}}</p>
+                        <p class="card-text"><strong>Reservation Status:</strong>
+                            {{Reservation_Status[reserv.reservationStatus]}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Consumer Queries Table -->
+            <div *ngIf="displayContactUsQueries" class="card-container">
+                <div class="card" *ngFor="let query of consumerQueriesList ; let i = index">
+                    <div class="card-body">
+                        <h5 class="card-title">Query ID: {{query.queryId}}</h5>
+                        <p class="card-text"><strong>Email:</strong> {{query.email}}</p>
+                        <p class="card-text"><strong>Query Type:</strong>
+                            {{Contact_Us_Query_Type[query.query_Type]}}</p>
+                        <p class="card-text"><strong>Description:</strong>
+                            {{query.description}}</p>
+                        <p class="card-text"><strong>Created Date:</strong>
+                            {{query.queryCreatedDate}}</p>
+                        <p class="card-text"><strong>Status:</strong>
+                            {{Contact_Us_Query_Status[query.query_Status]}}
+                        <p class="card-text">
+                            <strong>Acknowledge:</strong>
+                            <button *ngIf="query.query_Status !== 1" (click)="acknowledgeConsumerQuery(query.queryId)"
+                                style="background-color: orange; font-weight: bold; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+                                Acknowledge
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Forms -->
+            <!-- Add Book Form -->
+            <div *ngIf="displayAddBookForm == true" class="AddBook-form">
+                <h5 style="color: orange;">Add Book Form</h5>
+                <form [formGroup]="addbookForm" (submit)="onBookAdd()">
+                    <div>
+                        <label for="isbn">Isbn (required):</label>
+                        <input type="text" formControlName="isbn" />
+                    </div>
+                    <div>
+                        <label for="title">Title (required):</label>
+                        <input type="text" formControlName="title" />
+                    </div>
+                    <div>
+                        <label for="author">Author (text characters only):</label>
+                        <input type="text" formControlName="author" />
+                    </div>
+                    <div>
+                        <label for="publication">Publication (text characters only):</label>
+                        <input type="text" formControlName="publication" />
+                    </div>
+                    <div>
+                        <label for="publishedDate">PublishedDate:</label>
+                        <input type="date" formControlName="publishedDate" />
+                    </div>
+                    <div>
+                        <label for="edition">Edition:</label>
+                        <input type="text" formControlName="edition" />
+                    </div>
+                    <div>
+                        <label for="language">Language (text characters only):</label>
+                        <input type="text" formControlName="language" />
+                    </div>
+                    <div>
+                        <label for="description">Description:</label>
+                        <input type="text" formControlName="description" />
+                    </div>
+                    <div>
+                        <label for="cost">Cost (required):</label>
+                        <input type="number" formControlName="cost" step="0.01" />
+                    </div>
+                    <div>
+                        <label for="availableQuantity">AvailableQuantity (required):</label>
+                        <input type="text" formControlName="availableQuantity" />
+                    </div>
+                    <div>
+                        <label for="totalQuantity">TotalQuantity (required):</label>
+                        <input type="text" formControlName="totalQuantity" />
+                    </div>
+                    <div>
+                        <label for="genreId" style="margin-right: 5px;">Select Genre
+                            (required):</label>
+                        <select formControlName="genreId">
+                            <option *ngFor="let genre of genreList" [value]="genre.genreId">
+                                {{genre.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+
+            <!-- Update Book Form -->
+            <div *ngIf="displayUpdateBookForm == true" class="updatebook-form">
+                <h5 style="color: orange;">Update Book Form</h5>
+                <form #updatebookForm="ngForm" (ngSubmit)="onBookUpdate(updatebookForm)">
+                    <div>
+                        <label for="bookid">Choose Book:</label>
+                        <!-- <input type="text" id="bookid" name="bookid" [(ngModel)]="updatebook.BookId" required /> -->
+                        <select name="bookid" id="bookid" [(ngModel)]="updatebook.BookId" required>
+                            @for (book of bookListToDisplay; track $index) {
+                            <option value="{{book.bookId}}">{{book.title}}</option>
+                            }
+                        </select>
+                    </div>
+                    <div>
+                        <label for="availablequantitty">AvailableQuantity:</label>
+                        <input type="text" id="availablequantitty" name="availablequantitty"
+                            [(ngModel)]="updatebook.AvailableQuantity" required />
+                    </div>
+                    <div>
+                        <label for="totalquantity">TotalQuantity:</label>
+                        <input type="text" id="totalquantity" name="totalquantity"
+                            [(ngModel)]="updatebook.TotalQuantity" required />
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+
+            <!-- Remove Book Form -->
+            <div *ngIf="displayRemovekForm == true" class="removebook-form">
+                <h5 style="color: orange;">Remove Book Form</h5>
+                <form #removebookForm="ngForm" (ngSubmit)="onBookRemove(removebookForm)">
+                    <div>
+                        <label for="bookid">Choose Book:</label>
+                        <!-- <input type="text" id="bookid" name="bookid" [(ngModel)]="removebook.bookid" required /> -->
+                        <select name="bookid" id="bookid" [(ngModel)]="removebook.bookid" required>
+                            @for (book of bookListToDisplay; track $index) {
+                            <option value="{{book.bookId}}">{{book.title}}</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+
+            <!-- Add more content as needed -->
+        </div>
     </div>
 </div>

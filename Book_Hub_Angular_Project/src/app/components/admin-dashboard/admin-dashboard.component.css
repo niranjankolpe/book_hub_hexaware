@@ -4,7 +4,6 @@ div{
 
 div > *{
   margin-top: 5px;
-  padding: 2px;
   text-align: center;
 }
 
@@ -38,16 +37,17 @@ th{
 .AddBook-form {
   max-width: 600px;
   margin: 20px auto;
-  padding: 20px;
+  padding: 10px;
   border: 1px solid #dee2e6;
   border-radius: 8px;
   background-color: #f8f9fa;
+  overflow: auto;
 }
 
 .AddBook-form form {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Space between rows */
+  gap: 5px; /* Space between rows */
 }
 
 .AddBook-form div {
@@ -71,7 +71,7 @@ th{
 
 .AddBook-form button {
   padding: 10px;
-  background-color: #007bff;
+  background-color: orange;
   color: white;
   border: none;
   border-radius: 4px;
@@ -81,7 +81,7 @@ th{
 }
 
 .AddBook-form button:hover {
-  background-color: #0056b3;
+  background-color: orange;
 }
 
 
@@ -122,7 +122,7 @@ th{
 
 .updatebook-form button {
   padding: 10px;
-  background-color: #007bff;
+  background-color: orange;
   color: white;
   border: none;
   border-radius: 4px;
@@ -132,7 +132,7 @@ th{
 }
 
 .updatebook-form button:hover {
-  background-color: #0056b3;
+  background-color: orange;
 }
 
 .removebook-form {
@@ -171,7 +171,7 @@ th{
 
 .removebook-form button {
   padding: 10px;
-  background-color: #0056b3; /* Bootstrap danger color */
+  background-color: orange; /* Bootstrap danger color */
   color: white;
   border: none;
   border-radius: 4px;
@@ -181,5 +181,45 @@ th{
 }
 
 .removebook-form button:hover {
-  background-color:  #0056b3;
+  background-color:  orange;
 }
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin: 20px;
+}
+
+.card {
+  width: 300px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  background-color: #fff;
+  text-align: left;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  color: orange;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #555;
+}
+
+p {
+  margin-bottom: 0;
+}
+

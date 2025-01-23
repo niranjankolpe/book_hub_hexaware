@@ -23,7 +23,7 @@ export class UserDashboardComponent {
   userToken: any;
   userRole: any;
 
-  filterTypeSelected: any = '';
+  // filterTypeSelected: any = '';
   settingsFilterType: any = '';
 
   displayNotificationList: boolean = false;
@@ -50,6 +50,18 @@ export class UserDashboardComponent {
   otpValidationForm: FormGroup;
   displayOTPForm: boolean = false;
   generatedOTP: any;
+  
+  filters = [
+    { label: 'Notifications', value: 'notifications' },
+    { label: 'Borrowings', value: 'borrowings' },
+    { label: 'Reservations', value: 'reservations' },
+    { label: 'Fines', value: 'fines' },
+    { label: 'Explore More Books', value: 'explore' }
+   
+  ];
+
+  filterTypeSelected: string = '';
+
 
   constructor(private authService: LoginServicesService, private router: Router, private route: ActivatedRoute, private httpClient: HttpClient, private otpService: OtpServiceService) {
     this.userToken = this.authService.getToken();

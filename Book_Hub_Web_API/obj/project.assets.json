@@ -4925,23 +4925,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\niran\\.nuget\\packages\\": {},
+    "C:\\Users\\Sejal\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\niran\\Desktop\\My Files\\Book Hub\\Book_Hub_Web_API\\Book_Hub_Web_API.csproj",
+      "projectUniqueName": "D:\\Book Hub\\Book_Hub_Web_API\\Book_Hub_Web_API.csproj",
       "projectName": "Book_Hub_Web_API",
-      "projectPath": "C:\\Users\\niran\\Desktop\\My Files\\Book Hub\\Book_Hub_Web_API\\Book_Hub_Web_API.csproj",
-      "packagesPath": "C:\\Users\\niran\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\niran\\Desktop\\My Files\\Book Hub\\Book_Hub_Web_API\\obj\\",
+      "projectPath": "D:\\Book Hub\\Book_Hub_Web_API\\Book_Hub_Web_API.csproj",
+      "packagesPath": "C:\\Users\\Sejal\\.nuget\\packages\\",
+      "outputPath": "D:\\Book Hub\\Book_Hub_Web_API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\niran\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Sejal\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4950,6 +4950,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4967,8 +4968,7 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.100"
+      }
     },
     "frameworks": {
       "net8.0": {
@@ -5016,7 +5016,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

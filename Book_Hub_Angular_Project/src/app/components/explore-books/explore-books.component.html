@@ -37,41 +37,39 @@
         <input type="text" formControlName="bookId" id="bookId" name="bookId" placeholder="Enter Book ID here">
         <button class="btn btn-secondary" type="submit">Borrow</button>
     </form><br><br> -->
-
-    <div class="container" name="bookListToDisplay" id="bookListToDisplay" *ngIf="displayBookList">
-       <form [formGroup]="borrowBookForm">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Sr. No.</th>
-                    <th scope="col">ISBN</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Author</th>
-                    <th scope="col">AvailableQuantity</th>
-                    <th scope="col">Genre ID</th>
-                    <th scope="col">Borrow</th>
-                    <th scope="col">Reserve</th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (book of bookListToDisplay; track $index) {
-                <tr>
-                    <td>{{book.bookId}}</td>
-                    <td>{{book.isbn}}</td>
-                    <td>{{book.title}}</td>
-                    <td>{{book.author}}</td>
-                    <td>{{book.availableQuantity}}</td>
-                    <td>{{book.genreId}}</td>
-                    <td>
-                        <button *ngIf="book.availableQuantity>0" (click)="borrowBook(book.bookId)" class="btn btn-secondary">Borrow</button>
-                    </td>
-                    <td>
-                        <button *ngIf="book.availableQuantity>0" (click)="reserveBook(book.bookId)" class="btn btn-secondary">Reserve</button>
-                    </td>
-                </tr>
-                }
-            </tbody>
-        </table>
-       </form>
-    </div>
+    <div style="flex: 1; padding: 20px; overflow-y: auto;">
+        <div *ngIf="displayBookList" class="card-container">
+            <div class="card" *ngFor="let book of bookListToDisplay; let i = index">
+                <div class="card-body">
+                    <h5 class="card-title">Sr.No: {{book.bookId}}</h5>
+                    <p class="card-text"><strong>ISBN No.:</strong> {{book.isbn}}</p>
+                    <p class="card-text"><strong>Title:</strong> {{book.title}}</p>
+                    <p class="card-text"><strong>Author Name:</strong> {{book.author}}</p>
+                    <p class="card-text"><strong>Available Quantity:</strong> {{book.availableQuantity}}</p>
+                    <p class="card-text"><strong>Genre ID:</strong> {{book.genreId}}</p>
+                    <p class="card-text">
+                        <strong style="margin-right: 10px;">Borrow:</strong>
+                        <button 
+                            *ngIf="book.availableQuantity > 0" 
+                            (click)="borrowBook(book.bookId)" 
+                            class="btn btn-secondary" 
+                            style="background-color: orange; border-color: orange; font-size: 0.8rem; margin-left: 10px; padding: 5px 10px;">
+                            Borrow
+                        </button>
+                    </p>
+                    <p class="card-text">
+                        <strong style="margin-right: 10px;">Return:</strong>
+                        <button 
+                            *ngIf="book.availableQuantity > 0" 
+                            (click)="reserveBook(book.bookId)" 
+                            class="btn btn-secondary" 
+                            style="background-color: orange; border-color: orange; font-size: 0.8rem; margin-left: 10px; padding: 5px 10px;">
+                            Return
+                        </button>
+                    </p>
+                   
+                </div>
+            </div>
+        </div>
+   
 </div>

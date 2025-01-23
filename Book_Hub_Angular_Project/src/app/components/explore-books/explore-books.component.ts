@@ -84,11 +84,24 @@ export class ExploreBooksComponent {
     })
   }
 
-  GetAllGenres(){
-    this.httpClient.get("https://localhost:7251/api/Admin/GetGenre").subscribe((result:any) => {
-      this.genreList = result.$values;
-    })
+  GetAllGenres() {
+    this.httpClient.get("https://localhost:7251/api/Admin/GetGenre")
+      .subscribe({
+        next: (result: any) => {
+          console.log(result, "API Response"); // Log the response to inspect its structure
+          if (result && result.$values) {
+            this.genreList = result.$values; // Access the `$values` if it exists
+          } else {
+            this.genreList = result; // Use the response directly if `$values` isn't needed
+          }
+          console.log(this.genreList, "genreList");
+        },
+        error: (error) => {
+          console.error("Error fetching genres", error);
+        }
+      });
   }
+  
 
   GetAllAuthors(){
     this.GetAllBooks();

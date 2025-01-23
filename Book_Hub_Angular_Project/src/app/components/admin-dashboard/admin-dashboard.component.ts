@@ -90,8 +90,21 @@ export class AdminDashboardComponent {
 
 
   filterTypeSelected: string = '';
-
   bookListToDisplay: any[] = [];
+  filters = [
+    { label: 'Books', value: 'all' },
+    { label: 'Genre', value: 'genre' },
+    { label: 'Borrowed', value: 'borrowed' },
+    { label: 'Fines', value: 'fines' },
+    { label: 'Users', value: 'users' },
+    { label: "User's Logs Activity", value: 'logs' },
+    { label: 'Notifications', value: 'notifications' },
+    { label: 'Reservations', value: 'reservations' },
+    { label: 'Consumer Queries', value: 'consumerQueries' },
+    { label: 'Add New Book', value: 'addBook' },
+    { label: 'Update Existing Books', value: 'updateBook' },
+    { label: 'Remove Existing Books', value: 'removeBook' }
+  ];
 
   constructor(private httpClient: HttpClient, private router: Router, private authService: LoginServicesService) {
     this.adminEmail = this.authService.decodeToken(this.authService.getToken())["Email"];
@@ -354,6 +367,7 @@ export class AdminDashboardComponent {
   GetAllGenres() {
     this.httpClient.get(Constant.BASE_URI + Constant.Get_All_Genre).subscribe((result: any) => {
       this.genreList = result.$values;
+      console.log(this.genreList);
 
     })
   }

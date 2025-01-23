@@ -10,6 +10,7 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { UserDashboardComponent } from './components/user-dashboard/user-dashboard.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 
+
 export const routes: Routes = [
     {
         path:'',

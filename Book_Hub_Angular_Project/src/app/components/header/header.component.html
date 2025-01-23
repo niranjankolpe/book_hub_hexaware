@@ -25,6 +25,7 @@
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{userToken["Email"]}}</a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" routerLink="{{roleBasedDashboard}}" [queryParams]="{ displaySection: '0' }" routerLinkActive="active">Profile</a></li>
+            
             <!-- <li><a class="dropdown-item" (click)="toggleNotifications()">Notifications</a>
               <div *ngIf="isNotificationDropdownOpen == true">
                 <ul>

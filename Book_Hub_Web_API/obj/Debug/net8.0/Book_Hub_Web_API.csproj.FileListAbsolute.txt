@@ -516,3 +516,5 @@ C:\Users\niran\Desktop\My Files\Book Hub\Book_Hub_Web_API\obj\Debug\net8.0\refin
 C:\Users\niran\Desktop\My Files\Book Hub\Book_Hub_Web_API\obj\Debug\net8.0\Book_Hub_Web_API.pdb
 C:\Users\niran\Desktop\My Files\Book Hub\Book_Hub_Web_API\obj\Debug\net8.0\Book_Hub_Web_API.genruntimeconfig.cache
 C:\Users\niran\Desktop\My Files\Book Hub\Book_Hub_Web_API\obj\Debug\net8.0\ref\Book_Hub_Web_API.dll
+D:\Book Hub\Book_Hub_Web_API\bin\Debug\net8.0\log4net.config
+D:\Book Hub\Book_Hub_Web_API\bin\Debug\net8.0\log4net.dll
