@@ -46,6 +46,9 @@ select * from Reservations;
 select * from ContactUs;
 go
 
+select * from dbo.__EFMigrationsHistory;
+go
+
 -- delete from Books where BookId>10;
 
 update Users set Role='Administrator' where UserId=1;

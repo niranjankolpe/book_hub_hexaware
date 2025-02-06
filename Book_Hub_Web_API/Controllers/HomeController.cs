@@ -62,7 +62,7 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
-                // _logger.Info($"Called:{nameof(GenerateOTP)}");
+                _logger.Info($"Called:{nameof(GenerateOTP)}");
                 Random random = new Random();
                 string otp = random.Next(100000, 999999).ToString();
                 Debug.WriteLine("\n\nGot email address to send mail is: ", emailAddress, "\n\n");
@@ -73,7 +73,7 @@ namespace Book_Hub_Web_API.Controllers
             }
             catch (Exception ex)
             {
-                // _logger.Error($"{ex.GetType().Name}:{ex.Message}");
+                _logger.Error($"{ex.GetType().Name}:{ex.Message}");
                 return new JsonResult(new { value = "Error" });
             }
         }
@@ -111,7 +111,7 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
-                // _logger.Info($"Called:{nameof(Login)}");
+                _logger.Info($"Called:{nameof(Login)}");
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
@@ -144,7 +144,7 @@ namespace Book_Hub_Web_API.Controllers
             }
             catch (Exception ex)
             {
-                // _logger.Error($"{ex.GetType().Name}:{ex.Message}");
+                _logger.Error($"{ex.GetType().Name}:{ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -156,13 +156,13 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
-                // _logger.Info($"Called:{nameof(Logout)}");
+                _logger.Info($"Called:{nameof(Logout)}");
                 await _commonRepository.Logout(userId);
                 return Ok();
             }
             catch(Exception ex)
             {
-                // _logger.Error($"{ex.GetType().Name}:{ex.Message}");
+                _logger.Error($"{ex.GetType().Name}:{ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -174,7 +174,7 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
-                // _logger.Info($"Called:{nameof(CreateUser)}");
+                _logger.Info($"Called:{nameof(CreateUser)}");
                 if (ModelState.IsValid)
                 {
                     await Task.Delay(100);
@@ -190,7 +190,7 @@ namespace Book_Hub_Web_API.Controllers
             }
             catch(Exception ex)
             {
-                // _logger.Error($"{ex.GetType().Name}:{ex.Message}");
+                _logger.Error($"{ex.GetType().Name}:{ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -202,7 +202,7 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
-                // _logger.Info($"Called:{nameof(UpdateUser)}");
+                _logger.Info($"Called:{nameof(UpdateUser)}");
                 if (ModelState.IsValid)
                 {
                     Users u = await _commonRepository.UpdateUser(updateUser_DTO);
@@ -216,7 +216,7 @@ namespace Book_Hub_Web_API.Controllers
             }
             catch(Exception ex)
             {
-                // _logger.Error($"{ex.GetType().Name}:{ex.Message}");
+                _logger.Error($"{ex.GetType().Name}:{ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -229,14 +229,14 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
-                // _logger.Info($"Called:{nameof(DeleteUser)}");
+                _logger.Info($"Called:{nameof(DeleteUser)}");
                 var temporaryUser = await _commonRepository.DeleteUser(userId);
                 _emailService.SendEmail([temporaryUser.Email], Notification_Type.Account_Related.ToString(), $"Dear {temporaryUser.Name},\n\nSuccessfully Deleted your Account details at Book Hub!\n\nSorry to see you go :(\n\nRegards,\nBook Hub");
                 return Ok(new JsonResult(temporaryUser));
             }
             catch(Exception ex)
             {
-                // _logger.Error($"{ex.GetType().Name}:{ex.Message}");
+                _logger.Error($"{ex.GetType().Name}:{ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -248,14 +248,14 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
-                // _logger.Info($"Called:{nameof(ForgotPassword)}");
+                _logger.Info($"Called:{nameof(ForgotPassword)}");
                 var user = await _commonRepository.ForgotPassword(emailAddress, newPassword);
                 _emailService.SendEmail([emailAddress], Notification_Type.Account_Related.ToString(), $"Your password was Updated Successfully!");
                 return Ok(new JsonResult(value: "Password successfully Updated!"));
             }
             catch(Exception ex)
             {
-                // _logger.Error($"{ex.GetType().Name}:{ex.Message}");
+                _logger.Error($"{ex.GetType().Name}:{ex.Message}");
                 return BadRequest(ex.Message);
             }
         }
@@ -267,13 +267,13 @@ namespace Book_Hub_Web_API.Controllers
         {
             try
             {
-                // _logger.Info($"Called:{nameof(AddContactUsQuery)}");
+                _logger.Info($"Called:{nameof(AddContactUsQuery)}");
                 var contact_us = await _commonRepository.AddContactUsQuery(contact_Us_DTO);
                 return Ok(new JsonResult(value: "Query submitted successfully!"));
             }
             catch(Exception ex)
             {
-                // _logger.Error($"{ex.GetType().Name}:{ex.Message}");
+                _logger.Error($"{ex.GetType().Name}:{ex.Message}");
                 return BadRequest(ex.Message);
             }
         }

@@ -24,16 +24,7 @@
         <li *ngIf="displayUserInHeader == true" class="nav-item ms-auto dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">{{userToken["Email"]}}</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" routerLink="{{roleBasedDashboard}}" [queryParams]="{ displaySection: '0' }" routerLinkActive="active">Profile</a></li>
-            
-            <!-- <li><a class="dropdown-item" (click)="toggleNotifications()">Notifications</a>
-              <div *ngIf="isNotificationDropdownOpen == true">
-                <ul>
-                    <li>asd</li>
-                    <li>asdsdss</li>
-                </ul>
-            </div></li> -->
-            <li *ngIf="userRole != 'Administrator'"><a class="dropdown-item" routerLink="{{roleBasedDashboard}}" [queryParams]="{ displaySection: '1' }" routerLinkActive="active">Settings</a></li>
+            <li><a class="dropdown-item" routerLink="{{roleBasedDashboard}}" routerLinkActive="active">Profile</a></li>
             <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
           </ul>
         </li>

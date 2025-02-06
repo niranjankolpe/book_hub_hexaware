@@ -450,3 +450,13 @@ C:\Users\niran\Desktop\My Files\Book Hub\BookHubTestProject\bin\Debug\net8.0\nun
 C:\Users\niran\Desktop\My Files\Book Hub\BookHubTestProject\bin\Debug\net8.0\nunit.engine.api.dll
 C:\Users\niran\Desktop\My Files\Book Hub\BookHubTestProject\bin\Debug\net8.0\nunit.engine.core.dll
 C:\Users\niran\Desktop\My Files\Book Hub\BookHubTestProject\bin\Debug\net8.0\testcentric.engine.metadata.dll
+C:\Users\niran\Desktop\My Files\Book Hub\BookHubTestProject\bin\Debug\net8.0\de\Microsoft.Data.SqlClient.resources.dll
+C:\Users\niran\Desktop\My Files\Book Hub\BookHubTestProject\bin\Debug\net8.0\es\Microsoft.Data.SqlClient.resources.dll
+C:\Users\niran\Desktop\My Files\Book Hub\BookHubTestProject\bin\Debug\net8.0\fr\Microsoft.Data.SqlClient.resources.dll
+C:\Users\niran\Desktop\My Files\Book Hub\BookHubTestProject\bin\Debug\net8.0\it\Microsoft.Data.SqlClient.resources.dll
+C:\Users\niran\Desktop\My Files\Book Hub\BookHubTestProject\bin\Debug\net8.0\ja\Microsoft.Data.SqlClient.resources.dll
+C:\Users\niran\Desktop\My Files\Book Hub\BookHubTestProject\bin\Debug\net8.0\ko\Microsoft.Data.SqlClient.resources.dll
+C:\Users\niran\Desktop\My Files\Book Hub\BookHubTestProject\bin\Debug\net8.0\pt-BR\Microsoft.Data.SqlClient.resources.dll
+C:\Users\niran\Desktop\My Files\Book Hub\BookHubTestProject\bin\Debug\net8.0\ru\Microsoft.Data.SqlClient.resources.dll
+C:\Users\niran\Desktop\My Files\Book Hub\BookHubTestProject\bin\Debug\net8.0\zh-Hans\Microsoft.Data.SqlClient.resources.dll
+C:\Users\niran\Desktop\My Files\Book Hub\BookHubTestProject\bin\Debug\net8.0\zh-Hant\Microsoft.Data.SqlClient.resources.dll

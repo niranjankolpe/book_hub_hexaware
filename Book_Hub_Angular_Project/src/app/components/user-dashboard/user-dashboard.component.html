@@ -1,11 +1,11 @@
 <div style="display: flex; height: 100vh;">
+
     <!-- Sidebar -->
     <div style="width: 250px; background-color: #f4f4f4; padding: 15px; border-right: 1px solid #ddd;">
         <ul style="list-style: none; padding: 0;">
             <li *ngFor="let filter of filters">
-                <button *ngIf="filter.value !== 'explore'" (click)="ApplyFilter(filter.value)" [ngStyle]="{
-                        background: filterTypeSelected === filter.value ? 'antiquewhite' : 'none'
-                    }"
+                <button *ngIf="filter.value !== 'explore'" (click)="ApplyFilter(filter.value)"
+                    [ngStyle]="{background: filterTypeSelected === filter.value ? 'antiquewhite' : 'none'}"
                     style="background: none; border: none; color: orange; font-weight: bold; text-align: left; padding: 5px; width: 100%; cursor: pointer; border-bottom: 1px solid #ddd;">
                     {{ filter.label }}
                 </button>
@@ -16,16 +16,21 @@
             </li>
         </ul>
     </div>
+
+    <!-- Main Content -->
     <div
         style="display: flex; justify-content: center; flex-direction: column; width: 100%; background-color: antiquewhite;">
-        <div>
-            <h4>Welcome {{userToken.Email}}</h4>
+
+        <!-- Page Heading -->
+        <div style="text-align: center;">
+            <br>
+            <h4>Welcome {{userToken.Email}}</h4><br>
         </div>
-        <!-- Main Content -->
 
+        <!-- Page Main Section -->
+        <div style="flex: 1; padding: 20px; overflow-y: auto; text-align: center;">
 
-        <!-- Notifications Table -->
-        <div style="flex: 1; padding: 20px; overflow-y: auto;">
+            <!-- Notifications Table -->
             <div *ngIf="displayNotificationList" class="card-container">
                 <div class="card" *ngFor="let noti of notificationList; let i = index">
                     <div class="card-body">
@@ -39,135 +44,134 @@
                 </div>
             </div>
 
-
-
             <!-- Borrowed Table -->
-            <div style="flex: 1; padding: 20px; overflow-y: auto;">
-                <div *ngIf="displayBorrowingList" class="card-container">
-                    <div class="card" *ngFor="let borrowed of borrowingList; let i = index">
-                        <div class="card-body">
-                            <h5 class="card-title">Borrow ID: {{borrowed.borrowId}}</h5>
-                            <p class="card-text"><strong>Book ID:</strong> {{borrowed.bookId}}</p>
-                            <p class="card-text"><strong>User ID:</strong> {{borrowed.userId}}</p>
-                            <p class="card-text"><strong>Borrow Date:</strong> {{borrowed.borrowDate}}</p>
-                            <p class="card-text"><strong>Return Deadline:</strong> {{borrowed.returnDeadline}}</p>
-                            <p class="card-text"><strong>Return Date:</strong> {{borrowed.returnDate}}</p>
-                            <p class="card-text"><strong>Borrow Status:</strong>
-                                {{Borrow_Status[borrowed.borrowStatus]}}</p>
-                            <p class="card-text">
-                                <strong>Action:</strong>
-                                <button *ngIf="borrowed.borrowStatus == '0'" (click)="reportLostBook(borrowed.borrowId)"
-                                    class="btn btn-secondary"
-                                    style="background-color: orange; color: white; font-size: 12px; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer; margin-left: 10px;">
-                                    Report Lost
-                                </button>
-                            </p>
-                        </div>
+            <div *ngIf="displayBorrowingList" class="card-container">
+                <div class="card" *ngFor="let borrowed of borrowingList; let i = index">
+                    <div class="card-body">
+                        <h5 class="card-title">Borrow ID: {{borrowed.borrowId}}</h5>
+                        <p class="card-text"><strong>Book ID:</strong> {{borrowed.bookId}}</p>
+                        <p class="card-text"><strong>User ID:</strong> {{borrowed.userId}}</p>
+                        <p class="card-text"><strong>Borrow Date:</strong> {{borrowed.borrowDate}}</p>
+                        <p class="card-text"><strong>Return Deadline:</strong> {{borrowed.returnDeadline}}</p>
+                        <p class="card-text"><strong>Return Date:</strong> {{borrowed.returnDate}}</p>
+                        <p class="card-text"><strong>Borrow Status:</strong>
+                            {{Borrow_Status[borrowed.borrowStatus]}}</p>
+                        <p class="card-text">
+                            <strong>Action:</strong>
+                            <button *ngIf="borrowed.borrowStatus == '0'" (click)="returnBook(borrowed.borrowId)"
+                                class="btn btn-secondary"
+                                style="background-color: orange; color: white; font-size: 12px; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer; margin-left: 10px;">
+                                Return Book
+                            </button>
+                            <button *ngIf="borrowed.borrowStatus == '0'" (click)="reportLostBook(borrowed.borrowId)"
+                                class="btn btn-secondary"
+                                style="background-color: orange; color: white; font-size: 12px; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer; margin-left: 10px;">
+                                Report Lost
+                            </button>
+                        </p>
                     </div>
                 </div>
+            </div>
 
-                <!-- ReservationsTable -->
-
-                <div style="flex: 1; padding: 20px; overflow-y: auto;">
-                    <div *ngIf="displayReservationList" class="card-container">
-                        <div class="card" *ngFor="let reserv of reservationList; let i = index">
-                            <div class="card-body">
-                                <h5 class="card-title">Reservation ID: {{reserv.reservationId}}</h5>
-                                <p class="card-text"><strong>Book ID:</strong> {{reserv.bookId}}</p>
-                                <p class="card-text"><strong>User ID:</strong> {{reserv.userId}}</p>
-                                <p class="card-text"><strong>Application Timestamp:</strong>
-                                    {{reserv.applicationTimestamp}}</p>
-                                <p class="card-text"><strong>Expected Availability Date:</strong>
-                                    {{reserv.expectedAvailabilityDate}}</p>
-                                <p class="card-text"><strong>Reservation Expiry Date:</strong>
-                                    {{reserv.reservationExpiryDate}}</p>
-                                <p class="card-text"><strong>Reservation Status:</strong>
-                                    {{Reservation_Status[reserv.reservationStatus]}}</p>
-                                <p class="card-text">
-                                    <strong>Action:</strong>
-                                    <button *ngIf="reserv.reservationStatus == '0'"
-                                        (click)="cancelReservation(reserv.reservationId)" class="btn btn-secondary"
-                                        style="background-color: orange; color: white; font-size: 12px; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer; margin-left: 10px;">
-                                        Cancel Reservation
-                                    </button>
-                                </p>
+            <!-- ReservationsTable -->
+            <div *ngIf="displayReservationList" class="card-container">
+                <div class="card" *ngFor="let reserv of reservationList; let i = index">
+                    <div class="card-body">
+                        <h5 class="card-title">Reservation ID: {{reserv.reservationId}}</h5>
+                        <p class="card-text"><strong>Book ID:</strong> {{reserv.bookId}}</p>
+                        <p class="card-text"><strong>User ID:</strong> {{reserv.userId}}</p>
+                        <p class="card-text"><strong>Application Timestamp:</strong>
+                            {{reserv.applicationTimestamp}}</p>
+                        <p class="card-text"><strong>Expected Availability Date:</strong>
+                            {{reserv.expectedAvailabilityDate}}</p>
+                        <p class="card-text"><strong>Reservation Expiry Date:</strong>
+                            {{reserv.reservationExpiryDate}}</p>
+                        <p class="card-text"><strong>Reservation Status:</strong>
+                            {{Reservation_Status[reserv.reservationStatus]}}</p>
+                        <p class="card-text">
+                            <strong>Action:</strong>
+                            <button *ngIf="reserv.reservationStatus == '0'"
+                                (click)="cancelReservation(reserv.reservationId)" class="btn btn-secondary"
+                                style="background-color: orange; color: white; font-size: 12px; padding: 5px 10px; border: none; border-radius: 3px; cursor: pointer; margin-left: 10px;">
+                                Cancel Reservation
+                            </button>
+                        </p>
 
 
-                            </div>
-                        </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Fines table -->
+            <div *ngIf="displayFineList" class="card-container">
+                <div class="card" *ngFor="let fines of fineList; let i = index">
+                    <div class="card-body">
+                        <h5 class="card-title">Fine ID: {{fines.fineId}}</h5>
+                        <p class="card-text"><strong>Borrow ID:</strong> {{fines.borrowId}}</p>
+                        <p class="card-text"><strong>Fine Type:</strong> {{Fine_Type[fines.fineType]}}</p>
+                        <p class="card-text"><strong>Fine Amount:</strong> {{fines.fineAmount}}</p>
+                        <p class="card-text"><strong>Fine Paid Status:</strong>
+                            {{Fine_Paid_Status[fines.finePaidStatus]}}</p>
+                        <p class="card-text"><strong>Paid Date:</strong> {{fines.paidDate}}</p>
 
 
-                    <!-- Fines table -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div *ngIf="displaySettings">
+                <button (click)="ApplySettingsFilter('updateAccount')" class="btn btn-primary">Update
+                    Account Details</button>
+                <button (click)="ApplySettingsFilter('resetPassword')" class="btn btn-primary">Reset
+                    Password</button>
+                <button (click)="ApplySettingsFilter('deleteAccount')" class="btn btn-primary">Delete
+                    Account</button><br><br>
 
 
-                    <div style="flex: 1; padding: 20px; overflow-y: auto;">
-                        <div *ngIf="displayFineList" class="card-container">
-                            <div class="card" *ngFor="let fines of fineList; let i = index">
-                                <div class="card-body">
-                                    <h5 class="card-title">Fine ID: {{fines.fineId}}</h5>
-                                    <p class="card-text"><strong>Borrow ID:</strong> {{fines.borrowId}}</p>
-                                    <p class="card-text"><strong>Fine Type:</strong> {{Fine_Type[fines.fineType]}}</p>
-                                    <p class="card-text"><strong>Fine Amount:</strong> {{fines.fineAmount}}</p>
-                                    <p class="card-text"><strong>Fine Paid Status:</strong>
-                                        {{Fine_Paid_Status[fines.finePaidStatus]}}</p>
-                                    <p class="card-text"><strong>Paid Date:</strong> {{fines.paidDate}}</p>
+                <form [formGroup]="updateUserForm" *ngIf="displayUpdateAccountForm ==  true" (ngSubmit)="updateUser()"
+                    class="userAccountSettings">
+                    <h2>Update Account Details</h2><br>
+                    <label for="name">Enter your Name:</label>
+                    <input type="text" formControlName="name"><br><br>
 
+                    <label for="phone">Enter Phone Number:</label>
+                    <input type="text" formControlName="phone"><br><br>
 
-                                </div>
-                            </div>
+                    <label for="address">Enter Address:</label>
+                    <input type="text" formControlName="address"><br><br>
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+
+                <form [formGroup]="updatePasswordForm" *ngIf="displayUpdatePasswordForm ==  true"
+                    (ngSubmit)="resetUserPassword()" class="userAccountSettings">
+                    <h2>Reset Password</h2><br>
+                    <label for="oldPassword">Enter old Password:</label>
+                    <input type="password" formControlName="oldPassword"><br><br>
+
+                    <label for="newPassword">Enter new Password:</label>
+                    <input type="password" formControlName="newPassword"><br><br>
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+
+                <form *ngIf="displayDeleteAccountForm ==  true" (ngSubmit)="deleteUser()" class="userAccountSettings">
+                    <h2>Delete Account</h2><br>
+                    <input type="text" name="userId" id="userId" hidden>
+                    <button type="submit" class="btn btn-danger">Delete Account</button>
+                </form>
+                <div class="otpValidationFormStyles" *ngIf="displayOTPForm == true">
+                    <form [formGroup]="otpValidationForm" (ngSubmit)="validateDeleteOTP()">
+                        <h2>OTP Validation</h2>
+                        <div class="form-group">
+                            <label>Enter One-Time-Password (OTP):</label>
+                            <input formControlName="otp" type="text" name="otp" id="otp">
                         </div>
-
-
-                        <div *ngIf="displaySection == '1'">
-                            <button (click)="ApplySettingsFilter('updateAccount')" class="btn btn-primary">Update
-                                Account Details</button>
-                            <button (click)="ApplySettingsFilter('resetPassword')" class="btn btn-primary">Reset
-                                Password</button>
-                            <button (click)="ApplySettingsFilter('deleteAccount')" class="btn btn-primary">Delete
-                                Account</button><br><br>
-
-
-                            <form [formGroup]="updateUserForm" *ngIf="displayUpdateAccountForm ==  true"
-                                (ngSubmit)="updateUser()" class="userAccountSettings">
-                                <h2>Update Account Details</h2><br>
-                                <label for="name">Enter your Name:</label>
-                                <input type="text" formControlName="name"><br><br>
-
-                                <label for="phone">Enter Phone Number:</label>
-                                <input type="text" formControlName="phone"><br><br>
-
-                                <label for="address">Enter Address:</label>
-                                <input type="text" formControlName="address"><br><br>
-
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </form>
-
-                            <form [formGroup]="updatePasswordForm" *ngIf="displayUpdatePasswordForm ==  true"
-                                (ngSubmit)="resetUserPassword()" class="userAccountSettings">
-                                <h2>Reset Password</h2><br>
-                                <label for="oldPassword">Enter old Password:</label>
-                                <input type="password" formControlName="oldPassword"><br><br>
-
-                                <label for="newPassword">Enter new Password:</label>
-                                <input type="password" formControlName="newPassword"><br><br>
-
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </form>
-
-                            <form *ngIf="displayDeleteAccountForm ==  true" (ngSubmit)="deleteUser()"
-                                class="userAccountSettings">
-                                <h2>Delete Account</h2><br>
-                                <input type="text" name="userId" id="userId" hidden>
-                                <button type="submit" class="btn btn-danger">Delete Account</button>
-                            </form>
-                            <div class="otpValidationFormStyles" *ngIf="displayOTPForm == true">
-                                <form [formGroup]="otpValidationForm" (ngSubmit)="validateDeleteOTP()">
-                                    <h2>OTP Validation</h2>
-                                    <div class="form-group">
-                                        <label>Enter One-Time-Password (OTP):</label>
-                                        <input formControlName="otp" type="text" name="otp" id="otp">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary">Verify</button>
-                                </form>
-                            </div>
+                        <button type="submit" class="btn btn-primary">Verify</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

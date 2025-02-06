@@ -38,7 +38,7 @@ export class UserDashboardComponent {
   displayFineList: boolean = false;
   fineList: any[] = [];
 
-  displaySection: any = '0';
+  displaySettings = false;
 
   displayUpdateAccountForm = false;
   displayUpdatePasswordForm = false;
@@ -51,13 +51,14 @@ export class UserDashboardComponent {
   displayOTPForm: boolean = false;
   generatedOTP: any;
   
+  
   filters = [
     { label: 'Notifications', value: 'notifications' },
     { label: 'Borrowings', value: 'borrowings' },
     { label: 'Reservations', value: 'reservations' },
     { label: 'Fines', value: 'fines' },
+    { label: 'Settings', value: 'settings' },
     { label: 'Explore More Books', value: 'explore' }
-   
   ];
 
   filterTypeSelected: string = '';
@@ -88,9 +89,6 @@ export class UserDashboardComponent {
       address: new FormControl('')
     });
 
-    this.route.queryParams.subscribe((params) => {
-      this.displaySection = params['displaySection'];// Convert to boolean if necessary
-    });
     this.otpValidationForm = new FormGroup({
       otp: new FormControl('')
     });
@@ -111,6 +109,7 @@ export class UserDashboardComponent {
       this.displayBorrowingList = false;
       this.displayReservationList = false;
       this.displayFineList = false;
+      this.displaySettings = false;
     }
     else if (filterType == 'borrowings') {
       this.GetUserBorrowings();
@@ -119,6 +118,7 @@ export class UserDashboardComponent {
       this.displayNotificationList = false;
       this.displayReservationList = false;
       this.displayFineList = false;
+      this.displaySettings = false;
     }
     else if (filterType == 'reservations') {
       this.GetUserReservations();
@@ -127,6 +127,7 @@ export class UserDashboardComponent {
       this.displayNotificationList = false;
       this.displayBorrowingList = false;
       this.displayFineList = false;
+      this.displaySettings = false;
     }
     else if (filterType == 'fines') {
       this.GetUserFines();
@@ -135,6 +136,17 @@ export class UserDashboardComponent {
       this.displayNotificationList = false;
       this.displayBorrowingList = false;
       this.displayReservationList = false;
+      this.displaySettings = false;
+    }
+    else if (filterType == 'settings') {
+
+      this.GetUserFines();
+      this.displaySettings = true;
+
+      this.displayNotificationList = false;
+      this.displayBorrowingList = false;
+      this.displayReservationList = false;
+      this.displayFineList = false;
     }
   }
 
